@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SuiteWash for Properties — Turn Laundry Into a Revenue Line</title>
+  <meta name="description" content="SuiteWash is a managed laundry amenity for multifamily properties. Zero setup cost, monthly revenue share, and 48-hour launch. Detroit Metro." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:      #0a1628;
+      --navy2:     #0f2040;
+      --cream:     #f5f0e8;
+      --cream2:    #ede8df;
+      --gold:      #c9a84c;
+      --gold-lt:   #e8d5a3;
+      --gold-dk:   #9c7a2e;
+      --slate:     #2d3f5a;
+      --white:     #ffffff;
+      --text-mid:  #4a5568;
+      --green:     #16a34a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--navy); overflow-x:hidden; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    button { font-family:'DM Sans',sans-serif; }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      display:flex; align-items:center; justify-content:space-between;
+      padding:1.1rem 3rem;
+      background:rgba(10,22,40,0.95);
+      backdrop-filter:blur(14px);
+      border-bottom:1px solid rgba(201,168,76,0.15);
+    }
+    .nav-logo {
+      font-family:'Playfair Display',serif;
+      font-size:1.4rem; font-weight:700;
+      color:var(--gold); letter-spacing:0.04em;
+      text-decoration:none;
+    }
+    .nav-logo span { color:var(--white); }
+    .nav-pill {
+      font-size:0.6rem; font-weight:800;
+      letter-spacing:0.14em; text-transform:uppercase;
+      background:rgba(201,168,76,0.15); color:var(--gold);
+      border:1px solid rgba(201,168,76,0.3);
+      padding:0.2rem 0.65rem; margin-left:0.75rem;
+    }
+    .nav-right { display:flex; align-items:center; gap:1.5rem; }
+    .nav-link {
+      color:rgba(255,255,255,0.65); font-size:0.8rem;
+      text-decoration:none; letter-spacing:0.05em;
+      text-transform:uppercase; transition:color 0.2s;
+    }
+    .nav-link:hover { color:var(--gold); }
+    .nav-cta {
+      background:var(--gold); color:var(--navy);
+      padding:0.55rem 1.3rem; border:none;
+      font-family:'DM Sans',sans-serif;
+      font-weight:600; font-size:0.8rem;
+      letter-spacing:0.04em; cursor:pointer;
+      transition:background 0.2s;
+    }
+    .nav-cta:hover { background:var(--gold-lt); }
+
+    /* Hamburger */
+    .nav-hamburger {
+      display:none; flex-direction:column; gap:5px;
+      cursor:pointer; padding:4px; background:none; border:none;
+    }
+    .nav-hamburger span {
+      display:block; width:22px; height:2px;
+      background:var(--white); border-radius:2px; transition:all 0.3s;
+    }
+    .nav-mobile-menu {
+      display:none; position:fixed;
+      top:62px; left:0; right:0; z-index:99;
+      background:rgba(10,22,40,0.98);
+      border-bottom:1px solid rgba(201,168,76,0.15);
+      padding:1.5rem 2rem; flex-direction:column; gap:0;
+    }
+    .nav-mobile-menu.open { display:flex; }
+    .nav-mobile-menu a, .nav-mobile-menu button {
+      display:block; width:100%; padding:0.9rem 0;
+      border-bottom:1px solid rgba(255,255,255,0.07);
+      color:rgba(255,255,255,0.75); text-decoration:none;
+      font-size:0.9rem; font-weight:500; letter-spacing:0.05em;
+      text-transform:uppercase; background:none;
+      border-left:none; border-right:none; border-top:none;
+      text-align:left; cursor:pointer; transition:color 0.2s;
+      font-family:'DM Sans',sans-serif;
+    }
+    .nav-mobile-menu a:hover, .nav-mobile-menu button:hover { color:var(--gold); }
+    .nav-mobile-menu .mob-cta {
+      margin-top:1rem; padding:0.9rem;
+      background:var(--gold); color:var(--navy);
+      border:none; font-weight:700; text-align:center;
+      letter-spacing:0.04em; text-transform:uppercase;
+    }
+
+    /* Form success */
+    .form-success {
+      display:none; text-align:center; padding:2.5rem 1rem;
+    }
+    .form-success-icon { font-size:2.5rem; margin-bottom:0.75rem; }
+    .form-success-title {
+      font-family:'Playfair Display',serif;
+      font-size:1.3rem; font-weight:700;
+      color:var(--white); margin-bottom:0.5rem;
+    }
+    .form-success-sub { font-size:0.85rem; color:rgba(255,255,255,0.55); line-height:1.6; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height:100vh;
+      background:var(--navy);
+      position:relative; overflow:hidden;
+      display:flex; flex-direction:column;
+      justify-content:center;
+      padding:9rem 6rem 6rem;
+    }
+    .hero::before {
+      content:'';
+      position:absolute; inset:0;
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.07) 0%, transparent 55%),
+        radial-gradient(ellipse at 10% 80%, rgba(45,63,90,0.4) 0%, transparent 50%);
+    }
+    /* diagonal gold accent line */
+    .hero::after {
+      content:'';
+      position:absolute; top:0; right:0;
+      width:45%; height:100%;
+      background:linear-gradient(135deg, transparent 40%, rgba(201,168,76,0.04) 100%);
+      border-left:1px solid rgba(201,168,76,0.08);
+    }
+    .hero-inner { position:relative; z-index:2; max-width:760px; }
+    .hero-eyebrow {
+      display:inline-flex; align-items:center; gap:0.75rem;
+      font-size:0.7rem; font-weight:700; letter-spacing:0.2em;
+      text-transform:uppercase; color:var(--gold);
+      margin-bottom:2rem;
+    }
+    .hero-eyebrow::before {
+      content:''; width:32px; height:1px; background:var(--gold);
+    }
+    .hero-title {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2.8rem,5.5vw,5rem);
+      font-weight:900; line-height:1.04;
+      color:var(--white); margin-bottom:1.75rem;
+    }
+    .hero-title em { color:var(--gold); font-style:italic; }
+    .hero-sub {
+      font-size:1.05rem; line-height:1.75;
+      color:rgba(255,255,255,0.6);
+      max-width:560px; margin-bottom:3rem;
+    }
+    .hero-actions { display:flex; gap:1rem; flex-wrap:wrap; }
+    .btn-gold {
+      background:var(--gold); color:var(--navy);
+      padding:0.9rem 2.2rem; border:none;
+      font-family:'DM Sans',sans-serif;
+      font-weight:700; font-size:0.95rem;
+      letter-spacing:0.04em; cursor:pointer;
+      transition:all 0.2s;
+    }
+    .btn-gold:hover { background:var(--gold-lt); transform:translateY(-2px); }
+    .btn-ghost {
+      background:transparent; color:rgba(255,255,255,0.75);
+      padding:0.9rem 2.2rem;
+      border:1px solid rgba(255,255,255,0.2);
+      font-family:'DM Sans',sans-serif;
+      font-weight:400; font-size:0.95rem;
+      cursor:pointer; letter-spacing:0.04em;
+      transition:all 0.2s;
+    }
+    .btn-ghost:hover { border-color:var(--gold); color:var(--gold); }
+
+    /* floating stat cards */
+    .hero-stats {
+      position:absolute; right:5%; bottom:10%;
+      display:flex; flex-direction:column; gap:0.75rem;
+      z-index:3;
+    }
+    .stat-card {
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(201,168,76,0.2);
+      padding:1rem 1.5rem;
+      backdrop-filter:blur(8px);
+      min-width:200px;
+    }
+    .stat-card-num {
+      font-family:'Playfair Display',serif;
+      font-size:2rem; font-weight:900;
+      color:var(--gold); line-height:1;
+    }
+    .stat-card-label {
+      font-size:0.68rem; color:rgba(255,255,255,0.5);
+      letter-spacing:0.08em; text-transform:uppercase;
+      margin-top:0.25rem;
+    }
+
+    /* ── SECTIONS ── */
+    .section { padding:7rem 6rem; }
+    .section-eyebrow {
+      font-size:0.68rem; font-weight:800;
+      letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:1rem;
+      display:flex; align-items:center; gap:0.75rem;
+    }
+    .section-eyebrow::before { content:''; width:24px; height:1px; background:var(--gold); }
+    .section-title {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(2rem,3.5vw,3rem);
+      font-weight:700; line-height:1.15;
+      margin-bottom:1.25rem;
+    }
+    .section-body {
+      font-size:1rem; line-height:1.75;
+      color:var(--text-mid); max-width:580px;
+    }
+
+    /* ── VALUE PROPS ── */
+    .value-section {
+      background:var(--navy);
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:0; overflow:hidden;
+    }
+    .value-left {
+      padding:7rem 5rem;
+      border-right:1px solid rgba(201,168,76,0.1);
+    }
+    .value-left .section-title { color:var(--white); }
+    .value-left .section-body { color:rgba(255,255,255,0.55); }
+    .value-props { margin-top:3rem; display:flex; flex-direction:column; gap:0; }
+    .value-prop {
+      padding:1.5rem 0;
+      border-bottom:1px solid rgba(255,255,255,0.06);
+      display:flex; gap:1.25rem; align-items:flex-start;
+    }
+    .value-prop:last-child { border-bottom:none; }
+    .vp-icon {
+      font-size:1.3rem; flex-shrink:0;
+      margin-top:2px;
+    }
+    .vp-title {
+      font-size:0.95rem; font-weight:700;
+      color:var(--white); margin-bottom:0.35rem;
+    }
+    .vp-text { font-size:0.82rem; color:rgba(255,255,255,0.5); line-height:1.6; }
+
+    /* dashboard mockup */
+    .value-right {
+      padding:5rem 4rem;
+      display:flex; align-items:center; justify-content:center;
+      background:rgba(0,0,0,0.2);
+    }
+    .dash-mock {
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(201,168,76,0.2);
+      width:100%; max-width:380px;
+      padding:1.75rem;
+    }
+    .dash-header {
+      display:flex; justify-content:space-between;
+      align-items:center; margin-bottom:1.5rem;
+      padding-bottom:1rem;
+      border-bottom:1px solid rgba(255,255,255,0.07);
+    }
+    .dash-title {
+      font-size:0.65rem; letter-spacing:0.12em;
+      text-transform:uppercase; color:var(--gold);
+    }
+    .dash-badge {
+      font-size:0.6rem; font-weight:700;
+      background:rgba(22,163,74,0.15); color:#4ade80;
+      padding:0.2rem 0.6rem; letter-spacing:0.08em;
+    }
+    .dash-property {
+      font-family:'Playfair Display',serif;
+      font-size:1.1rem; color:var(--white);
+      font-weight:700; margin-bottom:1.5rem;
+    }
+    .dash-row {
+      display:flex; justify-content:space-between;
+      align-items:center; padding:0.75rem 0;
+      border-bottom:1px solid rgba(255,255,255,0.05);
+      font-size:0.8rem;
+    }
+    .dash-row:last-child { border-bottom:none; }
+    .dash-key { color:rgba(255,255,255,0.5); }
+    .dash-val { color:var(--white); font-weight:600; }
+    .dash-val.gold { color:var(--gold); }
+    .dash-val.green { color:#4ade80; }
+    .dash-metrics {
+      display:grid; grid-template-columns:repeat(3,1fr);
+      gap:1px; background:rgba(255,255,255,0.04);
+      margin-top:1.5rem; border-top:1px solid rgba(255,255,255,0.07);
+      padding-top:1.5rem;
+    }
+    .dash-metric { text-align:center; }
+    .dash-metric-num {
+      font-family:'Playfair Display',serif;
+      font-size:1.5rem; font-weight:900; color:var(--gold);
+    }
+    .dash-metric-label {
+      font-size:0.58rem; color:rgba(255,255,255,0.4);
+      text-transform:uppercase; letter-spacing:0.1em;
+      margin-top:0.2rem;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how-section { background:var(--cream2); }
+    .how-grid {
+      display:grid; grid-template-columns:repeat(4,1fr);
+      gap:0; margin-top:4rem;
+      border:1px solid rgba(10,22,40,0.1);
+    }
+    .how-step {
+      padding:2.5rem 2rem;
+      border-right:1px solid rgba(10,22,40,0.08);
+      position:relative;
+    }
+    .how-step:last-child { border-right:none; }
+    .how-num {
+      font-family:'Playfair Display',serif;
+      font-size:3.5rem; font-weight:900;
+      color:rgba(10,22,40,0.06); line-height:1;
+      margin-bottom:1rem;
+    }
+    .how-title {
+      font-size:0.9rem; font-weight:700;
+      margin-bottom:0.65rem; color:var(--navy);
+    }
+    .how-text { font-size:0.8rem; color:var(--text-mid); line-height:1.65; }
+    .how-step::before {
+      content:'';
+      position:absolute; top:0; left:0; right:0;
+      height:3px; background:var(--gold);
+      transform:scaleX(0); transform-origin:left;
+      transition:transform 0.4s ease;
+    }
+    .how-step:hover::before { transform:scaleX(1); }
+
+    /* ── REVENUE CALC ── */
+    .calc-section {
+      background:var(--navy);
+      padding:7rem 6rem;
+    }
+    .calc-inner {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:5rem; align-items:center;
+    }
+    .calc-left .section-title { color:var(--white); }
+    .calc-left .section-body { color:rgba(255,255,255,0.55); }
+    .calc-box {
+      background:rgba(255,255,255,0.04);
+      border:1px solid rgba(201,168,76,0.2);
+      padding:2.5rem;
+    }
+    .calc-label {
+      font-size:0.65rem; font-weight:800;
+      letter-spacing:0.15em; text-transform:uppercase;
+      color:var(--gold); margin-bottom:1.5rem;
+    }
+    .calc-slider-group { margin-bottom:1.5rem; }
+    .calc-slider-label {
+      display:flex; justify-content:space-between;
+      font-size:0.75rem; color:rgba(255,255,255,0.6);
+      margin-bottom:0.5rem;
+    }
+    .calc-slider-val {
+      color:var(--white); font-weight:700;
+    }
+    input[type=range] {
+      width:100%; -webkit-appearance:none;
+      height:2px; background:rgba(255,255,255,0.1);
+      outline:none; cursor:pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      width:14px; height:14px;
+      border-radius:50%; background:var(--gold);
+      border:2px solid var(--navy);
+    }
+    .calc-result {
+      border-top:1px solid rgba(201,168,76,0.15);
+      padding-top:1.5rem; margin-top:0.5rem;
+    }
+    .calc-result-label {
+      font-size:0.65rem; letter-spacing:0.12em;
+      text-transform:uppercase; color:rgba(255,255,255,0.4);
+      margin-bottom:0.5rem;
+    }
+    .calc-result-num {
+      font-family:'Playfair Display',serif;
+      font-size:2.5rem; font-weight:900; color:var(--gold);
+      line-height:1;
+    }
+    .calc-result-sub {
+      font-size:0.75rem; color:rgba(255,255,255,0.4);
+      margin-top:0.4rem;
+    }
+    .calc-breakdown {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:1px; background:rgba(255,255,255,0.04);
+      margin-top:1.5rem;
+    }
+    .calc-break-item {
+      padding:1rem; background:rgba(10,22,40,0.4);
+      text-align:center;
+    }
+    .calc-break-num {
+      font-family:'Playfair Display',serif;
+      font-size:1.3rem; font-weight:700; color:var(--white);
+    }
+    .calc-break-label {
+      font-size:0.6rem; color:rgba(255,255,255,0.35);
+      text-transform:uppercase; letter-spacing:0.08em;
+      margin-top:0.2rem;
+    }
+
+    /* ── CASE STUDY ── */
+    .case-section { background:var(--cream); }
+    .case-inner {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:5rem; align-items:center;
+    }
+    .case-tag {
+      display:inline-block;
+      font-size:0.6rem; font-weight:800;
+      letter-spacing:0.15em; text-transform:uppercase;
+      background:var(--navy); color:var(--gold);
+      padding:0.3rem 0.8rem; margin-bottom:1.25rem;
+    }
+    .case-quote {
+      font-family:'Playfair Display',serif;
+      font-size:1.4rem; font-style:italic;
+      line-height:1.5; color:var(--navy);
+      margin:1.5rem 0; padding-left:1.5rem;
+      border-left:3px solid var(--gold);
+    }
+    .case-attribution {
+      font-size:0.78rem; color:var(--text-mid);
+    }
+    .case-attribution strong { color:var(--navy); }
+    .case-numbers {
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:1px; background:rgba(10,22,40,0.08);
+    }
+    .case-num-item {
+      background:var(--white);
+      padding:2rem 1.75rem;
+    }
+    .case-num-val {
+      font-family:'Playfair Display',serif;
+      font-size:2.2rem; font-weight:900; color:var(--navy);
+      line-height:1;
+    }
+    .case-num-val span { color:var(--gold); }
+    .case-num-label {
+      font-size:0.7rem; color:var(--text-mid);
+      text-transform:uppercase; letter-spacing:0.08em;
+      margin-top:0.5rem; line-height:1.5;
+    }
+
+    /* ── COMPARISON ── */
+    .compare-section { background:var(--cream2); }
+    .compare-table {
+      margin-top:3.5rem;
+      border:1px solid rgba(10,22,40,0.1);
+      overflow:hidden;
+    }
+    .compare-head {
+      display:grid; grid-template-columns:2fr 1fr 1fr;
+      background:var(--navy);
+    }
+    .compare-head-cell {
+      padding:1rem 1.5rem;
+      font-size:0.7rem; font-weight:800;
+      letter-spacing:0.1em; text-transform:uppercase;
+      color:rgba(255,255,255,0.5);
+      border-right:1px solid rgba(255,255,255,0.06);
+    }
+    .compare-head-cell.highlight { color:var(--gold); }
+    .compare-row {
+      display:grid; grid-template-columns:2fr 1fr 1fr;
+      border-bottom:1px solid rgba(10,22,40,0.07);
+    }
+    .compare-row:last-child { border-bottom:none; }
+    .compare-row:nth-child(even) { background:rgba(10,22,40,0.02); }
+    .compare-cell {
+      padding:1rem 1.5rem;
+      font-size:0.83rem;
+      border-right:1px solid rgba(10,22,40,0.06);
+      display:flex; align-items:center;
+    }
+    .compare-cell:last-child { border-right:none; }
+    .compare-cell.feature { font-weight:600; color:var(--navy); }
+    .compare-cell.yes { color:var(--green); font-weight:700; }
+    .compare-cell.no { color:#dc2626; opacity:0.7; }
+    .compare-cell.highlight-col {
+      background:rgba(201,168,76,0.04);
+    }
+
+    /* ── DEMO FORM ── */
+    .demo-section {
+      background:var(--slate);
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:0; overflow:hidden;
+    }
+    .demo-left {
+      padding:7rem 5rem;
+      border-right:1px solid rgba(255,255,255,0.06);
+    }
+    .demo-left .section-title { color:var(--white); }
+    .demo-left .section-body { color:rgba(255,255,255,0.55); margin-bottom:3rem; }
+    .demo-checklist { list-style:none; display:flex; flex-direction:column; gap:1rem; }
+    .demo-checklist li {
+      display:flex; gap:0.85rem; align-items:flex-start;
+      font-size:0.88rem; color:rgba(255,255,255,0.7); line-height:1.5;
+    }
+    .demo-checklist li::before {
+      content:'✓'; color:var(--gold);
+      font-weight:800; flex-shrink:0; margin-top:1px;
+    }
+    .demo-right { padding:7rem 5rem; background:rgba(0,0,0,0.15); }
+    .demo-form-title {
+      font-family:'Playfair Display',serif;
+      font-size:1.4rem; color:var(--white);
+      font-weight:700; margin-bottom:2rem;
+    }
+    .form-group { margin-bottom:1rem; }
+    .form-group label {
+      display:block; font-size:0.68rem;
+      font-weight:700; letter-spacing:0.1em;
+      text-transform:uppercase; color:rgba(255,255,255,0.45);
+      margin-bottom:0.4rem;
+    }
+    .form-group input,
+    .form-group select {
+      width:100%; padding:0.8rem 1rem;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.1);
+      color:var(--white); font-family:'DM Sans',sans-serif;
+      font-size:0.9rem; outline:none;
+      transition:border-color 0.2s;
+    }
+    .form-group input::placeholder { color:rgba(255,255,255,0.25); }
+    .form-group input:focus,
+    .form-group select:focus { border-color:var(--gold); }
+    .form-group select { color:rgba(255,255,255,0.8); }
+    .form-group select option { background:var(--slate); }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .form-submit {
+      width:100%; padding:0.95rem;
+      background:var(--gold); color:var(--navy);
+      border:none; font-family:'DM Sans',sans-serif;
+      font-weight:700; font-size:0.95rem;
+      letter-spacing:0.05em; cursor:pointer;
+      transition:all 0.2s; margin-top:0.5rem;
+    }
+    .form-submit:hover { background:var(--gold-lt); transform:translateY(-1px); }
+    .form-note {
+      font-size:0.7rem; color:rgba(255,255,255,0.3);
+      margin-top:0.75rem; text-align:center; line-height:1.5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background:var(--navy);
+      padding:2.5rem 6rem;
+      display:flex; align-items:center;
+      justify-content:space-between;
+      border-top:1px solid rgba(201,168,76,0.1);
+    }
+    .footer-links { display:flex; gap:2rem; }
+    .footer-links a {
+      color:rgba(255,255,255,0.35); font-size:0.78rem;
+      text-decoration:none; transition:color 0.2s;
+    }
+    .footer-links a:hover { color:var(--gold); }
+    .footer-copy { color:rgba(255,255,255,0.2); font-size:0.72rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:900px) {
+      nav { padding:1rem 1.5rem; }
+      .nav-right a { display:none; }
+      .nav-hamburger { display:flex; }
+      .hero { padding:7rem 2rem 4rem; }
+      .hero-stats { display:none; }
+      .section { padding:4rem 2rem; }
+      .value-section { grid-template-columns:1fr; }
+      .value-left { padding:4rem 2rem; border-right:none; border-bottom:1px solid rgba(255,255,255,0.06); }
+      .value-right { padding:3rem 2rem; }
+      .how-grid { grid-template-columns:1fr 1fr; }
+      .how-step { border-bottom:1px solid rgba(10,22,40,0.08); }
+      .calc-section { padding:4rem 2rem; }
+      .calc-inner { grid-template-columns:1fr; gap:3rem; }
+      .case-inner { grid-template-columns:1fr; gap:3rem; }
+      .compare-section { padding:4rem 2rem; }
+      .demo-section { grid-template-columns:1fr; }
+      .demo-left { padding:4rem 2rem; border-right:none; border-bottom:1px solid rgba(255,255,255,0.06); }
+      .demo-right { padding:3rem 2rem; }
+      .form-row { grid-template-columns:1fr; }
+      footer { flex-direction:column; gap:1.5rem; text-align:center; padding:2rem; }
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .hero-eyebrow { animation:fadeUp 0.5s ease both; }
+    .hero-title   { animation:fadeUp 0.5s 0.1s ease both; }
+    .hero-sub     { animation:fadeUp 0.5s 0.2s ease both; }
+    .hero-actions { animation:fadeUp 0.5s 0.3s ease both; }
+    .hero-stats   { animation:fadeUp 0.5s 0.4s ease both; }
+
+    /* ── GATE WALL ── */
+    #gate-wall {
+      background: var(--navy);
+      padding: 6rem;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 80vh;
+    }
+    .gate-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 5rem; align-items: center;
+      max-width: 960px; width: 100%;
+    }
+    .gate-left h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 700; color: var(--white);
+      line-height: 1.15; margin-bottom: 1.25rem;
+    }
+    .gate-left h2 em { color: var(--gold); font-style: italic; }
+    .gate-left p {
+      font-size: 0.95rem; color: rgba(255,255,255,0.55);
+      line-height: 1.75; margin-bottom: 2rem;
+    }
+    .gate-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+    .gate-bullets li {
+      display: flex; gap: 0.75rem; align-items: flex-start;
+      font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.5;
+    }
+    .gate-bullets li::before { content: '✓'; color: var(--gold); font-weight: 800; flex-shrink: 0; }
+    .gate-box {
+      background: var(--white);
+      padding: 2.5rem;
+    }
+    .gate-box-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--navy); margin-bottom: 0.4rem;
+    }
+    .gate-box-sub {
+      font-size: 0.78rem; color: var(--text-mid);
+      margin-bottom: 1.75rem; line-height: 1.5;
+    }
+    .gate-form-group { margin-bottom: 0.85rem; }
+    .gate-form-group label {
+      display: block; font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-mid); margin-bottom: 0.35rem;
+    }
+    .gate-form-group input,
+    .gate-form-group select {
+      width: 100%; padding: 0.75rem 0.9rem;
+      border: 1px solid rgba(10,22,40,0.14);
+      font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+      color: var(--navy); background: var(--cream);
+      outline: none; transition: border-color 0.2s;
+    }
+    .gate-form-group input:focus,
+    .gate-form-group select:focus { border-color: var(--gold); background: var(--white); }
+    .gate-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.85rem; }
+    .gate-submit {
+      width: 100%; padding: 0.95rem;
+      background: var(--gold); color: var(--navy);
+      border: none; font-family: 'DM Sans', sans-serif;
+      font-weight: 700; font-size: 0.95rem;
+      letter-spacing: 0.04em; cursor: pointer;
+      transition: all 0.2s; margin-top: 0.5rem;
+    }
+    .gate-submit:hover { background: var(--gold-lt); transform: translateY(-1px); }
+    .gate-note {
+      font-size: 0.68rem; color: var(--text-mid);
+      text-align: center; margin-top: 0.75rem; line-height: 1.5;
+    }
+
+    /* ── GATED CONTENT ── */
+    #gated-content { display: none; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    #gated-content.unlocked {
+      display: block;
+      animation: fadeIn 0.5s ease both;
+    }
+
+    @media (max-width: 900px) {
+      #gate-wall { padding: 4rem 2rem; min-height: auto; }
+      .gate-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .gate-form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;">
+    <a href="index.html" class="nav-logo">Suite<span>Wash</span></a>
+    <span class="nav-pill">For Properties</span>
+  </div>
+  <div class="nav-right">
+    <a href="index.html" class="nav-link">For Residents</a>
+    <a href="#how" class="nav-link">How It Works</a>
+    <button class="nav-cta" onclick="document.getElementById('gate-wall').scrollIntoView({behavior:'smooth'})">Request Demo</button>
+    <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="nav-mobile-menu" id="mobile-menu">
+  <a href="index.html">For Residents</a>
+  <a href="#how" onclick="closeMenu()">How It Works</a>
+  <a href="#gate-wall" onclick="closeMenu()">Revenue Calculator</a>
+  <button class="mob-cta" onclick="closeMenu();document.getElementById('gate-wall').scrollIntoView({behavior:'smooth'});">Request Demo →</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Property Partner Program</p>
+    <h1 class="hero-title">
+      Turn laundry into<br>
+      a <em>revenue line.</em>
+    </h1>
+    <p class="hero-sub">
+      SuiteWash installs at zero cost to your property. We operate everything — you earn a monthly revenue share, boost your amenity package, and increase resident retention.
+    </p>
+    <div class="hero-actions">
+      <button class="btn-gold" onclick="document.getElementById('gate-wall').scrollIntoView({behavior:'smooth'})">Request a Property Demo</button>
+      <button class="btn-ghost" onclick="document.getElementById('gate-wall').scrollIntoView({behavior:'smooth'})">Calculate My Revenue →</button>
+    </div>
+  </div>
+
+  <!-- floating stats -->
+  <div class="hero-stats">
+    <div class="stat-card">
+      <div class="stat-card-num">$0</div>
+      <div class="stat-card-label">Setup cost to property</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num">77%</div>
+      <div class="stat-card-label">Avg. resident adoption</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-card-num">$1,840</div>
+      <div class="stat-card-label">Avg. monthly revenue share</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GATE WALL ── -->
+<div id="gate-wall">
+  <div class="gate-inner">
+    <div class="gate-left">
+      <h2>Unlock the full<br><em>partner program.</em></h2>
+      <p>Revenue projections, case studies, dashboard walkthrough, and our full comparison against coin-op are available exclusively to registered property partners.</p>
+      <ul class="gate-bullets">
+        <li>Your custom revenue projection based on unit count</li>
+        <li>Live dashboard demo — real data, real numbers</li>
+        <li>Full case study: 77% adoption, $22K/yr at Maple Lofts</li>
+        <li>Side-by-side comparison vs traditional coin-op</li>
+        <li>One-page partner agreement, no commitment required</li>
+      </ul>
+    </div>
+    <div class="gate-box">
+      <div class="gate-box-title">Create Your Partner Profile</div>
+      <div class="gate-box-sub">Takes 60 seconds. Instant access to all program details.</div>
+      <div class="gate-form-row">
+        <div class="gate-form-group">
+          <label>First Name</label>
+          <input type="text" placeholder="Jane" id="g-first" />
+        </div>
+        <div class="gate-form-group">
+          <label>Last Name</label>
+          <input type="text" placeholder="Smith" id="g-last" />
+        </div>
+      </div>
+      <div class="gate-form-group">
+        <label>Property Name</label>
+        <input type="text" placeholder="Maple Lofts" id="g-property" />
+      </div>
+      <div class="gate-form-group">
+        <label>City</label>
+        <input type="text" placeholder="Detroit, MI" id="g-city" />
+      </div>
+      <div class="gate-form-row">
+        <div class="gate-form-group">
+          <label>Unit Count</label>
+          <select id="g-units">
+            <option value="">Select...</option>
+            <option>Under 50 units</option>
+            <option>50–100 units</option>
+            <option>100–200 units</option>
+            <option>200+ units</option>
+          </select>
+        </div>
+        <div class="gate-form-group">
+          <label>Your Role</label>
+          <select id="g-role">
+            <option value="">Select...</option>
+            <option>Property Manager</option>
+            <option>Owner / Investor</option>
+            <option>Asset Manager</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="gate-form-group">
+        <label>Email Address</label>
+        <input type="email" placeholder="jane@propertyco.com" id="g-email" />
+      </div>
+      <div class="gate-form-group">
+        <label>Phone</label>
+        <input type="tel" placeholder="(313) 555-0100" id="g-phone" />
+      </div>
+      <button class="gate-submit" onclick="unlockContent()">View Partner Program &#x2192;</button>
+      <p class="gate-note">&#x1F512; Your information is kept private and never sold or shared.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── GATED CONTENT ── -->
+<div id="gated-content">
+
+<!-- VALUE PROPS -->
+<section class="value-section">
+  <div class="value-left">
+    <p class="section-eyebrow">Why SuiteWash</p>
+    <h2 class="section-title" style="color:var(--white)">We run it.<br>You earn from it.</h2>
+    <p class="section-body">No equipment purchases, no staff, no liability. SuiteWash is a fully managed amenity that pays you — not the other way around.</p>
+    <div class="value-props">
+      <div class="value-prop">
+        <span class="vp-icon">💰</span>
+        <div>
+          <div class="vp-title">Monthly Revenue Share</div>
+          <div class="vp-text">Earn a percentage of every active subscription in your building. Average property earns $1,200–$2,400/month depending on unit count and adoption.</div>
+        </div>
+      </div>
+      <div class="value-prop">
+        <span class="vp-icon">🏗️</span>
+        <div>
+          <div class="vp-title">Zero Capital Required</div>
+          <div class="vp-text">No machines to buy, no build-out costs, no maintenance contracts. SuiteWash handles all equipment, operations, and resident support.</div>
+        </div>
+      </div>
+      <div class="value-prop">
+        <span class="vp-icon">📱</span>
+        <div>
+          <div class="vp-title">Real-Time Dashboard</div>
+          <div class="vp-text">Live view of adoption rates, active subscriptions, revenue share, and resident satisfaction — all in one property dashboard.</div>
+        </div>
+      </div>
+      <div class="value-prop">
+        <span class="vp-icon">🏠</span>
+        <div>
+          <div class="vp-title">Higher Resident Retention</div>
+          <div class="vp-text">Properties with managed laundry amenities see measurably lower turnover. Residents stay longer when daily chores are solved.</div>
+        </div>
+      </div>
+      <div class="value-prop">
+        <span class="vp-icon">⚡</span>
+        <div>
+          <div class="vp-title">48-Hour Launch</div>
+          <div class="vp-text">From signed agreement to first resident pickup in as little as 48 hours. No construction, no downtime, no disruption to your building.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="value-right">
+    <div class="dash-mock">
+      <div class="dash-header">
+        <span class="dash-title">Property Dashboard</span>
+        <span class="dash-badge">● Live</span>
+      </div>
+      <div class="dash-property">Maple Lofts — Detroit</div>
+      <div class="dash-row">
+        <span class="dash-key">Total Units</span>
+        <span class="dash-val">62</span>
+      </div>
+      <div class="dash-row">
+        <span class="dash-key">Active Subscribers</span>
+        <span class="dash-val">48 units</span>
+      </div>
+      <div class="dash-row">
+        <span class="dash-key">Adoption Rate</span>
+        <span class="dash-val green">77.4%</span>
+      </div>
+      <div class="dash-row">
+        <span class="dash-key">This Month's Revenue Share</span>
+        <span class="dash-val gold">$1,840</span>
+      </div>
+      <div class="dash-row">
+        <span class="dash-key">Annual Projected</span>
+        <span class="dash-val gold">$22,080</span>
+      </div>
+      <div class="dash-row">
+        <span class="dash-key">Resident Satisfaction</span>
+        <span class="dash-val">4.9 ★</span>
+      </div>
+      <div class="dash-row">
+        <span class="dash-key">Next Pickup Cycle</span>
+        <span class="dash-val">Tue & Fri</span>
+      </div>
+      <div class="dash-metrics">
+        <div class="dash-metric">
+          <div class="dash-metric-num">$0</div>
+          <div class="dash-metric-label">Setup</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric-num">48h</div>
+          <div class="dash-metric-label">Launch</div>
+        </div>
+        <div class="dash-metric">
+          <div class="dash-metric-num">4.9★</div>
+          <div class="dash-metric-label">Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section" id="how">
+  <p class="section-eyebrow">The Process</p>
+  <h2 class="section-title">Up and running in 48 hours.</h2>
+  <div class="how-grid">
+    <div class="how-step">
+      <div class="how-num">01</div>
+      <div class="how-title">Sign the Partner Agreement</div>
+      <p class="how-text">A simple one-page agreement. No exclusivity required. We handle all resident-facing terms and service agreements separately.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">02</div>
+      <div class="how-title">We Onboard Your Residents</div>
+      <p class="how-text">SuiteWash handles all resident outreach, signups, and app onboarding. You provide building access — we do the rest.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">03</div>
+      <div class="how-title">Pickups Begin</div>
+      <p class="how-text">Our team runs scheduled pickup and delivery routes through your building. Residents love it. Zero burden on property staff.</p>
+    </div>
+    <div class="how-step">
+      <div class="how-num">04</div>
+      <div class="how-title">You Get Paid Monthly</div>
+      <p class="how-text">Revenue share is calculated and deposited automatically each month. Watch your building's dashboard in real time.</p>
+    </div>
+  </div>
+</section>
+
+<!-- REVENUE CALCULATOR -->
+<section class="calc-section" id="calc">
+  <div class="calc-inner">
+    <div class="calc-left">
+      <p class="section-eyebrow" style="color:var(--gold)">Revenue Calculator</p>
+      <h2 class="section-title" style="color:var(--white)">See what your building could earn.</h2>
+      <p class="section-body">Adjust the sliders to match your property. These are conservative estimates based on current partner averages.</p>
+    </div>
+    <div class="calc-box">
+      <p class="calc-label">Estimate Your Monthly Revenue</p>
+
+      <div class="calc-slider-group">
+        <div class="calc-slider-label">
+          <span>Total Units</span>
+          <span class="calc-slider-val" id="units-val">100 units</span>
+        </div>
+        <input type="range" min="20" max="500" step="10" value="100" id="units-slider" oninput="calcRevenue()" />
+      </div>
+
+      <div class="calc-slider-group">
+        <div class="calc-slider-label">
+          <span>Expected Adoption Rate</span>
+          <span class="calc-slider-val" id="adoption-val">50%</span>
+        </div>
+        <input type="range" min="10" max="80" step="5" value="50" id="adoption-slider" oninput="calcRevenue()" />
+      </div>
+
+      <div class="calc-slider-group">
+        <div class="calc-slider-label">
+          <span>Avg. Plan Mix (blended price)</span>
+          <span class="calc-slider-val" id="price-val">$89.99</span>
+        </div>
+        <input type="range" min="5999" max="11999" step="100" value="8999" id="price-slider" oninput="calcRevenue()" />
+      </div>
+
+      <div class="calc-result">
+        <div class="calc-result-label">Your Estimated Monthly Revenue</div>
+        <div class="calc-result-num" id="result-num">$900</div>
+        <div class="calc-result-sub" id="result-sub">Based on 50 subscribers at $89.99 avg</div>
+      </div>
+
+      <div class="calc-breakdown">
+        <div class="calc-break-item">
+          <div class="calc-break-num" id="break-annual">$10,800</div>
+          <div class="calc-break-label">Annual Revenue</div>
+        </div>
+        <div class="calc-break-item">
+          <div class="calc-break-num" id="break-subs">50</div>
+          <div class="calc-break-label">Subscribers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDY -->
+<section class="section case-section">
+  <div class="case-inner">
+    <div>
+      <span class="case-tag">Case Study</span>
+      <p class="section-eyebrow">Maple Lofts · Detroit, MI</p>
+      <h2 class="section-title">62 units. 77% adoption. $22K/yr.</h2>
+      <p class="section-body">Maple Lofts added SuiteWash as a managed amenity in January 2026. Within 90 days, adoption reached 77% of occupied units with zero property staff involvement.</p>
+      <blockquote class="case-quote">
+        "We didn't have to do anything. SuiteWash handled setup, resident onboarding, and operations. The revenue share just shows up every month."
+      </blockquote>
+      <p class="case-attribution"><strong>Property Manager</strong> · Maple Lofts Detroit</p>
+    </div>
+    <div class="case-numbers">
+      <div class="case-num-item">
+        <div class="case-num-val">48<span>hrs</span></div>
+        <div class="case-num-label">Time from agreement to first pickup</div>
+      </div>
+      <div class="case-num-item">
+        <div class="case-num-val">77<span>%</span></div>
+        <div class="case-num-label">Resident adoption within 90 days</div>
+      </div>
+      <div class="case-num-item">
+        <div class="case-num-val">$<span>0</span></div>
+        <div class="case-num-label">Capital investment from property</div>
+      </div>
+      <div class="case-num-item">
+        <div class="case-num-val">$22<span>K</span></div>
+        <div class="case-num-label">Annual revenue share projected</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="section compare-section">
+  <p class="section-eyebrow">Why Not Coin-Op?</p>
+  <h2 class="section-title">SuiteWash vs. traditional laundry.</h2>
+  <div class="compare-table">
+    <div class="compare-head">
+      <div class="compare-head-cell">Feature</div>
+      <div class="compare-head-cell highlight">SuiteWash</div>
+      <div class="compare-head-cell">Coin-Op / Vendor</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Setup cost to property</div>
+      <div class="compare-cell yes highlight-col">$0</div>
+      <div class="compare-cell no">$5,000–$30,000+</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Monthly revenue to property</div>
+      <div class="compare-cell yes highlight-col">✓ Revenue share</div>
+      <div class="compare-cell no">Minimal / none</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Property staff involvement</div>
+      <div class="compare-cell yes highlight-col">Zero</div>
+      <div class="compare-cell no">Maintenance calls, complaints</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Resident satisfaction</div>
+      <div class="compare-cell yes highlight-col">4.9★ avg</div>
+      <div class="compare-cell no">Frequently negative</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Door-to-door service</div>
+      <div class="compare-cell yes highlight-col">✓ Included</div>
+      <div class="compare-cell no">✗ Not available</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Real-time property dashboard</div>
+      <div class="compare-cell yes highlight-col">✓ Included</div>
+      <div class="compare-cell no">✗ Not available</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Machine maintenance burden</div>
+      <div class="compare-cell yes highlight-col">None — no machines</div>
+      <div class="compare-cell no">Ongoing, costly</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell feature">Launch time</div>
+      <div class="compare-cell yes highlight-col">48 hours</div>
+      <div class="compare-cell no">Weeks to months</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /gated-content -->
+
+<!-- FOOTER -->
+<footer>
+  <a href="index.html" class="nav-logo" style="font-size:1.2rem;">Suite<span>Wash</span></a>
+  <div class="footer-links">
+    <a href="index.html">For Residents</a>
+    <a href="index.html#plans">Pricing</a>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+  </div>
+  <p class="footer-copy">© 2026 SuiteWash. Detroit, MI.</p>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobile-menu').classList.remove('open');
+  }
+  function submitPartnerForm() {
+    document.getElementById('partner-form-body').style.display    = 'none';
+    document.getElementById('partner-form-success').style.display = 'block';
+  }
+  function unlockContent() {
+    const first    = document.getElementById('g-first').value || 'Partner';
+    const property = document.getElementById('g-property').value || 'Your Property';
+    const units    = document.getElementById('g-units').value || '';
+
+    // Hide gate, show content
+    document.getElementById('gate-wall').style.display    = 'none';
+    const gc = document.getElementById('gated-content');
+    gc.classList.add('unlocked');
+
+    // Personalise dashboard with their details
+    const propEl = document.getElementById('dash-property-name');
+    if (propEl) propEl.textContent = property;
+
+    // Pre-fill confirm form
+    const cfProp = document.getElementById('cf-property');
+    if (cfProp) cfProp.value = property;
+
+    // Scroll to content
+    gc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Run calculator
+    calcRevenue();
+  }
+
+  function calcRevenue() {
+    const unitsEl = document.getElementById('units-slider');
+    if (!unitsEl) return;
+    const units    = +unitsEl.value;
+    const adoption = +document.getElementById('adoption-slider').value;
+    const price    = +document.getElementById('price-slider').value / 100;
+
+    const subs   = Math.round(units * adoption / 100);
+    const gross  = subs * price;
+    const share  = gross * 0.20;
+    const annual = share * 12;
+
+    document.getElementById('units-val').textContent    = units + ' units';
+    document.getElementById('adoption-val').textContent = adoption + '%';
+    document.getElementById('price-val').textContent    = '$' + price.toFixed(2);
+    document.getElementById('result-num').textContent   = '$' + Math.round(share).toLocaleString();
+    document.getElementById('result-sub').textContent   = 'Based on ' + subs + ' subscribers at $' + price.toFixed(2) + ' avg';
+    document.getElementById('break-annual').textContent = '$' + Math.round(annual).toLocaleString();
+    document.getElementById('break-subs').textContent   = subs;
+
+    // Update dashboard revenue fields
+    const revEl = document.getElementById('dash-revenue');
+    const annEl = document.getElementById('dash-annual');
+    if (revEl) revEl.textContent = '$' + Math.round(share).toLocaleString() + '/mo';
+    if (annEl) annEl.textContent = '$' + Math.round(annual).toLocaleString() + '/yr';
+  }
+</script>
+
+</body>
+</html>
