@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SuiteWash — Managed Laundry for Detroit Apartments</title>
+<meta name="description" content="SuiteWash delivers managed door-to-door laundry for residents, and a revenue-generating amenity for property owners. Detroit Metro."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ink:#080f1e;--ink2:#111827;--ink3:#1a2535;
+  --cream:#f7f3ec;--cream2:#ede8df;
+  --gold:#c9a84c;--gold2:#e8d5a3;--gold3:#9c7a2e;
+  --white:#fff;--mid:#6b7280;--lt:#9ca3af;
+  --green:#22c55e;
+  --sh:0 2px 16px rgba(8,15,30,.12);--sh2:0 8px 40px rgba(8,15,30,.22);
+  --glow:0 0 40px rgba(201,168,76,.18);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;scroll-padding-top:68px;}
+body{font-family:'Inter',sans-serif;color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+button{font-family:'Inter',sans-serif;cursor:pointer;}
+a{color:inherit;text-decoration:none;}
+
+/* ─── NAV ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:400;
+  height:68px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;
+  background:rgba(8,15,30,.9);backdrop-filter:blur(24px) saturate(180%);
+  border-bottom:1px solid rgba(201,168,76,.1);
+}
+.n-logo{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--gold);letter-spacing:.02em;cursor:pointer;user-select:none;flex-shrink:0;}
+.n-logo b{color:var(--white);}
+.n-mid{display:flex;list-style:none;gap:0;}
+.n-mid a{color:rgba(255,255,255,.5);font-size:.71rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:.5rem .9rem;transition:color .2s;position:relative;}
+.n-mid a::after{content:'';position:absolute;bottom:0;left:.9rem;right:.9rem;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .2s;}
+.n-mid a:hover{color:var(--white);}
+.n-mid a:hover::after{transform:scaleX(1);}
+.n-r{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
+.n-ghost{background:transparent;color:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.14);padding:.42rem .95rem;font-size:.71rem;font-weight:500;letter-spacing:.04em;border-radius:3px;transition:all .2s;white-space:nowrap;}
+.n-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.n-cta{background:var(--gold);color:var(--ink);border:none;padding:.44rem 1.1rem;font-size:.71rem;font-weight:700;letter-spacing:.04em;border-radius:3px;transition:all .2s;white-space:nowrap;}
+.n-cta:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:var(--glow);}
+.n-ham{display:none;flex-direction:column;gap:4px;background:none;border:none;padding:6px;flex-shrink:0;}
+.n-ham span{display:block;width:20px;height:1.5px;background:rgba(255,255,255,.7);border-radius:2px;transition:all .3s;}
+.mob-nav{display:none;position:fixed;top:68px;left:0;right:0;z-index:399;background:rgba(8,15,30,.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(201,168,76,.1);padding:1rem 1.5rem;flex-direction:column;}
+.mob-nav.open{display:flex;}
+.mob-nav a,.mob-nav button{display:block;width:100%;padding:.78rem 0;border-bottom:1px solid rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-size:.82rem;font-weight:500;background:none;border-left:none;border-right:none;border-top:none;text-align:left;transition:color .2s;font-family:'Inter',sans-serif;}
+.mob-nav a:hover,.mob-nav button:hover{color:var(--gold);}
+.mob-gold{margin-top:.65rem!important;padding:.82rem!important;background:var(--gold)!important;color:var(--ink)!important;border:none!important;font-weight:700!important;text-align:center!important;border-radius:3px!important;}
+
+/* ─── SPLIT HOMEPAGE ─── */
+#home{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;}
+
+/* Resident side */
+.split-res{
+  background:var(--cream);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:8rem 5% 5rem;
+  position:relative;overflow:hidden;
+  transition:background .35s;cursor:pointer;
+  border-right:1px solid rgba(8,15,30,.08);
+}
+.split-res:hover{background:var(--cream2);}
+.split-res::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 500px 500px at 80% 20%,rgba(201,168,76,.06) 0%,transparent 70%);
+}
+.sr-chip{display:inline-flex;align-items:center;gap:.5rem;background:rgba(8,15,30,.07);border:1px solid rgba(8,15,30,.1);color:var(--mid);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .72rem;border-radius:20px;margin-bottom:1.35rem;width:fit-content;}
+.sr-num{width:5px;height:5px;border-radius:50%;background:var(--gold);}
+.sr-headline{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:900;line-height:1.04;color:var(--ink);margin-bottom:1.1rem;}
+.sr-headline em{color:var(--gold);font-style:italic;}
+.sr-body{font-size:.92rem;line-height:1.8;color:var(--mid);max-width:420px;margin-bottom:2rem;font-weight:300;}
+.sr-props{display:flex;flex-direction:column;gap:.65rem;margin-bottom:2.25rem;}
+.sr-prop{display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--ink);font-weight:500;}
+.sr-prop-ico{width:32px;height:32px;border-radius:8px;background:rgba(8,15,30,.06);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.sr-cta{display:inline-flex;align-items:center;gap:.55rem;background:var(--ink);color:var(--white);padding:.88rem 2rem;font-size:.84rem;font-weight:700;letter-spacing:.04em;border-radius:3px;border:none;transition:all .25s;}
+.sr-cta:hover{background:var(--ink2);transform:translateY(-2px);box-shadow:var(--sh2);}
+.sr-cta-arrow{transition:transform .2s;}
+.sr-cta:hover .sr-cta-arrow{transform:translateX(3px);}
+.sr-link{display:block;margin-top:.85rem;font-size:.75rem;color:var(--mid);text-align:center;}
+.sr-link a{color:var(--gold);text-decoration:underline;cursor:pointer;}
+.split-res-label{position:absolute;top:2rem;left:5%;font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lt);display:flex;align-items:center;gap:.5rem;}
+.split-res-label::before{content:'';width:16px;height:1px;background:var(--lt);}
+
+/* Partner side */
+.split-part{
+  background:var(--ink);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:8rem 5% 5rem;
+  position:relative;overflow:hidden;
+  transition:background .35s;cursor:pointer;
+}
+.split-part:hover{background:var(--ink2);}
+.split-part::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 600px 500px at 20% 70%,rgba(201,168,76,.07) 0%,transparent 65%);
+}
+.sp-chip{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.24);color:var(--gold);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .72rem;border-radius:20px;margin-bottom:1.35rem;width:fit-content;}
+.sp-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.45;transform:scale(1.5);}}
+.sp-headline{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:900;line-height:1.04;color:var(--white);margin-bottom:1.1rem;}
+.sp-headline em{color:var(--gold);font-style:italic;}
+.sp-body{font-size:.92rem;line-height:1.8;color:rgba(255,255,255,.45);max-width:420px;margin-bottom:2rem;font-weight:300;}
+.sp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.12);border-radius:6px;overflow:hidden;margin-bottom:2.25rem;}
+.sp-stat{background:rgba(255,255,255,.03);padding:1rem .75rem;text-align:center;}
+.sp-stat-n{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--gold);line-height:1;}
+.sp-stat-l{font-size:.54rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;}
+.sp-cta{display:inline-flex;align-items:center;gap:.55rem;background:var(--gold);color:var(--ink);padding:.88rem 2rem;font-size:.84rem;font-weight:700;letter-spacing:.04em;border-radius:3px;border:none;transition:all .25s;}
+.sp-cta:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:var(--glow);}
+.sp-cta-arrow{transition:transform .2s;}
+.sp-cta:hover .sp-cta-arrow{transform:translateX(3px);}
+.sp-link{display:block;margin-top:.85rem;font-size:.75rem;color:rgba(255,255,255,.35);text-align:center;}
+.sp-link a{color:rgba(255,255,255,.6);text-decoration:underline;}
+.split-part-label{position:absolute;top:2rem;left:5%;font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);display:flex;align-items:center;gap:.5rem;}
+.split-part-label::before{content:'';width:16px;height:1px;background:rgba(255,255,255,.2);}
+
+/* Divider line */
+#home::after{
+  content:'';
+  position:absolute;top:0;left:50%;width:1px;height:100%;
+  background:linear-gradient(180deg,transparent 0%,rgba(201,168,76,.3) 25%,rgba(201,168,76,.3) 75%,transparent 100%);
+  pointer-events:none;z-index:1;
+}
+
+/* ─── RESIDENT SECTION ─── */
+#resident{display:none;}
+#portal{display:none;}
+
+/* Resident hero */
+.rh{min-height:100vh;background:var(--ink);display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;}
+.rh::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 700px 500px at 72% 38%,rgba(201,168,76,.08) 0%,transparent 65%);}
+.rh-l{display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 5rem 6%;position:relative;z-index:2;}
+.rh-chip{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22);color:var(--gold);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .72rem;border-radius:20px;margin-bottom:1.4rem;width:fit-content;}
+.rh-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+.rh-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,5vw,4.4rem);font-weight:900;line-height:1.03;color:var(--white);margin-bottom:1.25rem;}
+.rh-title em{color:var(--gold);font-style:italic;}
+.rh-sub{font-size:.95rem;line-height:1.82;color:rgba(255,255,255,.48);max-width:430px;margin-bottom:2.25rem;font-weight:300;}
+.rh-acts{display:flex;gap:.7rem;flex-wrap:wrap;}
+.btn-gold{background:var(--gold);color:var(--ink);border:none;padding:.86rem 1.9rem;font-size:.84rem;font-weight:700;letter-spacing:.04em;border-radius:3px;transition:all .25s;display:flex;align-items:center;gap:.45rem;}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.28);}
+.btn-gold-arrow{transition:transform .2s;}
+.btn-gold:hover .btn-gold-arrow{transform:translateX(3px);}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.14);padding:.86rem 1.75rem;font-size:.84rem;font-weight:500;border-radius:3px;transition:all .25s;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.rh-r{display:flex;align-items:center;justify-content:center;padding:5rem 6% 5rem 2rem;position:relative;z-index:2;}
+.dash-card{background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:1.65rem;width:100%;max-width:340px;backdrop-filter:blur(12px);animation:float 8s ease-in-out infinite;box-shadow:0 24px 56px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.05);}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.dc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.15rem;padding-bottom:.9rem;border-bottom:1px solid rgba(255,255,255,.06);}
+.dc-lbl{font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+.dc-live{display:flex;align-items:center;gap:.35rem;font-size:.58rem;font-weight:600;color:var(--green);}
+.dc-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 7px var(--green);animation:pulse 2s infinite;}
+.dc-prop{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);font-weight:700;margin-bottom:1rem;}
+.dc-row{display:flex;justify-content:space-between;padding:.58rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.74rem;}
+.dc-row:last-of-type{border-bottom:none;}
+.dc-k{color:rgba(255,255,255,.38);font-weight:300;}
+.dc-v{color:var(--white);font-weight:600;}
+.dc-v.gold{color:var(--gold);}
+.dc-v.green{color:var(--green);}
+.dc-ms{display:grid;grid-template-columns:repeat(3,1fr);margin-top:1.15rem;border:1px solid rgba(255,255,255,.06);border-radius:6px;overflow:hidden;}
+.dc-m{padding:.75rem .4rem;text-align:center;border-right:1px solid rgba(255,255,255,.05);}
+.dc-m:last-child{border-right:none;}
+.dc-m-n{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--gold);font-weight:700;line-height:1;}
+.dc-m-l{font-size:.5rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-top:.16rem;}
+
+/* Marquee */
+.mq{background:var(--gold);padding:.7rem 0;overflow:hidden;}
+.mq-track{display:flex;gap:2.5rem;white-space:nowrap;animation:mq 5s linear infinite;}
+@keyframes mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.mq-i{font-size:.64rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);flex-shrink:0;}
+.mq-d{opacity:.28;}
+
+/* How it works */
+.how{background:var(--ink2);padding:6rem 6%;}
+.ey{font-size:.61rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;}
+.ey::before{content:'';width:18px;height:1px;background:var(--gold);flex-shrink:0;}
+.sh{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,3vw,2.7rem);font-weight:700;line-height:1.1;margin-bottom:1.05rem;}
+.sp{font-size:.88rem;line-height:1.82;color:var(--mid);max-width:520px;font-weight:300;}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:3.25rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.04);border-radius:8px;overflow:hidden;}
+.step{padding:2rem 1.4rem;background:var(--ink2);transition:background .22s;position:relative;}
+.step:hover{background:rgba(255,255,255,.025);}
+.step::after{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .32s ease;}
+.step:hover::after{transform:scaleX(1);}
+.step-n{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:rgba(201,168,76,.09);line-height:1;margin-bottom:.8rem;}
+.step-title{font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:.45rem;}
+.step-txt{font-size:.73rem;color:rgba(255,255,255,.38);line-height:1.7;font-weight:300;}
+
+/* Plans */
+.plans{background:var(--cream);padding:6rem 6%;}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;margin-bottom:2.5rem;}
+.btog{display:flex;background:rgba(8,15,30,.08);border-radius:4px;padding:3px;gap:2px;}
+.to{padding:.38rem .88rem;border:none;background:transparent;font-size:.69rem;font-weight:700;color:var(--mid);border-radius:3px;transition:all .2s;}
+.to.on{background:var(--white);color:var(--ink);box-shadow:var(--sh);}
+.save-chip{font-size:.55rem;font-weight:700;background:var(--gold);color:var(--ink);padding:.16rem .52rem;border-radius:20px;margin-left:.38rem;}
+.pg{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid rgba(8,15,30,.08);border-radius:8px;overflow:hidden;}
+.plan{background:var(--white);display:flex;flex-direction:column;position:relative;transition:all .22s;cursor:pointer;border-right:1px solid rgba(8,15,30,.07);}
+.plan:last-child{border-right:none;}
+.plan:hover{transform:translateY(-4px);box-shadow:var(--sh2);z-index:3;}
+.plan.pop{background:var(--ink);}
+.plan-accent{height:2px;}
+.plan-badge{position:absolute;top:-1px;right:1rem;background:var(--gold);color:var(--ink);font-size:.5rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .52rem;border-radius:0 0 4px 4px;}
+.plan-body{padding:1.35rem 1.35rem 1.05rem;flex:1;}
+.plan-tier{font-size:.54rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.32rem;}
+.plan-name{font-family:'Playfair Display',serif;font-size:1.12rem;font-weight:700;margin-bottom:.32rem;}
+.plan.pop .plan-name{color:var(--gold);}
+.plan-desc{font-size:.7rem;color:var(--mid);line-height:1.62;margin-bottom:.95rem;font-weight:300;}
+.plan.pop .plan-desc{color:rgba(255,255,255,.38);}
+.plan-price{font-family:'Playfair Display',serif;font-size:2.25rem;font-weight:900;line-height:1;}
+.plan.pop .plan-price{color:var(--white);}
+.plan-price sup{font-size:.88rem;vertical-align:super;}
+.plan-cts{font-size:.82rem;font-weight:300;opacity:.38;}
+.plan-psub{font-size:.64rem;color:var(--lt);margin-top:.2rem;}
+.plan.pop .plan-psub{color:rgba(255,255,255,.3);}
+.plan-save{display:none;font-size:.62rem;font-weight:600;color:var(--gold);margin-top:.26rem;}
+.plan-div{border:none;border-top:1px solid rgba(8,15,30,.06);margin:0 1.35rem;}
+.plan.pop .plan-div{border-color:rgba(255,255,255,.07);}
+.plan-feats{list-style:none;padding:.95rem 1.35rem;flex:1;}
+.pf{font-size:.71rem;padding:.38rem 0;border-bottom:1px solid rgba(8,15,30,.04);display:flex;align-items:flex-start;gap:.45rem;line-height:1.45;}
+.pf:last-child{border-bottom:none;}
+.plan.pop .pf{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.05);}
+.ck{color:var(--gold);font-weight:700;flex-shrink:0;font-size:.78rem;margin-top:1px;}
+.dm{opacity:.28;}
+.ftag{font-size:.5rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;background:rgba(201,168,76,.1);color:var(--gold);padding:.07rem .28rem;border-radius:2px;margin-left:auto;flex-shrink:0;}
+.plan-foot{padding:0 1.35rem 1.35rem;}
+.plan-btn{width:100%;padding:.74rem;border:1px solid rgba(8,15,30,.18);background:transparent;font-size:.73rem;font-weight:700;letter-spacing:.05em;border-radius:3px;transition:all .2s;}
+.plan-btn:hover{background:var(--ink);color:var(--white);border-color:var(--ink);}
+.plan.pop .plan-btn{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+.plan.pop .plan-btn:hover{background:var(--gold2);}
+
+/* Add-Ons */
+.ao{margin-top:3.75rem;padding-top:3rem;border-top:1px solid rgba(8,15,30,.08);}
+.ao-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.85rem;}
+.ao-filters{display:flex;gap:.38rem;flex-wrap:wrap;}
+.ao-f{padding:.32rem .78rem;border:1px solid rgba(8,15,30,.12);background:transparent;font-size:.64rem;font-weight:600;letter-spacing:.04em;color:var(--mid);border-radius:20px;transition:all .2s;}
+.ao-f.on,.ao-f:hover{background:var(--ink);color:var(--white);border-color:var(--ink);}
+.ao-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:1px;background:rgba(8,15,30,.06);border:1px solid rgba(8,15,30,.06);border-radius:8px;overflow:hidden;}
+.ao-card{background:var(--cream);padding:1.15rem;transition:all .2s;cursor:pointer;}
+.ao-card:hover{background:var(--white);transform:translateY(-2px);box-shadow:var(--sh);}
+.ao-card.hidden{display:none;}
+.ao-ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.48rem;}
+.ao-ico{font-size:1.1rem;}
+.ao-price{font-family:'Playfair Display',serif;font-size:.84rem;font-weight:700;}
+.ao-name{font-size:.74rem;font-weight:700;margin-bottom:.2rem;}
+.ao-desc{font-size:.67rem;color:var(--mid);line-height:1.6;font-weight:300;}
+.ao-tag{display:inline-block;margin-top:.55rem;font-size:.5rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.1rem .36rem;border-radius:3px;}
+.tg-cl{color:#2563eb;background:rgba(37,99,235,.08);}
+.tg-su{color:var(--gold3);background:rgba(201,168,76,.08);}
+.tg-or{color:#ea580c;background:rgba(234,88,12,.08);}
+.tg-co{color:#7c3aed;background:rgba(124,58,237,.08);}
+
+/* Footer */
+footer{background:var(--ink);padding:1.85rem 6%;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(201,168,76,.07);}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.12rem;font-weight:700;color:var(--gold);cursor:pointer;}
+.f-logo b{color:var(--white);}
+.flinks{display:flex;gap:1.4rem;flex-wrap:wrap;justify-content:center;}
+.flinks a{color:rgba(255,255,255,.26);font-size:.68rem;transition:color .2s;}
+.flinks a:hover{color:var(--gold);}
+.fcopy{color:rgba(255,255,255,.14);font-size:.64rem;}
+
+/* Portal */
+#portal{min-height:100vh;background:var(--cream);}
+#auth-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--ink);padding-top:68px;}
+.auth{background:var(--white);width:100%;max-width:440px;padding:2.25rem;box-shadow:var(--sh2);border-radius:8px;}
+.auth-logo{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:var(--ink);}
+.auth-logo em{color:var(--gold);font-style:normal;}
+.auth-sub{font-size:.7rem;color:var(--mid);margin:.25rem 0 1.35rem;}
+.atabs{display:flex;background:rgba(8,15,30,.06);border-radius:4px;padding:3px;gap:2px;margin-bottom:1.5rem;}
+.atab{flex:1;padding:.48rem;border:none;font-size:.7rem;font-weight:700;letter-spacing:.05em;border-radius:3px;transition:all .2s;}
+.atab.on{background:var(--white);color:var(--ink);box-shadow:var(--sh);}
+.atab:not(.on){background:transparent;color:var(--mid);}
+.ag{margin-bottom:.72rem;}
+.ag label{display:block;font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.26rem;}
+.ag input,.ag select{width:100%;padding:.63rem .82rem;border:1px solid rgba(8,15,30,.12);font-family:'Inter',sans-serif;font-size:.82rem;color:var(--ink);background:var(--cream2);outline:none;transition:border-color .2s;border-radius:3px;}
+.ag input:focus,.ag select:focus{border-color:var(--gold);background:var(--white);}
+.a2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+.abtn{width:100%;padding:.82rem;font-size:.82rem;font-weight:700;letter-spacing:.04em;border:none;border-radius:3px;transition:all .2s;margin-top:.65rem;}
+.abtn.dk{background:var(--ink);color:var(--white);}
+.abtn.dk:hover{background:var(--ink2);}
+.abtn.gd{background:var(--gold);color:var(--ink);}
+.abtn.gd:hover{background:var(--gold2);}
+.alink{font-size:.7rem;color:var(--mid);text-align:center;margin-top:.72rem;}
+.alink a{color:var(--gold);cursor:pointer;}
+.prog{display:flex;gap:3px;margin-top:.95rem;}
+.pd{flex:1;height:2px;background:rgba(8,15,30,.1);border-radius:2px;transition:background .3s;}
+.pd.on{background:var(--gold);}
+.popt{display:flex;align-items:flex-start;gap:.65rem;padding:.82rem;border:1px solid rgba(8,15,30,.1);cursor:pointer;transition:all .2s;margin-bottom:.48rem;border-radius:4px;}
+.popt:hover{border-color:var(--gold3);}
+.popt.sel{border:2px solid var(--gold);background:rgba(201,168,76,.04);}
+.popt input[type=radio]{margin-top:3px;accent-color:var(--ink);flex-shrink:0;}
+.popt-name{font-size:.8rem;font-weight:700;}
+.popt-price{font-family:'Playfair Display',serif;font-size:.92rem;font-weight:900;margin-left:auto;white-space:nowrap;}
+.popt-desc{font-size:.64rem;color:var(--mid);margin-top:.16rem;line-height:1.45;font-weight:300;}
+.ord{background:var(--ink);padding:1.05rem;margin-bottom:1.05rem;border-radius:4px;}
+.ord-lbl{font-size:.53rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.55rem;}
+.ord-name{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--white);font-weight:700;}
+.ord-unit{font-size:.68rem;color:rgba(255,255,255,.35);margin-bottom:.78rem;font-weight:300;}
+.ord-row{display:flex;justify-content:space-between;padding:.42rem 0;border-top:1px solid rgba(255,255,255,.07);font-size:.73rem;}
+.ord-k{color:rgba(255,255,255,.52);}
+.ord-v{color:var(--gold);font-weight:700;}
+.sec-note{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.14);border-radius:4px;padding:.65rem;font-size:.68rem;color:var(--mid);line-height:1.6;margin-bottom:.9rem;}
+#dash{display:none;}
+.dh{background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);padding:2rem 5%;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-bottom:1px solid rgba(201,168,76,.07);}
+.dh-greet{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:.28rem;}
+.dh-name{font-family:'Playfair Display',serif;font-size:1.72rem;color:var(--white);font-weight:700;}
+.dh-info{font-size:.72rem;color:rgba(255,255,255,.32);margin-top:.16rem;font-weight:300;}
+.dh-live{display:flex;align-items:center;gap:.38rem;}
+.dl-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);}
+.dl-txt{color:var(--green);font-size:.7rem;font-weight:600;}
+.db{padding:1.75rem 5%;}
+.dgrid{display:grid;grid-template-columns:2fr 1fr;gap:1.2rem;}
+.dc2{background:var(--white);border:1px solid rgba(8,15,30,.07);padding:1.45rem;margin-bottom:1.15rem;border-radius:8px;}
+.dc2-h{font-size:.88rem;font-weight:700;margin-bottom:1.05rem;display:flex;align-items:center;justify-content:space-between;}
+.dc2-tag{font-family:'Inter',sans-serif;font-size:.53rem;letter-spacing:.1em;text-transform:uppercase;background:var(--cream2);color:var(--mid);padding:.17rem .46rem;border-radius:3px;}
+.dc2.dk2{background:var(--ink);}
+.dc2.dk2 .dc2-h{color:var(--gold);}
+.pi2{display:grid;grid-template-columns:1fr 1fr;gap:1.05rem;margin-bottom:1.4rem;}
+.pil label{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.32);display:block;margin-bottom:.18rem;}
+.pil span{font-size:.98rem;font-weight:600;color:var(--white);}
+.brow{display:flex;gap:.52rem;flex-wrap:wrap;}
+.bsm{padding:.44rem .92rem;font-size:.68rem;font-weight:700;letter-spacing:.04em;border:none;border-radius:3px;transition:all .2s;white-space:nowrap;}
+.bg{background:var(--gold);color:var(--ink);}
+.bg:hover{background:var(--gold2);}
+.bgh{background:transparent;color:rgba(255,255,255,.52);border:1px solid rgba(255,255,255,.12);}
+.bgh:hover{border-color:rgba(255,255,255,.3);color:var(--white);}
+.bpl{background:var(--cream2);color:var(--ink);border:1px solid rgba(8,15,30,.09);}
+.bpl:hover{border-color:var(--gold);}
+.day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.48rem;margin-bottom:.88rem;}
+.day{padding:.7rem .28rem;text-align:center;border:1px solid rgba(8,15,30,.09);background:var(--cream);border-radius:4px;transition:all .2s;cursor:pointer;}
+.day:not(.off):hover,.day.sel{border-color:var(--gold);background:rgba(201,168,76,.07);}
+.day.off{opacity:.3;pointer-events:none;}
+.day-n{font-size:.55rem;text-transform:uppercase;letter-spacing:.07em;color:var(--mid);}
+.day-d{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin:.14rem 0;}
+.day-a{font-size:.55rem;color:var(--gold);}
+.hrow{display:flex;align-items:center;justify-content:space-between;padding:.7rem 0;border-bottom:1px solid rgba(8,15,30,.05);}
+.hrow:last-child{border-bottom:none;}
+.hdt{font-size:.68rem;color:var(--mid);font-weight:300;}
+.hdesc{font-size:.76rem;font-weight:500;}
+.hbadge{font-size:.54rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.14rem .46rem;background:rgba(34,197,94,.1);color:#16a34a;border-radius:3px;}
+.ubar{height:4px;background:var(--cream2);border-radius:2px;overflow:hidden;margin-top:.3rem;}
+.ufill{height:100%;background:var(--gold);transition:width .8s ease;}
+.umeta{display:flex;justify-content:space-between;font-size:.63rem;color:var(--mid);margin-top:.26rem;}
+.perk{display:flex;align-items:center;gap:.58rem;padding:.54rem 0;border-bottom:1px solid rgba(8,15,30,.05);font-size:.76rem;}
+.perk:last-child{border-bottom:none;}
+.perk-ico{font-size:.9rem;flex-shrink:0;}
+.perk.used{opacity:.34;text-decoration:line-through;}
+.ao-stat{font-size:.55rem;font-weight:700;letter-spacing:.07em;margin-left:auto;}
+.ao-on{color:#16a34a;}
+.ao-off{color:var(--lt);}
+.ao-shop{display:none;border-top:1px solid rgba(8,15,30,.06);margin-top:.76rem;padding-top:.76rem;}
+.asr{display:flex;align-items:center;justify-content:space-between;padding:.52rem 0;border-bottom:1px solid rgba(8,15,30,.05);font-size:.76rem;}
+.asr:last-child{border-bottom:none;}
+.asb{background:var(--ink);color:var(--white);border:none;font-size:.64rem;font-weight:700;padding:.22rem .62rem;border-radius:3px;transition:all .2s;}
+.asb:hover{background:var(--gold);color:var(--ink);}
+
+/* Mini plan picker on split panel */
+.sr-plans-label{font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:.65rem;margin-top:1.75rem;}
+.sr-plan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem;margin-bottom:1.75rem;}
+.sr-plan-card{border:1px solid rgba(8,15,30,.12);border-radius:5px;padding:.75rem .6rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--white);position:relative;}
+.sr-plan-card:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(201,168,76,.14);}
+.sr-plan-card.active{border:2px solid var(--gold);background:rgba(201,168,76,.05);box-shadow:0 2px 16px rgba(201,168,76,.18);}
+.sr-plan-card.active .spc-name{color:var(--gold3);}
+.sr-plan-check{position:absolute;top:.35rem;right:.45rem;font-size:.62rem;color:var(--gold);font-weight:700;opacity:0;transition:opacity .15s;}
+.sr-plan-card.active .sr-plan-check{opacity:1;}
+.spc-name{font-size:.7rem;font-weight:700;color:var(--ink);margin-bottom:.2rem;transition:color .2s;}
+.spc-price{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;color:var(--ink);line-height:1;}
+.spc-price sup{font-size:.55rem;vertical-align:super;}
+.spc-sub{font-size:.55rem;color:var(--lt);margin-top:.15rem;}
+.spc-feat{font-size:.58rem;color:var(--mid);margin-top:.35rem;line-height:1.45;font-weight:300;}
+.sr-plan-pop{background:var(--ink);}
+.sr-plan-pop .spc-name,.sr-plan-pop .spc-price,.sr-plan-pop .spc-sub,.sr-plan-pop .spc-feat{color:var(--white);}
+.sr-plan-pop .spc-price{color:var(--gold);}
+.sr-plan-pop .spc-sub{color:rgba(255,255,255,.38);}
+.sr-plan-pop .spc-feat{color:rgba(255,255,255,.5);}
+.sr-plan-pop:hover{border-color:var(--gold);}
+.sr-plan-pop.active{border-color:var(--gold);}
+.sr-plan-more{font-size:.68rem;color:var(--mid);text-align:center;margin-bottom:.65rem;}
+.sr-plan-more a{color:var(--gold3);font-weight:600;cursor:pointer;text-decoration:underline;}
+
+/* Scroll reveal */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.reveal-l{opacity:0;transform:translateX(-18px);transition:opacity .55s ease,transform .55s ease;}
+.reveal-l.vis{opacity:1;transform:translateX(0);}
+.reveal-r{opacity:0;transform:translateX(18px);transition:opacity .55s ease,transform .55s ease;}
+.reveal-r.vis{opacity:1;transform:translateX(0);}
+
+/* Responsive */
+@media(max-width:1100px){.pg{grid-template-columns:repeat(2,1fr);}.plan{border-bottom:1px solid rgba(8,15,30,.07);}}
+@media(max-width:900px){
+  nav{padding:0 1.1rem;}
+  .n-mid,.n-ghost,.n-cta{display:none;}
+  .n-ham{display:flex;}
+  #home{grid-template-columns:1fr;grid-template-rows:1fr 1fr;min-height:auto;}
+  #home::after{display:none;}
+  .split-res,.split-part{min-height:100vh;padding:6rem 6% 3.5rem;}
+  .rh{grid-template-columns:1fr;}
+  .rh-l{padding:5.5rem 6% 3rem;}
+  .rh-r{display:none;}
+  .how,.plans{padding:3.5rem 6%;}
+  .steps{grid-template-columns:1fr 1fr;}
+  .pg{grid-template-columns:1fr;}
+  .ph{flex-direction:column;align-items:flex-start;}
+  .ao-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:1rem;padding:1.75rem 6%;text-align:center;}
+  .flinks{justify-content:center;}
+  .dh,.db{padding:1.5rem 6%;}
+  .dgrid{grid-template-columns:1fr;}
+  .day-grid{grid-template-columns:repeat(2,1fr);}
+  .auth{margin:1rem;max-width:100%;border-radius:6px;}
+  .a2{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="n-logo" onclick="goHome()">Suite<b>Wash</b></div>
+  <ul class="n-mid" id="nav-mid">
+    <li><a href="#" onclick="goHome();return false;" id="nav-home" style="display:none">Home</a></li>
+    <li><a href="#how" onclick="navTo('how');return false;" id="nav-how" style="display:none">How It Works</a></li>
+    <li><a href="#plans" onclick="navTo('plans');return false;" id="nav-plans" style="display:none">Plans</a></li>
+    <li><a href="partners.html" id="nav-partners">Property Partners</a></li>
+  </ul>
+  <div class="n-r">
+    <button class="n-ghost" id="nav-signin" onclick="showPortal()" style="display:none">Sign In</button>
+    <button class="n-cta" id="nav-getstarted" onclick="startSignup('com')" style="display:none">Get Started</button>
+    <button class="n-ham" onclick="toggleNav()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-nav" id="mob-nav">
+  <a href="#" onclick="closeNav();goHome();">Home</a>
+  <a href="partners.html">Property Partners</a>
+  <a href="#how" onclick="closeNav();navTo('how');" id="mob-how" style="display:none">How It Works</a>
+  <a href="#plans" onclick="closeNav();navTo('plans');" id="mob-plans" style="display:none">Plans</a>
+  <button onclick="closeNav();showPortal();" id="mob-signin" style="display:none">Sign In</button>
+  <button class="mob-gold" onclick="closeNav();startSignup('com');" id="mob-getstarted" style="display:none">Get Started &rarr;</button>
+</div>
+
+<!-- ═══════ SPLIT HOMEPAGE ═══════ -->
+<div id="home" style="position:relative;">
+
+  <!-- RESIDENT SIDE -->
+  <div class="split-res" onclick="enterResident()">
+    <div class="split-res-label">For Residents</div>
+    <div class="sr-chip"><span class="sr-num"></span>Residents &bull; Detroit Metro</div>
+    <h2 class="sr-headline">Laundry that comes<br>to <em>your door.</em></h2>
+    <p class="sr-body">Fresh, folded clothes delivered back to your door on a flat monthly subscription. No machines. No trips downstairs. No thinking about it.</p>
+    <div class="sr-props">
+      <div class="sr-prop"><div class="sr-prop-ico">&#x1F9BA;</div>Pickup from your door — no trips downstairs</div>
+      <div class="sr-prop"><div class="sr-prop-ico">&#x1F4C5;</div>Flat monthly rate — no per-load charges</div>
+      <div class="sr-prop"><div class="sr-prop-ico">&#x23F1;</div>48-hour wash, fold &amp; delivery turnaround</div>
+    </div>
+
+    <p class="sr-plans-label">Choose a plan to get started</p>
+    <div class="sr-plan-grid" id="sr-plan-grid" onclick="event.stopPropagation()">
+      <div class="sr-plan-card" id="spc-sw" onclick="selectSplitPlan('sw',this)">
+        <span class="sr-plan-check">&#x2713;</span>
+        <div class="spc-name">Self-Wash</div>
+        <div class="spc-price"><sup>$</sup>29<span style="font-size:.7rem;font-weight:400;opacity:.55">.99</span></div>
+        <div class="spc-sub">/mo</div>
+        <div class="spc-feat">App booking · 4 sessions</div>
+      </div>
+      <div class="sr-plan-card" id="spc-ess" onclick="selectSplitPlan('ess',this)">
+        <span class="sr-plan-check">&#x2713;</span>
+        <div class="spc-name">Essential</div>
+        <div class="spc-price"><sup>$</sup>59<span style="font-size:.7rem;font-weight:400;opacity:.55">.99</span></div>
+        <div class="spc-sub">/mo</div>
+        <div class="spc-feat">Wash &amp; fold · 2×/mo</div>
+      </div>
+      <div class="sr-plan-card sr-plan-pop active" id="spc-com" onclick="selectSplitPlan('com',this)">
+        <span class="sr-plan-check">&#x2713;</span>
+        <div class="spc-name">Comfort</div>
+        <div class="spc-price"><sup>$</sup>89<span style="font-size:.7rem;font-weight:400;opacity:.5">.99</span></div>
+        <div class="spc-sub">/mo</div>
+        <div class="spc-feat">Door pickup &amp; delivery</div>
+      </div>
+      <div class="sr-plan-card" id="spc-suite" onclick="selectSplitPlan('suite',this)">
+        <span class="sr-plan-check">&#x2713;</span>
+        <div class="spc-name">Suite</div>
+        <div class="spc-price"><sup>$</sup>119<span style="font-size:.7rem;font-weight:400;opacity:.55">.99</span></div>
+        <div class="spc-sub">/mo</div>
+        <div class="spc-feat">Unlimited · Attendant</div>
+      </div>
+    </div>
+    <p class="sr-plan-more" onclick="event.stopPropagation()">Not sure? <a onclick="enterResident();setTimeout(()=>navTo('plans'),120)">See full plan details &rarr;</a></p>
+
+    <button class="sr-cta" id="sr-cta-btn" onclick="event.stopPropagation();startSignup(selectedSplitPlan)">Start My Subscription <span class="sr-cta-arrow">&rarr;</span></button>
+    <p class="sr-link">Already a member? <a onclick="event.stopPropagation();showPortal()">Sign in &rarr;</a></p>
+  </div>
+
+  <!-- PARTNER SIDE -->
+  <div class="split-part" onclick="window.location.href='partners.html'">
+    <div class="split-part-label">For Property Partners</div>
+    <div class="sp-chip"><span class="sp-dot"></span>Property Partners &bull; Detroit Metro</div>
+    <h2 class="sp-headline">Turn laundry into<br>a <em>revenue line.</em></h2>
+    <p class="sp-body">SuiteWash installs at zero cost. We run all operations &mdash; you earn a monthly revenue share and elevate your amenity package overnight.</p>
+    <div class="sp-stats">
+      <div class="sp-stat"><div class="sp-stat-n">$0</div><div class="sp-stat-l">Setup Cost</div></div>
+      <div class="sp-stat"><div class="sp-stat-n">77%</div><div class="sp-stat-l">Avg Adoption</div></div>
+      <div class="sp-stat"><div class="sp-stat-n">$22K</div><div class="sp-stat-l">Avg Annual</div></div>
+    </div>
+    <button class="sp-cta" onclick="event.stopPropagation();window.location.href='partners.html'">View Partner Program <span class="sp-cta-arrow">&rarr;</span></button>
+    <p class="sp-link"><a onclick="event.stopPropagation()">No commitment &bull; 48-hour launch &bull; Zero setup cost</a></p>
+  </div>
+
+</div>
+
+<!-- ═══════ RESIDENT SECTION ═══════ -->
+<div id="resident">
+
+  <!-- Resident Hero -->
+  <section class="rh">
+    <div class="rh-l">
+      <div class="rh-chip"><span class="rh-chip-dot"></span>Managed Laundry &bull; Detroit Metro</div>
+      <h1 class="rh-title">Laundry that comes<br>to <em>your door.</em></h1>
+      <p class="rh-sub">SuiteWash picks up your laundry, washes, folds, and delivers back to your door — on a flat monthly subscription. No machines. No trips downstairs. No thinking about it.</p>
+      <div class="rh-acts">
+        <button class="btn-gold" onclick="startSignup('com')">Start My Subscription <span class="btn-gold-arrow">&rarr;</span></button>
+        <button class="btn-ghost" onclick="navTo('plans')">View Plans</button>
+      </div>
+    </div>
+    <div class="rh-r">
+      <div class="dash-card">
+        <div class="dc-top"><span class="dc-lbl">Live Dashboard</span><span class="dc-live"><span class="dc-dot"></span>Active</span></div>
+        <div class="dc-prop">Maple Lofts &mdash; Detroit</div>
+        <div class="dc-row"><span class="dc-k">Active Subscribers</span><span class="dc-v">48 / 62 units</span></div>
+        <div class="dc-row"><span class="dc-k">Revenue Share</span><span class="dc-v gold">$1,840 / mo</span></div>
+        <div class="dc-row"><span class="dc-k">Next Pickup</span><span class="dc-v">Tue &amp; Fri</span></div>
+        <div class="dc-row"><span class="dc-k">Resident Rating</span><span class="dc-v green">4.9 &starf;</span></div>
+        <div class="dc-ms">
+          <div class="dc-m"><div class="dc-m-n">77%</div><div class="dc-m-l">Adoption</div></div>
+          <div class="dc-m"><div class="dc-m-n">$0</div><div class="dc-m-l">Setup</div></div>
+          <div class="dc-m"><div class="dc-m-n">48h</div><div class="dc-m-l">Delivery</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="mq">
+    <div class="mq-track">
+      <span class="mq-i">Wash &amp; Fold</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">Door Pickup</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">Door Delivery</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">48-Hour Turnaround</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">No Equipment Needed</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">Detroit Metro</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">Wash &amp; Fold</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">Door Pickup</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">Door Delivery</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">48-Hour Turnaround</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">No Equipment Needed</span><span class="mq-d"> &middot; </span>
+      <span class="mq-i">Detroit Metro</span><span class="mq-d"> &middot; </span>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <section class="how" id="how">
+    <p class="ey reveal">The Process</p>
+    <h2 class="sh reveal" style="color:var(--white)">Simple as leaving a bag at your door.</h2>
+    <div class="steps">
+      <div class="step reveal"><div class="step-n">01</div><div class="step-title">Schedule a Pickup</div><p class="step-txt">Choose your pickup day in the portal. We sync with your building schedule automatically.</p></div>
+      <div class="step reveal"><div class="step-n">02</div><div class="step-title">Leave It at Your Door</div><p class="step-txt">Bag it and set it out by 8 AM. No trips downstairs, no machines, no hassle.</p></div>
+      <div class="step reveal"><div class="step-n">03</div><div class="step-title">We Handle Everything</div><p class="step-txt">Washed, dried, and folded at a nearby facility using your exact preferences.</p></div>
+      <div class="step reveal"><div class="step-n">04</div><div class="step-title">Delivered Back Clean</div><p class="step-txt">Fresh folded laundry back at your door within 48 hours. Every cycle, every month.</p></div>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="plans" id="plans">
+    <div class="ph">
+      <div class="reveal">
+        <p class="ey">Resident Plans</p>
+        <h2 class="sh" style="margin-bottom:.3rem;">One flat rate. All month long.</h2>
+        <p style="font-size:.83rem;color:var(--mid);line-height:1.8;font-weight:300;">Four tiers from self-service to full door-to-door. No per-load surprises.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:.38rem;" class="reveal">
+        <div class="btog"><button class="to on" id="btn-mo" onclick="setBilling('mo')">Monthly</button><button class="to" id="btn-yr" onclick="setBilling('yr')">Annual</button></div>
+        <span class="save-chip">Save 15%</span>
+      </div>
+    </div>
+    <div class="pg">
+      <div class="plan" onclick="startSignup('sw')">
+        <div class="plan-accent" style="background:#6b7280"></div>
+        <div class="plan-body"><p class="plan-tier">DIY &middot; Self-Service</p><p class="plan-name">Self-Wash</p><p class="plan-desc">App-booked machine access during your guaranteed time window.</p><div class="plan-price"><sup>$</sup><span class="pv" data-mo="29" data-yr="24">29</span><span class="plan-cts">.99</span></div><p class="plan-psub">per month &middot; billed <span class="bl">monthly</span></p><div class="plan-save" id="sv-sw">$299/yr — save $60</div></div>
+        <hr class="plan-div"/>
+        <ul class="plan-feats"><li class="pf"><span class="ck">&#x2713;</span>App-based machine booking</li><li class="pf"><span class="ck">&#x2713;</span>Guaranteed peak-hour window</li><li class="pf"><span class="ck">&#x2713;</span>Up to 4 sessions per month</li><li class="pf"><span class="ck">&#x2713;</span>Real-time availability</li><li class="pf dm"><span class="ck" style="color:var(--lt)">&#x2013;</span>Wash &amp; fold service</li><li class="pf dm"><span class="ck" style="color:var(--lt)">&#x2013;</span>Door pickup or delivery</li></ul>
+        <div class="plan-foot"><button class="plan-btn" onclick="event.stopPropagation();startSignup('sw')">Book My Window</button></div>
+      </div>
+      <div class="plan" onclick="startSignup('ess')">
+        <div class="plan-accent" style="background:#374151"></div>
+        <div class="plan-body"><p class="plan-tier">Singles &amp; Light Use</p><p class="plan-name">Essential</p><p class="plan-desc">Wash &amp; fold pickup without door delivery.</p><div class="plan-price"><sup>$</sup><span class="pv" data-mo="59" data-yr="50">59</span><span class="plan-cts">.99</span></div><p class="plan-psub">per month &middot; billed <span class="bl">monthly</span></p><div class="plan-save" id="sv-ess">$599/yr — save $120</div></div>
+        <hr class="plan-div"/>
+        <ul class="plan-feats"><li class="pf"><span class="ck">&#x2713;</span>2 pickups per month</li><li class="pf"><span class="ck">&#x2713;</span>Up to 20 lbs per pickup</li><li class="pf"><span class="ck">&#x2713;</span>Wash &amp; fold standard</li><li class="pf"><span class="ck">&#x2713;</span>48-hour turnaround</li><li class="pf dm"><span class="ck" style="color:var(--lt)">&#x2013;</span>Door delivery</li><li class="pf dm"><span class="ck" style="color:var(--lt)">&#x2013;</span>Priority scheduling</li></ul>
+        <div class="plan-foot"><button class="plan-btn" onclick="event.stopPropagation();startSignup('ess')">Get Started</button></div>
+      </div>
+      <div class="plan pop" onclick="startSignup('com')">
+        <div class="plan-accent" style="background:var(--gold)"></div>
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-body"><p class="plan-tier">Professionals &amp; Couples</p><p class="plan-name">Comfort</p><p class="plan-desc">Full door-to-door &mdash; pickup, wash, fold, and delivery every cycle.</p><div class="plan-price"><sup>$</sup><span class="pv" data-mo="89" data-yr="76">89</span><span class="plan-cts">.99</span></div><p class="plan-psub">per month &middot; billed <span class="bl">monthly</span></p><div class="plan-save" id="sv-com">$911/yr — save $168</div></div>
+        <hr class="plan-div"/>
+        <ul class="plan-feats"><li class="pf"><span class="ck">&#x2713;</span>4 pickups per month</li><li class="pf"><span class="ck">&#x2713;</span>Up to 30 lbs per pickup</li><li class="pf"><span class="ck">&#x2713;</span>Premium wash &amp; fold</li><li class="pf"><span class="ck">&#x2713;</span><strong>Door pickup &amp; delivery</strong></li><li class="pf"><span class="ck">&#x2713;</span>Priority scheduling</li><li class="pf"><span class="ck">&#x2713;</span>48-hour turnaround</li></ul>
+        <div class="plan-foot"><button class="plan-btn" onclick="event.stopPropagation();startSignup('com')">Start Comfort Plan</button></div>
+      </div>
+      <div class="plan" onclick="startSignup('suite')">
+        <div class="plan-accent" style="background:var(--gold)"></div>
+        <div class="plan-body"><p class="plan-tier">Families &amp; Households</p><p class="plan-name">Suite</p><p class="plan-desc">Unlimited pickups, highest weight limit, dedicated attendant.</p><div class="plan-price"><sup>$</sup><span class="pv" data-mo="119" data-yr="101">119</span><span class="plan-cts">.99</span></div><p class="plan-psub">per month &middot; billed <span class="bl">monthly</span></p><div class="plan-save" id="sv-suite">$1,223/yr — save $216</div></div>
+        <hr class="plan-div"/>
+        <ul class="plan-feats"><li class="pf"><span class="ck">&#x2713;</span>Unlimited pickups</li><li class="pf"><span class="ck">&#x2713;</span>Up to 50 lbs per pickup</li><li class="pf"><span class="ck">&#x2713;</span>Premium wash &amp; fold</li><li class="pf"><span class="ck">&#x2713;</span>Door pickup &amp; delivery</li><li class="pf"><span class="ck">&#x2713;</span>Dedicated attendant</li><li class="pf"><span class="ck">&#x2713;</span>Rush/same-day <span class="ftag">Add-on</span></li></ul>
+        <div class="plan-foot"><button class="plan-btn" onclick="event.stopPropagation();startSignup('suite')">Get Suite Plan</button></div>
+      </div>
+    </div>
+    <div class="ao reveal">
+      <div class="ao-head">
+        <div><p class="ey">&Agrave; La Carte</p><h3 style="font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;margin-bottom:.28rem;">Boost your plan.</h3><p style="font-size:.78rem;color:var(--mid);font-weight:300;">Add anytime from your portal. Month-to-month.</p></div>
+        <div class="ao-filters"><button class="ao-f on" onclick="filterAO('all',this)">All</button><button class="ao-f" onclick="filterAO('cl',this)">Cleaning</button><button class="ao-f" onclick="filterAO('su',this)">Monthly</button><button class="ao-f" onclick="filterAO('or',this)">Per Order</button><button class="ao-f" onclick="filterAO('co',this)">Commercial</button></div>
+      </div>
+      <div class="ao-grid">
+        <div class="ao-card" data-cat="cl" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x1F454;</span><span class="ao-price">+$20/order</span></div><div class="ao-name">Dry Cleaning Concierge</div><div class="ao-desc">Pickup &amp; return alongside your regular laundry.</div><span class="ao-tag tg-cl">Cleaning</span></div>
+        <div class="ao-card" data-cat="cl" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x1F455;</span><span class="ao-price">+$8.99/order</span></div><div class="ao-name">Iron &amp; Press</div><div class="ao-desc">Dress shirts and blouses returned crisp and pressed.</div><span class="ao-tag tg-cl">Cleaning</span></div>
+        <div class="ao-card" data-cat="cl" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x1F45F;</span><span class="ao-price">+$12.99/pair</span></div><div class="ao-name">Shoe Cleaning</div><div class="ao-desc">Sneakers and dress shoes deep-cleaned with delivery.</div><span class="ao-tag tg-cl">Cleaning</span></div>
+        <div class="ao-card" data-cat="cl" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x1F6CF;</span><span class="ao-price">+$34.99/order</span></div><div class="ao-name">Linen &amp; Bedding</div><div class="ao-desc">Sheets and duvet covers washed separately.</div><span class="ao-tag tg-cl">Cleaning</span></div>
+        <div class="ao-card" data-cat="su" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x1F6E1;</span><span class="ao-price">+$7.99/mo</span></div><div class="ao-name">Garment Protection</div><div class="ao-desc">Up to $150 reimbursement per incident.</div><span class="ao-tag tg-su">Monthly</span></div>
+        <div class="ao-card" data-cat="su" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x1F9F4;</span><span class="ao-price">+$12.99/mo</span></div><div class="ao-name">Detergent Bundle</div><div class="ao-desc">Monthly premium pods &mdash; hypoallergenic available.</div><span class="ao-tag tg-su">Monthly</span></div>
+        <div class="ao-card" data-cat="su" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x1F338;</span><span class="ao-price">+$9.99/mo</span></div><div class="ao-name">Scent Subscription</div><div class="ao-desc">Premium fragrance sachets in your folded laundry.</div><span class="ao-tag tg-su">Monthly</span></div>
+        <div class="ao-card" data-cat="su" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x2728;</span><span class="ao-price">+$3.99/mo</span></div><div class="ao-name">Stain Treatment</div><div class="ao-desc">Pre-treatment on flagged garments before washing.</div><span class="ao-tag tg-su">Monthly</span></div>
+        <div class="ao-card" data-cat="su" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x1FA9D;</span><span class="ao-price">+$6.99/mo</span></div><div class="ao-name">Hanger Upgrade</div><div class="ao-desc">Dress shirts returned on hangers, lightly pressed.</div><span class="ao-tag tg-su">Monthly</span></div>
+        <div class="ao-card" data-cat="or" onclick="startSignup('suite')"><div class="ao-ch"><span class="ao-ico">&#x26A1;</span><span class="ao-price">+$19.99/order</span></div><div class="ao-name">Rush / Same-Day</div><div class="ao-desc">Returned within 8 hours of pickup on select days.</div><span class="ao-tag tg-or">Per Order</span></div>
+        <div class="ao-card" data-cat="or" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x1F45C;</span><span class="ao-price">+$14.99 once</span></div><div class="ao-name">Mesh Bag Set</div><div class="ao-desc">Set of 4 premium mesh laundry bags.</div><span class="ao-tag tg-or">One-Time</span></div>
+        <div class="ao-card" data-cat="co" style="background:var(--ink);color:var(--white)" onclick="startSignup('com')"><div class="ao-ch"><span class="ao-ico">&#x1F3E2;</span><span class="ao-price" style="color:var(--gold)">$399/mo flat</span></div><div class="ao-name" style="color:var(--white)">Commercial Account</div><div class="ao-desc" style="color:rgba(255,255,255,.42)">Furnished units and short-term rentals.</div><span class="ao-tag tg-co">Commercial</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f-logo" onclick="goHome()">Suite<b>Wash</b></div>
+    <div class="flinks">
+      <a href="#" onclick="goHome();return false;">Home</a>
+      <a href="#plans" onclick="navTo('plans');return false;">Plans</a>
+      <a href="partners.html">Property Partners</a>
+      <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a>
+      <a href="#" onclick="showPortal();return false;">Resident Login</a>
+    </div>
+    <p class="fcopy">&copy; 2026 SuiteWash &middot; Detroit, MI</p>
+  </footer>
+
+</div><!-- /resident -->
+
+<!-- ═══════ PORTAL ═══════ -->
+<div id="portal">
+<div id="auth-wrap">
+  <div class="auth">
+    <div class="auth-logo">Suite<em>Wash</em></div>
+    <p class="auth-sub" id="auth-sub">Resident Portal</p>
+    <div class="atabs"><button class="atab on" id="tab-in" onclick="switchTab('in')">Sign In</button><button class="atab" id="tab-up" onclick="switchTab('up')">Create Account</button></div>
+    <div id="f-in">
+      <div class="ag"><label>Email</label><input type="email" placeholder="you@email.com"/></div>
+      <div class="ag"><label>Password</label><input type="password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"/></div>
+      <button class="abtn dk" onclick="showDash()">Sign In</button>
+      <p class="alink">Demo: <a onclick="showDash()">Skip &amp; explore &rarr;</a></p>
+    </div>
+    <div id="f-s1" style="display:none">
+      <p style="font-size:.67rem;color:var(--mid);margin-bottom:.88rem;font-weight:300;">Step 1 of 3 &mdash; Your details</p>
+      <div class="a2"><div class="ag"><label>First Name</label><input type="text" placeholder="Alex" id="su-fn"/></div><div class="ag"><label>Last Name</label><input type="text" placeholder="Johnson" id="su-ln"/></div></div>
+      <div class="ag"><label>Email</label><input type="email" placeholder="alex@email.com"/></div>
+      <div class="ag"><label>Password</label><input type="password" placeholder="Min. 8 characters"/></div>
+      <div class="ag"><label>Phone</label><input type="tel" placeholder="(313) 555-0100"/></div>
+      <button class="abtn dk" onclick="gS(2)">Continue &rarr;</button>
+      <div class="prog"><div class="pd on"></div><div class="pd"></div><div class="pd"></div></div>
+    </div>
+    <div id="f-s2" style="display:none">
+      <p style="font-size:.67rem;color:var(--mid);margin-bottom:.88rem;font-weight:300;">Step 2 of 3 &mdash; Choose your plan</p>
+      <div class="popt" id="po-sw" onclick="pickP('sw')"><input type="radio" name="pl" value="sw"/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Self-Wash</span><span class="popt-price">$29.99/mo</span></div><p class="popt-desc">App-booked machine access &middot; 4 sessions/mo</p></div></div>
+      <div class="popt" id="po-ess" onclick="pickP('ess')"><input type="radio" name="pl" value="ess"/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Essential</span><span class="popt-price">$59.99/mo</span></div><p class="popt-desc">Wash &amp; fold pickup &middot; 2&times;/mo &middot; Up to 20 lbs</p></div></div>
+      <div class="popt sel" id="po-com" onclick="pickP('com')"><input type="radio" name="pl" value="com" checked/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Comfort <span style="font-size:.5rem;background:var(--gold);color:var(--ink);padding:.07rem .32rem;border-radius:2px;font-weight:800;">POPULAR</span></span><span class="popt-price">$89.99/mo</span></div><p class="popt-desc">Door pickup &amp; delivery &middot; 4&times;/mo &middot; Up to 30 lbs</p></div></div>
+      <div class="popt" id="po-suite" onclick="pickP('suite')"><input type="radio" name="pl" value="suite"/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Suite</span><span class="popt-price">$119.99/mo</span></div><p class="popt-desc">Unlimited pickups &middot; Dedicated attendant</p></div></div>
+      <div style="display:flex;gap:.52rem;margin-top:.82rem;"><button onclick="gS(1)" style="flex:1;padding:.74rem;background:transparent;border:1px solid rgba(8,15,30,.12);font-family:'Inter',sans-serif;font-weight:600;font-size:.76rem;color:var(--mid);border-radius:3px;">&larr; Back</button><button class="abtn dk" style="flex:2;margin-top:0;" onclick="gS(3)">Continue &rarr;</button></div>
+      <div class="prog"><div class="pd on"></div><div class="pd on"></div><div class="pd"></div></div>
+    </div>
+    <div id="f-s3" style="display:none">
+      <p style="font-size:.67rem;color:var(--mid);margin-bottom:.88rem;font-weight:300;">Step 3 of 3 &mdash; Your unit</p>
+      <div class="a2"><div class="ag"><label>Building</label><input type="text" placeholder="Maple Lofts" id="su-bldg"/></div><div class="ag"><label>Unit #</label><input type="text" placeholder="4B" id="su-unit"/></div></div>
+      <div class="ag"><label>City</label><input type="text" placeholder="Detroit" id="su-city"/></div>
+      <div class="ord"><div class="ord-lbl">Order Summary</div><div class="ord-name" id="os-n"></div><div class="ord-unit" id="os-u"></div><div class="ord-row"><span class="ord-k" id="os-plan"></span><span class="ord-v" id="os-price"></span></div></div>
+      <div class="ag"><label>Wash Preference</label><select><option>Warm wash, low heat dry</option><option>Cold wash, low heat dry</option><option>Cold wash, air dry</option></select></div>
+      <div class="ag"><label>Scent</label><select><option>Lavender</option><option>Fresh Linen</option><option>Unscented</option><option>Ocean Breeze</option></select></div>
+      <div class="ag"><label>Special Instructions</label><input type="text" placeholder="e.g. Hang dress shirts, separate darks"/></div>
+      <div class="sec-note">&#x1F512; Payment processed securely via Stripe. First pickup within 48 hours.</div>
+      <div style="display:flex;gap:.52rem;"><button onclick="gS(2)" style="flex:1;padding:.74rem;background:transparent;border:1px solid rgba(8,15,30,.12);font-family:'Inter',sans-serif;font-weight:600;font-size:.76rem;color:var(--mid);border-radius:3px;">&larr; Back</button><button class="abtn gd" style="flex:2;margin-top:0;" onclick="completeSignup()">Start Subscription &rarr;</button></div>
+      <div class="prog"><div class="pd on"></div><div class="pd on"></div><div class="pd on"></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="dash">
+  <div class="dh"><div><p class="dh-greet">Welcome back</p><h2 class="dh-name">Alex Johnson</h2><p class="dh-info">Unit 4B &middot; Maple Lofts Detroit &middot; Member since Jan 2026</p></div><div class="dh-live"><div class="dl-dot"></div><span class="dl-txt">Subscription Active</span></div></div>
+  <div class="db">
+    <div class="dgrid">
+      <div>
+        <div class="dc2 dk2">
+          <div class="dc2-h">Comfort Plan <span class="dc2-tag" style="background:rgba(201,168,76,.15);color:var(--gold)">Active</span></div>
+          <div class="pi2"><div class="pil"><label>Monthly Rate</label><span>$89.99</span></div><div class="pil"><label>Pickups Used</label><span>2 of 4</span></div><div class="pil"><label>Next Billing</label><span>Jul 1</span></div><div class="pil"><label>Next Pickup</label><span>Jun 10</span></div></div>
+          <div class="brow"><button class="bsm bg" onclick="alert('Upgrade to Suite — $119.99/mo')">Upgrade to Suite</button><button class="bsm bgh">Manage Plan</button></div>
+        </div>
+        <div class="dc2">
+          <div class="dc2-h">Schedule a Pickup <span class="dc2-tag">2 Remaining</span></div>
+          <div class="day-grid">
+            <div class="day" onclick="selDay(this)"><div class="day-n">Mon</div><div class="day-d">9</div><div class="day-a">Available</div></div>
+            <div class="day sel" onclick="selDay(this)"><div class="day-n">Tue</div><div class="day-d">10</div><div class="day-a">Selected &#x2713;</div></div>
+            <div class="day" onclick="selDay(this)"><div class="day-n">Thu</div><div class="day-d">12</div><div class="day-a">Available</div></div>
+            <div class="day" onclick="selDay(this)"><div class="day-n">Fri</div><div class="day-d">13</div><div class="day-a">Available</div></div>
+            <div class="day off"><div class="day-n">Sat</div><div class="day-d">14</div><div class="day-a">Full</div></div>
+            <div class="day" onclick="selDay(this)"><div class="day-n">Mon</div><div class="day-d">16</div><div class="day-a">Available</div></div>
+          </div>
+          <button class="bsm bg" style="width:100%;padding:.65rem;" onclick="alert('Pickup confirmed for Tuesday, June 10.\nLeave your bag outside by 8:00 AM.')">Confirm Pickup</button>
+        </div>
+        <div class="dc2">
+          <div class="dc2-h">Pickup History</div>
+          <div class="hrow"><div><div class="hdt">May 27</div><div class="hdesc">Wash &amp; Fold &middot; 24 lbs</div></div><span class="hbadge">Delivered</span></div>
+          <div class="hrow"><div><div class="hdt">May 13</div><div class="hdesc">Wash &amp; Fold &middot; 18 lbs</div></div><span class="hbadge">Delivered</span></div>
+          <div class="hrow"><div><div class="hdt">Apr 29</div><div class="hdesc">Wash &amp; Fold &middot; 31 lbs</div></div><span class="hbadge">Delivered</span></div>
+          <div class="hrow"><div><div class="hdt">Apr 15</div><div class="hdesc">Wash &amp; Fold &middot; 22 lbs</div></div><span class="hbadge">Delivered</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="dc2"><div class="dc2-h" style="font-size:.84rem;">This Month</div><p style="font-size:.68rem;color:var(--mid);margin-bottom:.52rem;font-weight:300;">Pickups used</p><div class="ubar"><div class="ufill" style="width:50%"></div></div><div class="umeta"><span>2 of 4</span><span>50%</span></div><p style="font-size:.68rem;color:var(--mid);margin:.82rem 0 .52rem;font-weight:300;">Pounds processed</p><div class="ubar"><div class="ufill" style="width:35%"></div></div><div class="umeta"><span>42 of 120 lbs</span><span>35%</span></div></div>
+        <div class="dc2"><div class="dc2-h" style="font-size:.84rem;">Plan Perks <span class="dc2-tag">Comfort</span></div><div class="perk"><span class="perk-ico">&#x1F9FA;</span>4 monthly pickups (2 left)</div><div class="perk"><span class="perk-ico">&#x1F6AA;</span>Door pickup &amp; delivery</div><div class="perk"><span class="perk-ico">&#x26A1;</span>Priority scheduling</div><div class="perk"><span class="perk-ico">&#x1F338;</span>Scent: Lavender</div></div>
+        <div class="dc2">
+          <div class="dc2-h" style="font-size:.84rem;">Add-Ons <button class="bsm bg" style="font-size:.62rem;padding:.2rem .6rem;" onclick="toggleAOShop()">+ More</button></div>
+          <div class="perk"><span class="perk-ico">&#x1F6E1;</span><div style="flex:1"><div>Garment Protection</div><div style="font-size:.62rem;color:var(--mid)">+$7.99/mo</div></div><span class="ao-stat ao-on">Active</span></div>
+          <div class="perk"><span class="perk-ico">&#x1F9F4;</span><div style="flex:1"><div>Detergent Bundle</div><div style="font-size:.62rem;color:var(--mid)">+$12.99/mo</div></div><span class="ao-stat ao-on">Active</span></div>
+          <div class="perk used"><span class="perk-ico">&#x26A1;</span><div style="flex:1"><div>Rush Delivery</div><div style="font-size:.62rem;color:var(--mid)">+$19.99/order</div></div><span class="ao-stat ao-off">Used</span></div>
+          <div class="ao-shop" id="ao-shop">
+            <div class="asr"><span>&#x1F338; Scent Subscription</span><button class="asb" onclick="alert('Added! +$9.99/mo')">+$9.99/mo</button></div>
+            <div class="asr"><span>&#x2728; Stain Treatment</span><button class="asb" onclick="alert('Added! +$3.99/mo')">+$3.99/mo</button></div>
+            <div class="asr"><span>&#x1FA9D; Hanger Upgrade</span><button class="asb" onclick="alert('Added! +$6.99/mo')">+$6.99/mo</button></div>
+            <div class="asr"><span>&#x1F454; Dry Cleaning</span><button class="asb" onclick="alert('Enabled! +$20/order')">+$20/order</button></div>
+          </div>
+        </div>
+        <div class="dc2"><div class="dc2-h" style="font-size:.84rem;">Account</div><div style="display:flex;flex-direction:column;gap:.42rem;"><button class="bsm bpl" style="width:100%;text-align:left;" onclick="alert('Preferences saved!')">Edit Wash Preferences</button><button class="bsm bpl" style="width:100%;text-align:left;" onclick="alert('Opening billing portal...')">Manage Billing</button><button class="bsm bpl" style="width:100%;text-align:left;color:var(--mid);" onclick="backToHome()">Sign Out</button></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div><!-- /portal -->
+
+<script>
+// ── NAV ──
+function toggleNav(){document.getElementById('mob-nav').classList.toggle('open');}
+function closeNav(){document.getElementById('mob-nav').classList.remove('open');}
+
+// ── SPLIT PLAN PICKER ──
+var selectedSplitPlan = 'com';
+function selectSplitPlan(plan, el) {
+  selectedSplitPlan = plan;
+  document.querySelectorAll('.sr-plan-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  const labels = {sw:'Self-Wash',ess:'Essential',com:'Comfort',suite:'Suite'};
+  document.getElementById('sr-cta-btn').innerHTML = 'Start ' + labels[plan] + ' Plan <span class="sr-cta-arrow">&rarr;</span>';
+}
+
+// ── SCROLL REVEAL ──
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:.1});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>obs.observe(el));
+
+// ── ROUTING ──
+function goHome(){
+  document.getElementById('home').style.display='grid';
+  document.getElementById('resident').style.display='none';
+  document.getElementById('portal').style.display='none';
+  // Reset nav
+  ['nav-home','nav-how','nav-plans','nav-signin','nav-getstarted'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('nav-partners').style.display='';
+  ['mob-how','mob-plans','mob-signin','mob-getstarted'].forEach(id=>document.getElementById(id).style.display='none');
+  window.scrollTo(0,0);
+}
+function enterResident(){
+  document.getElementById('home').style.display='none';
+  document.getElementById('resident').style.display='block';
+  document.getElementById('portal').style.display='none';
+  // Show resident nav items
+  ['nav-home','nav-how','nav-plans'].forEach(id=>document.getElementById(id).style.display='');
+  document.getElementById('nav-signin').style.display='';
+  document.getElementById('nav-getstarted').style.display='';
+  ['mob-how','mob-plans','mob-signin','mob-getstarted'].forEach(id=>document.getElementById(id).style.display='');
+  window.scrollTo(0,0);
+}
+function showPortal(){
+  document.getElementById('home').style.display='none';
+  document.getElementById('resident').style.display='none';
+  document.getElementById('portal').style.display='block';
+  document.getElementById('auth-wrap').style.display='flex';
+  document.getElementById('dash').style.display='none';
+  switchTab('in');window.scrollTo(0,0);
+}
+function startSignup(plan){
+  document.getElementById('home').style.display='none';
+  document.getElementById('resident').style.display='none';
+  document.getElementById('portal').style.display='block';
+  document.getElementById('auth-wrap').style.display='flex';
+  document.getElementById('dash').style.display='none';
+  switchTab('up');setTimeout(()=>{gS(1);pickP(plan||'com');},60);window.scrollTo(0,0);
+}
+function showDash(){
+  document.getElementById('auth-wrap').style.display='none';
+  document.getElementById('dash').style.display='block';window.scrollTo(0,0);
+}
+function backToHome(){
+  goHome();
+}
+function navTo(id){
+  const e=document.getElementById(id);if(e)e.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── AUTH ──
+function switchTab(t){
+  const li=t==='in';
+  document.getElementById('tab-in').classList.toggle('on',li);
+  document.getElementById('tab-up').classList.toggle('on',!li);
+  document.getElementById('f-in').style.display=li?'block':'none';
+  document.getElementById('f-s1').style.display=li?'none':'block';
+  ['f-s2','f-s3'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('auth-sub').textContent=li?'Sign in to your account':'Create your SuiteWash account';
+}
+function gS(n){
+  [1,2,3].forEach(i=>document.getElementById('f-s'+i).style.display=i===n?'block':'none');
+  if(n===3)buildOrd();
+}
+function buildOrd(){
+  const lbl={sw:'Self-Wash',ess:'Essential',com:'Comfort',suite:'Suite'};
+  const prc={sw:'$29.99/mo',ess:'$59.99/mo',com:'$89.99/mo',suite:'$119.99/mo'};
+  const sel=document.querySelector('input[name="pl"]:checked')?.value||'com';
+  const fn=document.getElementById('su-fn')?.value||'Resident';
+  const ln=document.getElementById('su-ln')?.value||'';
+  const bldg=document.getElementById('su-bldg')?.value||'Your Building';
+  const unit=document.getElementById('su-unit')?.value||'';
+  document.getElementById('os-n').textContent=`${fn} ${ln}`.trim();
+  document.getElementById('os-u').textContent=`Unit ${unit} · ${bldg}`;
+  document.getElementById('os-plan').textContent=`${lbl[sel]} Plan`;
+  document.getElementById('os-price').textContent=prc[sel];
+}
+function pickP(p){
+  ['sw','ess','com','suite'].forEach(id=>{
+    const el=document.getElementById('po-'+id);if(!el)return;
+    el.classList.toggle('sel',id===p);
+    const r=el.querySelector('input[type=radio]');if(r)r.checked=id===p;
+  });
+}
+function completeSignup(){
+  const fn=document.getElementById('su-fn')?.value||'there';
+  showDash();
+  setTimeout(()=>alert(`Welcome to SuiteWash, ${fn}! 🎉\n\nYour subscription is confirmed. We'll reach out within 24 hours to schedule your first pickup.`),300);
+}
+
+// ── BILLING ──
+function setBilling(t){
+  const yr=t==='yr';
+  document.getElementById('btn-mo').classList.toggle('on',!yr);
+  document.getElementById('btn-yr').classList.toggle('on',yr);
+  document.querySelectorAll('.pv').forEach(e=>e.textContent=yr?e.dataset.yr:e.dataset.mo);
+  document.querySelectorAll('.bl').forEach(e=>e.textContent=yr?'annually':'monthly');
+  ['sw','ess','com','suite'].forEach(id=>{const e=document.getElementById('sv-'+id);if(e)e.style.display=yr?'block':'none';});
+}
+
+// ── ADD-ONS ──
+function filterAO(cat,btn){
+  document.querySelectorAll('.ao-f').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.ao-card').forEach(c=>c.classList.toggle('hidden',cat!=='all'&&c.dataset.cat!==cat));
+}
+
+// ── DASHBOARD ──
+function selDay(el){
+  document.querySelectorAll('.day:not(.off)').forEach(b=>{b.classList.remove('sel');b.querySelector('.day-a').textContent='Available';});
+  el.classList.add('sel');el.querySelector('.day-a').textContent='Selected ✓';
+}
+function toggleAOShop(){
+  const s=document.getElementById('ao-shop');s.style.display=s.style.display==='block'?'none':'block';
+}
+</script>
+</body>
+</html>
