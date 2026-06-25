@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SuiteWash for Properties &mdash; Turn Laundry Into a Revenue Line</title>
+<meta name="description" content="SuiteWash is a managed laundry amenity for multifamily properties. Zero setup, monthly revenue share, 48-hour launch. Detroit Metro."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--ink:#080f1e;--ink2:#111827;--ink3:#1a2535;--cream:#f7f3ec;--cream2:#ede8df;--gold:#c9a84c;--gold2:#e8d5a3;--gold3:#9c7a2e;--white:#fff;--mid:#6b7280;--lt:#9ca3af;--green:#22c55e;--sh:0 2px 16px rgba(8,15,30,.12);--sh2:0 8px 40px rgba(8,15,30,.22);--glow:0 0 40px rgba(201,168,76,.18);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;scroll-padding-top:68px;}
+body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+button{font-family:'Inter',sans-serif;cursor:pointer;}a{color:inherit;text-decoration:none;}
+nav{position:fixed;top:0;left:0;right:0;z-index:400;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:rgba(8,15,30,.9);backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid rgba(201,168,76,.1);}
+.n-logo{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--gold);letter-spacing:.02em;cursor:pointer;user-select:none;}
+.n-logo b{color:var(--white);}
+.n-mid{display:flex;list-style:none;gap:0;}
+.n-mid a{color:rgba(255,255,255,.5);font-size:.71rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:.5rem .9rem;transition:color .2s;position:relative;}
+.n-mid a::after{content:'';position:absolute;bottom:0;left:.9rem;right:.9rem;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .2s;}
+.n-mid a:hover{color:var(--white);}
+.n-mid a:hover::after{transform:scaleX(1);}
+.n-r{display:flex;align-items:center;gap:.5rem;}
+.n-cta{background:var(--gold);color:var(--ink);border:none;padding:.44rem 1.1rem;font-size:.71rem;font-weight:700;letter-spacing:.04em;border-radius:3px;transition:all .2s;cursor:pointer;}
+.n-cta:hover{background:var(--gold2);}
+.n-ham{display:none;flex-direction:column;gap:4px;background:none;border:none;padding:6px;cursor:pointer;}
+.n-ham span{display:block;width:20px;height:1.5px;background:rgba(255,255,255,.7);border-radius:2px;}
+.mob-nav{display:none;position:fixed;top:68px;left:0;right:0;z-index:399;background:rgba(8,15,30,.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(201,168,76,.1);flex-direction:column;max-height:calc(100vh - 68px);overflow-y:auto;}
+.mob-nav.open{display:flex;}
+.mob-section{padding:.6rem 1.5rem .3rem;font-size:.54rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;border-top:1px solid rgba(255,255,255,.05);margin-top:.25rem;}
+.mob-section.res{color:rgba(255,255,255,.3);}
+.mob-section.part{color:var(--gold);opacity:.7;}
+.mob-nav a{display:flex;align-items:center;gap:.65rem;width:100%;padding:.72rem 1.5rem;color:rgba(255,255,255,.6);font-size:.82rem;font-weight:500;transition:all .2s;}
+.mob-nav a:hover{color:var(--white);background:rgba(255,255,255,.04);}
+.mob-divider{height:1px;background:rgba(255,255,255,.06);margin:.25rem 0;}
+.mob-ctas{padding:.75rem 1.5rem 1.25rem;display:flex;flex-direction:column;gap:.5rem;}
+.mob-gold{padding:.82rem;background:var(--gold);color:var(--ink);border:none;font-weight:700;text-align:center;border-radius:3px;font-family:'Inter',sans-serif;font-size:.82rem;cursor:pointer;}
+.back-bar{background:rgba(201,168,76,.06);border-bottom:1px solid rgba(201,168,76,.1);padding:.6rem 6%;display:flex;align-items:center;gap:.75rem;margin-top:68px;}
+.back-bar a{font-size:.72rem;color:rgba(255,255,255,.45);transition:color .2s;}
+.back-bar a:hover{color:var(--gold);}
+.back-sep{color:rgba(255,255,255,.18);font-size:.72rem;}
+.hero{background:var(--ink);min-height:82vh;display:flex;flex-direction:column;justify-content:center;padding:4rem 6% 4rem;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 700px 600px at 80% 40%,rgba(201,168,76,.07) 0%,transparent 65%);}
+.hero-chip{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22);color:var(--gold);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .72rem;border-radius:20px;margin-bottom:1.4rem;width:fit-content;}
+.hero-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.45;transform:scale(1.5);}}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,5vw,4.4rem);font-weight:900;line-height:1.03;color:var(--white);margin-bottom:1.25rem;}
+.hero-title em{color:var(--gold);font-style:italic;}
+.hero-sub{font-size:.95rem;line-height:1.82;color:rgba(255,255,255,.48);max-width:540px;margin-bottom:2.25rem;font-weight:300;}
+.hero-acts{display:flex;gap:.7rem;flex-wrap:wrap;}
+.btn-gold{background:var(--gold);color:var(--ink);border:none;padding:.86rem 1.9rem;font-size:.84rem;font-weight:700;letter-spacing:.04em;border-radius:3px;transition:all .25s;cursor:pointer;}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.14);padding:.86rem 1.75rem;font-size:.84rem;font-weight:500;border-radius:3px;transition:all .25s;cursor:pointer;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.12);border-radius:6px;overflow:hidden;max-width:380px;margin-top:2.5rem;}
+.hs{background:rgba(255,255,255,.03);padding:1rem .75rem;text-align:center;}
+.hs-n{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--gold);line-height:1;}
+.hs-l{font-size:.54rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;}
+.ey{font-size:.61rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;}
+.ey::before{content:'';width:18px;height:1px;background:var(--gold);flex-shrink:0;}
+.sh{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,3vw,2.7rem);font-weight:700;line-height:1.1;margin-bottom:1.05rem;}
+.sec{padding:5rem 6%;}
+.sec.cream{background:var(--cream);}
+.sec.dark{background:var(--ink2);}
+.sec.ink{background:var(--ink);}
+.gate{background:var(--ink3);border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:2rem;max-width:640px;margin:0 auto;}
+.gate-title{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:var(--white);margin-bottom:.5rem;}
+.gate-sub{font-size:.78rem;color:rgba(255,255,255,.38);margin-bottom:1.5rem;font-weight:300;line-height:1.7;}
+.gate-list{list-style:none;margin-bottom:1.5rem;}
+.gate-list li{font-size:.76rem;color:rgba(255,255,255,.55);padding:.32rem 0;display:flex;align-items:flex-start;gap:.52rem;font-weight:300;}
+.gate-list li::before{content:'✓';color:var(--gold);font-weight:700;flex-shrink:0;margin-top:1px;}
+.ag{margin-bottom:.72rem;}
+.ag label{display:block;font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.26rem;}
+.ag input,.ag select{width:100%;padding:.63rem .82rem;border:1px solid rgba(255,255,255,.08);font-family:'Inter',sans-serif;font-size:.82rem;color:var(--white);background:rgba(255,255,255,.05);outline:none;transition:border-color .2s;border-radius:3px;}
+.ag input:focus,.ag select:focus{border-color:var(--gold);background:rgba(255,255,255,.08);}
+.ag select option{background:var(--ink2);color:var(--white);}
+.a2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+.abtn{width:100%;padding:.86rem;font-size:.84rem;font-weight:700;letter-spacing:.04em;border:none;border-radius:3px;transition:all .2s;cursor:pointer;margin-top:.5rem;}
+.abtn.gd{background:var(--gold);color:var(--ink);}
+.abtn.gd:hover{background:var(--gold2);}
+.priv-note{font-size:.65rem;color:rgba(255,255,255,.25);text-align:center;margin-top:.7rem;display:flex;align-items:center;justify-content:center;gap:.35rem;}
+.why-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.2rem;margin-top:2.5rem;}
+.why-card{background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.1);border-radius:10px;padding:1.4rem;transition:all .22s;}
+.why-card:hover{background:rgba(255,255,255,.05);border-color:rgba(201,168,76,.22);}
+.why-ico{font-size:1.4rem;margin-bottom:.7rem;}
+.why-title{font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:.38rem;}
+.why-txt{font-size:.72rem;color:rgba(255,255,255,.38);line-height:1.7;font-weight:300;}
+.pdash{background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:10px;padding:1.4rem;max-width:380px;margin:2rem auto 0;}
+.pdash-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid rgba(201,168,76,.1);}
+.pdash-lbl{font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+.pdash-live{display:flex;align-items:center;gap:.35rem;font-size:.58rem;font-weight:600;color:var(--green);}
+.pdash-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 7px var(--green);animation:pulse 2s infinite;}
+.pdash-prop{font-family:'Playfair Display',serif;font-size:.92rem;color:var(--white);font-weight:700;margin-bottom:.8rem;}
+.pdash-row{display:flex;justify-content:space-between;padding:.42rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.72rem;}
+.pdash-row:last-of-type{border-bottom:none;}
+.pdash-k{color:rgba(255,255,255,.35);font-weight:300;}
+.pdash-v{color:var(--white);font-weight:600;}
+.pdash-v.gold{color:var(--gold);}
+.pdash-ms{display:grid;grid-template-columns:repeat(3,1fr);margin-top:1rem;border:1px solid rgba(255,255,255,.06);border-radius:6px;overflow:hidden;}
+.pdash-m{padding:.65rem .4rem;text-align:center;border-right:1px solid rgba(255,255,255,.05);}
+.pdash-m:last-child{border-right:none;}
+.pdash-m-n{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);font-weight:700;line-height:1;}
+.pdash-m-l{font-size:.5rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-top:.14rem;}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:2.5rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.04);border-radius:8px;overflow:hidden;}
+.step{padding:2rem 1.4rem;background:var(--ink2);transition:background .22s;position:relative;}
+.step:hover{background:rgba(255,255,255,.025);}
+.step::after{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .32s ease;}
+.step:hover::after{transform:scaleX(1);}
+.step-n{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:rgba(201,168,76,.09);line-height:1;margin-bottom:.8rem;}
+.step-title{font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:.45rem;}
+.step-txt{font-size:.73rem;color:rgba(255,255,255,.38);line-height:1.7;font-weight:300;}
+.calc-wrap{max-width:560px;margin:2rem auto 0;background:var(--ink3);border:1px solid rgba(201,168,76,.15);border-radius:12px;padding:1.75rem;}
+.calc-row{margin-bottom:1.2rem;}
+.calc-row label{display:flex;justify-content:space-between;font-size:.72rem;color:rgba(255,255,255,.45);margin-bottom:.38rem;}
+.calc-row label span{color:var(--gold);font-weight:700;}
+.calc-row input[type=range]{width:100%;accent-color:var(--gold);}
+.calc-result{background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.2);border-radius:8px;padding:1.2rem;text-align:center;margin-top:.5rem;}
+.calc-main{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--gold);}
+.calc-sub{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.2rem;}
+.calc-detail{display:flex;justify-content:center;gap:1.5rem;margin-top:.75rem;}
+.calc-d{text-align:center;}
+.calc-d-n{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);}
+.calc-d-l{font-size:.58rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.08em;}
+.case-wrap{max-width:680px;margin:0 auto;background:var(--ink3);border:1px solid rgba(201,168,76,.15);border-radius:12px;overflow:hidden;}
+.case-head{background:linear-gradient(135deg,rgba(201,168,76,.12) 0%,rgba(201,168,76,.05) 100%);padding:1.5rem 1.75rem;border-bottom:1px solid rgba(201,168,76,.12);}
+.case-loc{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;}
+.case-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--white);}
+.case-body{padding:1.5rem 1.75rem;}
+.case-quote{font-size:.84rem;color:rgba(255,255,255,.6);line-height:1.8;font-style:italic;border-left:2px solid var(--gold);padding-left:1rem;margin-bottom:1.25rem;font-weight:300;}
+.case-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.04);border-radius:6px;overflow:hidden;}
+.cs{padding:.85rem .5rem;text-align:center;background:var(--ink3);}
+.cs-n{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:900;color:var(--gold);}
+.cs-l{font-size:.52rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;}
+.comp-table{width:100%;border-collapse:collapse;margin-top:2rem;}
+.comp-table th{font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:.6rem 1rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.06);}
+.comp-table th:first-child{width:35%;}
+.comp-table td{padding:.7rem 1rem;font-size:.76rem;border-bottom:1px solid rgba(255,255,255,.04);}
+.comp-table tr:last-child td{border-bottom:none;}
+.comp-table .col-sw{color:var(--gold);font-weight:600;}
+.comp-table .col-co{color:rgba(255,255,255,.32);}
+.comp-table .col-lbl{color:rgba(255,255,255,.5);}
+.confirm-box{display:none;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:1.4rem;text-align:center;margin-top:1.2rem;}
+.confirm-box.show{display:block;}
+.confirm-ico{font-size:1.5rem;margin-bottom:.5rem;}
+.confirm-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:#22c55e;margin-bottom:.38rem;}
+.confirm-txt{font-size:.74rem;color:rgba(255,255,255,.5);line-height:1.7;font-weight:300;}
+footer{background:var(--ink);padding:1.85rem 6%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-top:1px solid rgba(201,168,76,.07);}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.12rem;font-weight:700;color:var(--gold);}
+.f-logo b{color:var(--white);}
+.flinks{display:flex;gap:1.4rem;flex-wrap:wrap;justify-content:center;}
+.flinks a{color:rgba(255,255,255,.26);font-size:.68rem;transition:color .2s;}
+.flinks a:hover{color:var(--gold);}
+.fcopy{color:rgba(255,255,255,.14);font-size:.64rem;}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+@media(max-width:900px){nav{padding:0 1.1rem;}.n-mid{display:none;}.n-ham{display:flex;}footer{flex-direction:column;gap:1rem;text-align:center;}.flinks{justify-content:center;}.steps{grid-template-columns:1fr 1fr;}.a2{grid-template-columns:1fr;}.case-stats{grid-template-columns:repeat(2,1fr);}}
+</style>
+<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X9ZHLN6NC5"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-X9ZHLN6NC5',{anonymize_ip:true});</script>
+<link rel="manifest" href="/manifest.json"/>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="n-logo">Suite<b>Wash</b></a>
+  <ul class="n-mid">
+    <li><a href="index.html">&larr; For Residents</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#gw">Calculator</a></li>
+  </ul>
+  <div class="n-r">
+    <button class="n-cta" onclick="document.getElementById('gw').scrollIntoView({behavior:'smooth'})">Get Partner Access</button>
+    <button class="n-ham" onclick="document.getElementById('mob-nav').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mob-nav" id="mob-nav">
+  <div class="mob-section res">For Residents</div>
+  <a href="index.html">&#x1F3E0; Resident Home</a>
+  <a href="index.html">&#x1F4B2; View Plans &amp; Pricing</a>
+  <a href="index.html">&#x1F4CB; How It Works</a>
+  <div class="mob-divider"></div>
+  <div class="mob-section part">For Property Partners</div>
+  <a href="#how">&#x26A1; How It Works</a>
+  <a href="#gw">&#x1F4CA; Revenue Calculator</a>
+  <a href="#case">&#x1F4C1; Case Study</a>
+  <a href="#gw">&#x1F511; Create Partner Profile</a>
+  <div class="mob-ctas">
+    <button class="mob-gold" onclick="document.getElementById('gw').scrollIntoView({behavior:'smooth'});document.getElementById('mob-nav').classList.remove('open');">Get Partner Access &rarr;</button>
+  </div>
+</div>
+<div class="back-bar">
+  <a href="index.html">&larr; Resident Site</a><span class="back-sep">|</span><span style="font-size:.72rem;color:rgba(255,255,255,.28);">Looking for laundry service as a resident?</span><a href="index.html" style="color:var(--gold);font-weight:600;margin-left:.25rem;">View Resident Plans &rarr;</a>
+</div>
+<section class="hero">
+  <div class="hero-chip"><span class="hero-dot"></span>Property Partner Program &bull; Detroit Metro</div>
+  <h1 class="hero-title">Turn laundry into<br>a <em>revenue line.</em></h1>
+  <p class="hero-sub">SuiteWash installs at zero cost. We operate everything &mdash; you earn a monthly revenue share, elevate your amenity package, and increase resident retention overnight.</p>
+  <div class="hero-acts">
+    <button class="btn-gold" onclick="document.getElementById('gw').scrollIntoView({behavior:'smooth'})">Get Partner Access &rarr;</button>
+    <button class="btn-ghost" onclick="document.getElementById('gw').scrollIntoView({behavior:'smooth'})">Calculate My Revenue &rarr;</button>
+  </div>
+  <div class="hero-stats">
+    <div class="hs"><div class="hs-n" data-count="0" data-suffix="">$0</div><div class="hs-l">Setup cost to property</div></div>
+    <div class="hs"><div class="hs-n" data-count="77" data-suffix="%">77%</div><div class="hs-l">Avg. resident adoption</div></div>
+    <div class="hs"><div class="hs-n" data-count="1840" data-suffix="">$1,840</div><div class="hs-l">Avg. monthly revenue</div></div>
+  </div>
+</section>
+<section class="sec ink" id="gw">
+  <div class="reveal" style="text-align:center;margin-bottom:2rem;">
+    <p class="ey">Unlock the full <em>partner program.</em></p>
+    <h2 class="sh" style="color:var(--white);text-align:center;">Unlock the full<br><em style="color:var(--gold);">partner program.</em></h2>
+    <p style="font-size:.84rem;color:rgba(255,255,255,.38);max-width:480px;margin:.6rem auto 0;font-weight:300;line-height:1.8;">Revenue projections, case studies, live dashboard walkthrough, and the full comparison against coin-op &mdash; available exclusively to registered property partners.</p>
+  </div>
+  <div class="gate reveal">
+    <div class="gate-title">Create Your Partner Profile</div>
+    <p class="gate-sub">Takes 60 seconds. Instant access to all program details.</p>
+    <ul class="gate-list">
+      <li>Custom revenue projection based on your unit count</li>
+      <li>Live dashboard demo &mdash; real data, real numbers</li>
+      <li>Full case study: 77% adoption, $22K/yr at Maple Lofts</li>
+      <li>Side-by-side comparison vs traditional coin-op</li>
+      <li>One-page partner agreement, no commitment required</li>
+    </ul>
+    <div id="partner-form">
+      <div class="a2"><div class="ag"><label>First Name</label><input type="text" id="pf-fn" placeholder="Sam"/></div><div class="ag"><label>Last Name</label><input type="text" id="pf-ln" placeholder="Cassar"/></div></div>
+      <div class="ag"><label>Property Name</label><input type="text" id="pf-prop" placeholder="Sterling Knolls"/></div>
+      <div class="ag"><label>City</label><input type="text" id="pf-city" placeholder="Detroit"/></div>
+      <div class="a2">
+        <div class="ag"><label>Unit Count</label><select id="pf-units"><option value="">Select...</option><option>Under 50</option><option>50&ndash;100</option><option>100&ndash;200</option><option>200+</option></select></div>
+        <div class="ag"><label>Your Role</label><select id="pf-role"><option value="">Select...</option><option>Property Manager</option><option>Owner / Investor</option><option>Asset Manager</option><option>Other</option></select></div>
+      </div>
+      <div class="ag"><label>Email Address</label><input type="email" id="pf-email" placeholder="sam@sterlingknolls.com"/></div>
+      <div class="ag"><label>Phone</label><input type="tel" id="pf-phone" placeholder="(313) 555-0100"/></div>
+      <div id="pf-error" style="display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:3px;padding:.55rem .75rem;font-size:.71rem;color:#dc2626;margin-bottom:.55rem;"></div>
+      <button class="abtn gd" id="pf-btn" onclick="submitPartnerForm()">Get Partner Access &rarr;</button>
+      <p class="priv-note">&#x1F512; Your information is kept private and never sold or shared.</p>
+    </div>
+    <div class="confirm-box" id="pf-confirm">
+      <div class="confirm-ico">&#x2705;</div>
+      <div class="confirm-title">You're confirmed.</div>
+      <p class="confirm-txt">A SuiteWash partner representative will reach out within 24 hours to schedule your property walkthrough and custom revenue projection.</p>
+    </div>
+  </div>
+</section>
+<section class="sec dark">
+  <p class="ey reveal">Why SuiteWash</p>
+  <h2 class="sh reveal" style="color:var(--white);">We run it.<br><em style="color:var(--gold);">You earn from it.</em></h2>
+  <p class="reveal" style="font-size:.84rem;color:rgba(255,255,255,.38);max-width:480px;font-weight:300;line-height:1.8;">No equipment, no staff, no liability. A fully managed amenity that pays you every month.</p>
+  <div class="why-grid reveal">
+    <div class="why-card"><div class="why-ico">&#x1F4B0;</div><div class="why-title">Monthly Revenue Share</div><p class="why-txt">Earn a share of every active subscription. Average property earns $1,200&ndash;$2,400 per month.</p></div>
+    <div class="why-card"><div class="why-ico">&#x1F3D7;</div><div class="why-title">Zero Capital Required</div><p class="why-txt">No machines, no build-out, no maintenance contracts. We handle all equipment and operations.</p></div>
+    <div class="why-card"><div class="why-ico">&#x1F4F1;</div><div class="why-title">Real-Time Dashboard</div><p class="why-txt">Live view of adoption, subscriptions, revenue, and satisfaction in one dashboard.</p></div>
+    <div class="why-card"><div class="why-ico">&#x1F3E0;</div><div class="why-title">Higher Resident Retention</div><p class="why-txt">Properties with managed laundry see measurably lower turnover year over year.</p></div>
+    <div class="why-card"><div class="why-ico">&#x26A1;</div><div class="why-title">48-Hour Launch</div><p class="why-txt">From signed agreement to first resident pickup in 48 hours. No downtime, no disruption.</p></div>
+  </div>
+  <div class="pdash reveal">
+    <div class="pdash-top"><span class="pdash-lbl">Property Dashboard</span><span class="pdash-live"><span class="pdash-dot"></span>Live</span></div>
+    <div class="pdash-prop">Your Property</div>
+    <div class="pdash-row"><span class="pdash-k">Adoption Rate</span><span class="pdash-v">Avg. 77%</span></div>
+    <div class="pdash-row"><span class="pdash-k">Est. Monthly Revenue</span><span class="pdash-v gold" id="pdash-rev">&mdash;</span></div>
+    <div class="pdash-row"><span class="pdash-k">Annual Projected</span><span class="pdash-v gold" id="pdash-ann">&mdash;</span></div>
+    <div class="pdash-row"><span class="pdash-k">Resident Satisfaction</span><span class="pdash-v">4.9 &#x2605; avg</span></div>
+    <div class="pdash-row"><span class="pdash-k">Setup Cost</span><span class="pdash-v">$0</span></div>
+    <div class="pdash-ms">
+      <div class="pdash-m"><div class="pdash-m-n">$0</div><div class="pdash-m-l">Setup</div></div>
+      <div class="pdash-m"><div class="pdash-m-n">48h</div><div class="pdash-m-l">Launch</div></div>
+      <div class="pdash-m"><div class="pdash-m-n">4.9&#x2605;</div><div class="pdash-m-l">Rating</div></div>
+    </div>
+  </div>
+</section>
+<section class="sec dark" id="how">
+  <p class="ey reveal">The Process</p>
+  <h2 class="sh reveal" style="color:var(--white);">Up and running in 48 hours.</h2>
+  <div class="steps">
+    <div class="step reveal"><div class="step-n">01</div><div class="step-title">Sign the Partner Agreement</div><p class="step-txt">A simple one-page agreement. No exclusivity required. We handle all resident-facing terms.</p></div>
+    <div class="step reveal"><div class="step-n">02</div><div class="step-title">We Onboard Your Residents</div><p class="step-txt">SuiteWash handles all resident outreach, signups, and app onboarding. You provide building access.</p></div>
+    <div class="step reveal"><div class="step-n">03</div><div class="step-title">Pickups Begin</div><p class="step-txt">Scheduled routes through your building on your chosen days. Zero burden on property staff.</p></div>
+    <div class="step reveal"><div class="step-n">04</div><div class="step-title">You Get Paid Monthly</div><p class="step-txt">Revenue share deposited automatically each month. Watch your dashboard in real time.</p></div>
+  </div>
+</section>
+<section class="sec ink" id="calculator">
+  <p class="ey reveal">NOI &amp; Asset Value Calculator</p>
+  <h2 class="sh reveal" style="color:var(--white);">See what SuiteWash adds to your bottom line.</h2>
+  <p class="reveal" style="font-size:.84rem;color:rgba(255,255,255,.38);font-weight:300;line-height:1.8;max-width:540px;">SuiteWash doesn't just generate revenue &mdash; it increases your property's NOI and appraised value. Adjust the inputs to see your building's projection.</p>
+  <div class="calc-wrap reveal" style="max-width:600px;">
+    <p style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:1.4rem;">Your Property</p>
+    <div class="calc-row"><label>Total Units <span id="lbl-units">100 units</span></label><input type="range" min="20" max="500" value="100" oninput="updateCalc()" id="sl-units"/></div>
+    <div class="calc-row"><label>Expected Adoption Rate <span id="lbl-adopt">50%</span></label><input type="range" min="10" max="90" value="50" oninput="updateCalc()" id="sl-adopt"/></div>
+    <div class="calc-row"><label>Avg. Plan Mix <span id="lbl-price">Comfort $89.99</span></label><input type="range" min="5999" max="11999" value="8999" step="100" oninput="updateCalc()" id="sl-price"/></div>
+    <div class="calc-row"><label>Cap Rate <span id="lbl-cap">6.0%</span></label><input type="range" min="40" max="90" value="60" oninput="updateCalc()" id="sl-cap"/></div>
+
+    <!-- Results grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.12);border-radius:10px;overflow:hidden;margin:1.5rem 0;">
+      <div style="background:rgba(255,255,255,.03);padding:1.25rem;text-align:center;">
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.4rem;">Monthly Revenue Share</div>
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--gold);" id="calc-rev">$900</div>
+        <div style="font-size:.62rem;color:rgba(255,255,255,.25);margin-top:.2rem;" id="calc-sub">50 subscribers</div>
+      </div>
+      <div style="background:rgba(255,255,255,.03);padding:1.25rem;text-align:center;">
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.4rem;">Annual NOI Increase</div>
+        <div style="font-family:'Playfair Display',serif;font-size:2rem;font-weight:900;color:var(--gold);" id="calc-noi">$10,800</div>
+        <div style="font-size:.62rem;color:rgba(255,255,255,.25);margin-top:.2rem;">Added to NOI</div>
+      </div>
+      <div style="background:rgba(201,168,76,.08);padding:1.25rem;text-align:center;grid-column:1/-1;">
+        <div style="font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.4rem;">&#x1F3E2; Estimated Asset Value Increase</div>
+        <div style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:var(--gold);" id="calc-asset">$180,000</div>
+        <div style="font-size:.7rem;color:rgba(255,255,255,.35);margin-top:.3rem;" id="calc-asset-sub">At 6.0% cap rate &mdash; NOI &divide; cap rate = asset value</div>
+      </div>
+    </div>
+
+    <!-- Breakdown -->
+    <div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1.1rem 1.25rem;margin-bottom:1rem;">
+      <p style="font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.75rem;">How it works</p>
+      <div style="display:flex;justify-content:space-between;font-size:.76rem;padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <span style="color:rgba(255,255,255,.45);">Subscribers</span><span style="color:var(--white);font-weight:600;" id="calc-subs-detail">50 residents</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:.76rem;padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <span style="color:rgba(255,255,255,.45);">Monthly revenue share (15%)</span><span style="color:var(--gold);font-weight:600;" id="calc-share-detail">$900/mo</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:.76rem;padding:.35rem 0;border-bottom:1px solid rgba(255,255,255,.05);">
+        <span style="color:rgba(255,255,255,.45);">Annual NOI impact</span><span style="color:var(--gold);font-weight:600;" id="calc-annual-detail">$10,800/yr</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:.76rem;padding:.35rem 0;">
+        <span style="color:rgba(255,255,255,.45);">Property value increase</span><span style="color:var(--gold);font-weight:700;" id="calc-value-detail">+$180,000</span>
+      </div>
+    </div>
+    <p style="font-size:.6rem;color:rgba(255,255,255,.18);text-align:center;line-height:1.7;">Projections are estimates based on current pilot data. Actual revenue share confirmed in partner agreement. Asset value calculated as Annual NOI &divide; Cap Rate.</p>
+    <button class="abtn gd" style="width:100%;margin-top:1rem;" onclick="document.getElementById('gw').scrollIntoView({behavior:'smooth'})">Get My Custom Projection &rarr;</button>
+  </div>
+</section>
+<section class="sec dark" id="case">
+  <p class="ey reveal">Case Study</p>
+  <div class="case-wrap reveal">
+    <div class="case-head">
+      <div class="case-loc">Maple Lofts &middot; Detroit, MI</div>
+      <h3 class="case-title">62 units. 77% adoption. $22K/yr.</h3>
+    </div>
+    <div class="case-body">
+      <p style="font-size:.82rem;color:rgba(255,255,255,.45);line-height:1.8;font-weight:300;margin-bottom:1.1rem;">Maple Lofts added SuiteWash in January 2026. Within 90 days, adoption hit 77% of occupied units with zero property staff involvement.</p>
+      <div class="case-quote">"We didn't have to do anything. SuiteWash handled setup, onboarding, and operations. The revenue just shows up every month."<br><span style="font-size:.65rem;color:rgba(255,255,255,.3);font-style:normal;margin-top:.4rem;display:block;">Property Manager &middot; Maple Lofts Detroit</span></div>
+      <div class="case-stats">
+        <div class="cs"><div class="cs-n">48hrs</div><div class="cs-l">Agreement to first pickup</div></div>
+        <div class="cs"><div class="cs-n">77%</div><div class="cs-l">Resident adoption in 90 days</div></div>
+        <div class="cs"><div class="cs-n">$0</div><div class="cs-l">Capital investment from property</div></div>
+        <div class="cs"><div class="cs-n">$22K</div><div class="cs-l">Annual revenue share projected</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec ink">
+  <p class="ey reveal">Why Not Coin-Op?</p>
+  <h2 class="sh reveal" style="color:var(--white);">SuiteWash vs. traditional laundry.</h2>
+  <table class="comp-table reveal">
+    <thead><tr><th>Feature</th><th>SuiteWash</th><th>Coin-Op / Vendor</th></tr></thead>
+    <tbody>
+      <tr><td class="col-lbl">Setup cost to property</td><td class="col-sw">$0</td><td class="col-co">$5K&ndash;$30K+</td></tr>
+      <tr><td class="col-lbl">Monthly revenue to property</td><td class="col-sw">&#x2713; Revenue share</td><td class="col-co">Minimal / none</td></tr>
+      <tr><td class="col-lbl">Property staff involvement</td><td class="col-sw">Zero</td><td class="col-co">Maintenance calls</td></tr>
+      <tr><td class="col-lbl">Resident satisfaction</td><td class="col-sw">4.9&#x2605; avg</td><td class="col-co">Frequently negative</td></tr>
+      <tr><td class="col-lbl">Door-to-door service</td><td class="col-sw">&#x2713; Included</td><td class="col-co">&#x2717; Not available</td></tr>
+      <tr><td class="col-lbl">Real-time dashboard</td><td class="col-sw">&#x2713; Included</td><td class="col-co">&#x2717; Not available</td></tr>
+      <tr><td class="col-lbl">Machine maintenance burden</td><td class="col-sw">None &mdash; no machines</td><td class="col-co">Ongoing, costly</td></tr>
+      <tr><td class="col-lbl">Launch time</td><td class="col-sw">48 hours</td><td class="col-co">Weeks to months</td></tr>
+    </tbody>
+  </table>
+</section>
+<section class="sec dark">
+  <p class="ey reveal">Get Started</p>
+  <h2 class="sh reveal" style="color:var(--white);">Create your partner profile.</h2>
+  <p class="reveal" style="font-size:.84rem;color:rgba(255,255,255,.38);max-width:480px;font-weight:300;line-height:1.8;margin-bottom:2rem;">Register to unlock the full program &mdash; revenue calculator, case study, live dashboard, and your custom projection.</p>
+  <div class="gate reveal">
+    <div class="gate-title">Create Your Partner Profile</div>
+    <p class="gate-sub">Takes 60 seconds. Instant access to all program details.</p>
+    <ul class="gate-list">
+      <li>Live dashboard walkthrough tailored to your property</li>
+      <li>Custom revenue projection based on your unit count</li>
+      <li>Resident onboarding plan and adoption timeline</li>
+      <li>Partner agreement review &mdash; one page, plain language</li>
+      <li>Response within 24 hours, guaranteed</li>
+    </ul>
+    <div id="partner-form-2">
+      <div class="a2"><div class="ag"><label>First Name</label><input type="text" id="pf2-fn" placeholder="Sam"/></div><div class="ag"><label>Last Name</label><input type="text" id="pf2-ln" placeholder="Cassar"/></div></div>
+      <div class="ag"><label>Property Name</label><input type="text" id="pf2-prop" placeholder="Sterling Knolls"/></div>
+      <div class="ag"><label>City</label><input type="text" id="pf2-city" placeholder="Detroit"/></div>
+      <div class="a2">
+        <div class="ag"><label>Unit Count</label><select id="pf2-units"><option value="">Under 50</option><option>50&ndash;100</option><option>100&ndash;200</option><option>200+</option></select></div>
+        <div class="ag"><label>Your Role</label><select id="pf2-role"><option value="">Property Manager</option><option>Owner / Investor</option><option>Asset Manager</option><option>Other</option></select></div>
+      </div>
+      <div class="ag"><label>Email Address</label><input type="email" id="pf2-email" placeholder="sam@sterlingknolls.com"/></div>
+      <div class="ag"><label>Phone</label><input type="tel" id="pf2-phone" placeholder="(313) 555-0100"/></div>
+      <div id="pf2-error" style="display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:3px;padding:.55rem .75rem;font-size:.71rem;color:#dc2626;margin-bottom:.55rem;"></div>
+      <button class="abtn gd" id="pf2-btn" onclick="submitPartnerForm2()">Get Partner Access &rarr;</button>
+      <p style="font-size:.65rem;color:rgba(255,255,255,.25);text-align:center;margin-top:.7rem;">No commitment. No sales pressure. Your information is never shared.</p>
+    </div>
+    <div class="confirm-box" id="pf2-confirm">
+      <div class="confirm-ico">&#x2705;</div>
+      <div class="confirm-title">You're confirmed.</div>
+      <p class="confirm-txt">A SuiteWash partner representative will reach out within 24 hours to schedule your property walkthrough and custom revenue projection.</p>
+    </div>
+  </div>
+</section>
+<!-- FIX 3: Footer links — Privacy, Terms, Contact were all href="#" — now point to correct destinations -->
+<footer>
+  <a href="index.html" class="f-logo">Suite<b>Wash</b></a>
+  <div class="flinks">
+    <a href="index.html">For Residents</a>
+    <a href="index.html#plans">Pricing</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="mailto:hello@suitewashandfold.com">Contact</a>
+  </div>
+  <p class="fcopy">&copy; 2026 SuiteWash &middot; Detroit, MI</p>
+</footer>
+<script>
+const PARTNER_FORM_ID='xvznveay';
+function toggleMobNav(){document.getElementById('mob-nav').classList.toggle('open');}
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+function updateCalc(){
+  const units=parseInt(document.getElementById('sl-units').value);
+  const adopt=parseInt(document.getElementById('sl-adopt').value);
+  const price=parseInt(document.getElementById('sl-price').value);
+  const capEl=document.getElementById('sl-cap');
+  const cap=capEl?parseInt(capEl.value)/100:0.06;
+  const subs=Math.round(units*adopt/100);
+  const monthlyRev=Math.round(subs*(price/100)*0.15);
+  const annualNOI=monthlyRev*12;
+  const assetValue=Math.round(annualNOI/cap);
+  const priceLabel={5999:'Essential $59.99',7999:'Mid $79.99',8999:'Comfort $89.99',10999:'Near-Suite',11999:'Suite $119.99'};
+  const pLabel=priceLabel[price]||'$'+(price/100).toFixed(2);
+
+  document.getElementById('lbl-units').textContent=units+' units';
+  document.getElementById('lbl-adopt').textContent=adopt+'%';
+  document.getElementById('lbl-price').textContent=pLabel;
+  if(capEl)document.getElementById('lbl-cap').textContent=(cap*100).toFixed(1)+'%';
+
+  // Main results
+  document.getElementById('calc-rev').textContent='$'+monthlyRev.toLocaleString();
+  document.getElementById('calc-sub').textContent=subs+' subscribers';
+  document.getElementById('calc-noi').textContent='$'+annualNOI.toLocaleString();
+  document.getElementById('calc-asset').textContent='$'+assetValue.toLocaleString();
+  document.getElementById('calc-asset-sub').textContent='At '+(cap*100).toFixed(1)+'% cap rate — NOI ÷ cap rate = asset value';
+
+  // Breakdown detail
+  if(document.getElementById('calc-subs-detail'))document.getElementById('calc-subs-detail').textContent=subs+' residents';
+  if(document.getElementById('calc-share-detail'))document.getElementById('calc-share-detail').textContent='$'+monthlyRev.toLocaleString()+'/mo';
+  if(document.getElementById('calc-annual-detail'))document.getElementById('calc-annual-detail').textContent='$'+annualNOI.toLocaleString()+'/yr';
+  if(document.getElementById('calc-value-detail'))document.getElementById('calc-value-detail').textContent='+$'+assetValue.toLocaleString();
+
+  // Mini dashboard
+  if(document.getElementById('pdash-rev'))document.getElementById('pdash-rev').textContent='$'+monthlyRev.toLocaleString()+' / mo';
+  if(document.getElementById('pdash-ann'))document.getElementById('pdash-ann').textContent='$'+annualNOI.toLocaleString()+'/yr';
+}
+updateCalc();
+async function submitPartnerForm(){
+  const fn=document.getElementById('pf-fn').value.trim();
+  const ln=document.getElementById('pf-ln').value.trim();
+  const prop=document.getElementById('pf-prop').value.trim();
+  const city=document.getElementById('pf-city').value.trim();
+  const units=document.getElementById('pf-units').value;
+  const role=document.getElementById('pf-role').value;
+  const email=document.getElementById('pf-email').value.trim();
+  const phone=document.getElementById('pf-phone').value.trim();
+  const err=document.getElementById('pf-error');
+  if(!fn||!email||!prop){err.textContent='Please fill in your name, property, and email.';err.style.display='block';return;}
+  err.style.display='none';
+  const btn=document.getElementById('pf-btn');
+  if(typeof gtag!=='undefined')gtag('event','generate_lead',{source:'partner_form'});btn.disabled=true;btn.textContent='Submitting…';
+  try{
+    await fetch('https://formspree.io/f/'+PARTNER_FORM_ID,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({_subject:'New Partner Inquiry — '+prop+' — '+city,first_name:fn,last_name:ln,property_name:prop,city,unit_count:units,role,email,phone,submitted_at:new Date().toLocaleString('en-US',{timeZone:'America/Detroit'})})});
+    document.getElementById('partner-form').style.display='none';
+    document.getElementById('pf-confirm').classList.add('show');
+  }catch(e){btn.disabled=false;btn.textContent='Get Partner Access →';err.textContent='Something went wrong. Please email hello@suitewashandfold.com directly.';err.style.display='block';}
+}
+// Animated counters
+const cObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const el=e.target;const raw=el.dataset.count;const suffix=el.dataset.suffix||'';if(raw){const target=parseFloat(raw);const start=performance.now();const isDecimal=target%1!==0;function step(now){const prog=Math.min((now-start)/1200,1);const ease=1-Math.pow(1-prog,3);const val=isDecimal?(target*ease).toFixed(1):(Math.round(target*ease));el.textContent=(raw==='0'?'$':raw==='1840'?'$':'')+(val)+(suffix);if(prog<1)requestAnimationFrame(step);}requestAnimationFrame(step);}cObs.unobserve(el);}});},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cObs.observe(el));
+
+async function submitPartnerForm2(){
+  const fn=document.getElementById('pf2-fn').value.trim();
+  const ln=document.getElementById('pf2-ln').value.trim();
+  const prop=document.getElementById('pf2-prop').value.trim();
+  const city=document.getElementById('pf2-city').value.trim();
+  const units=document.getElementById('pf2-units').value;
+  const role=document.getElementById('pf2-role').value;
+  const email=document.getElementById('pf2-email').value.trim();
+  const phone=document.getElementById('pf2-phone').value.trim();
+  const err=document.getElementById('pf2-error');
+  if(!fn||!email||!prop){err.textContent='Please fill in your name, property, and email.';err.style.display='block';return;}
+  err.style.display='none';
+  const btn=document.getElementById('pf2-btn');
+  btn.disabled=true;btn.textContent='Submitting…';
+  try{
+    await fetch('https://formspree.io/f/'+PARTNER_FORM_ID,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({_subject:'New Partner Inquiry — '+prop+' — '+city,first_name:fn,last_name:ln,property_name:prop,city,unit_count:units,role,email,phone,submitted_at:new Date().toLocaleString('en-US',{timeZone:'America/Detroit'})})});
+    document.getElementById('partner-form-2').style.display='none';
+    document.getElementById('pf2-confirm').classList.add('show');
+  }catch(e){btn.disabled=false;btn.textContent='Get Partner Access →';err.textContent='Something went wrong. Please email hello@suitewashandfold.com directly.';err.style.display='block';}
+}
+</script>
+</body>
+</html>
