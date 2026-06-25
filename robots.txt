@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /success.html
+Disallow: /staff.html
+
+Sitemap: https://suitewashandfold.com/sitemap.xml
