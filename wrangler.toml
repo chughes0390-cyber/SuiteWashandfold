@@ -1,0 +1,6 @@
+name = "suitewashandfold"
+compatibility_date = "2026-06-26"
+workers_dev = true
+
+[assets]
+directory = "."
