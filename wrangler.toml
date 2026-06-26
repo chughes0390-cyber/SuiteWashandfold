@@ -1,0 +1,11 @@
+name = "suitewashandfold"
+compatibility_date = "2026-06-26"
+workers_dev = false
+
+[assets]
+directory = "."
+not_found_handling = "single-page-application"
+
+[assets.serve_directly]
+include = ["**/*.html", "**/*.css", "**/*.js", "**/*.png", "**/*.ico", "**/*.json", "**/*.xml", "**/*.txt", "**/*.webmanifest"]
+exclude = [".git/**", ".wrangler/**", "README.md"]
