@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SuiteWash — Wash &amp; Fold Laundry Delivery for Detroit Apartments</title>
+<meta name="description" content="Door-to-door wash &amp; fold laundry for Detroit-area apartment residents. Subscribe monthly — pickup, wash, fold, deliver. Starting at $59.99/mo."/>
+<meta name="robots" content="index, follow"/>
+<meta name="author" content="SuiteWash and Fold LLC"/>
+<link rel="canonical" href="https://suitewashandfold.com/"/>
+<meta name="geo.region" content="US-MI"/>
+<meta name="geo.placename" content="Detroit, Michigan"/>
+<meta name="geo.position" content="42.3314;-83.0458"/>
+<meta name="ICBM" content="42.3314, -83.0458"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="SuiteWash"/>
+<meta property="og:title" content="SuiteWash — Wash &amp; Fold Laundry Delivered to Your Door"/>
+<meta property="og:description" content="Building-embedded laundry subscription for Detroit apartment residents. Starting at $59.99/mo. Zero cost to your building."/>
+<meta property="og:url" content="https://suitewashandfold.com/"/>
+<meta property="og:image" content="https://suitewashandfold.com/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="en_US"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="SuiteWash — Wash &amp; Fold Laundry Delivered to Your Door"/>
+<meta name="twitter:description" content="Building-embedded laundry subscription for Detroit apartment residents. Starting at $59.99/mo."/>
+<meta name="twitter:image" content="https://suitewashandfold.com/og-image.png"/>
+<meta name="theme-color" content="#080f1e"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="SuiteWash"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png"/>
+<link rel="manifest" href="/manifest.json"/>
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<!-- Google Analytics GA4 — replace G-X9ZHLN6NC5 with your Measurement ID -->
+<!-- To get your ID: analytics.google.com → Admin → Data Streams → Web → Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-X9ZHLN6NC5"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-X9ZHLN6NC5',{anonymize_ip:true});
+// Track key conversion events
+function trackEvent(name,params){if(typeof gtag!=='undefined')gtag('event',name,params||{});}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--ink:#080f1e;--ink2:#111827;--ink3:#1a2535;--cream:#f7f3ec;--cream2:#ede8df;--gold:#c9a84c;--gold2:#e8d5a3;--gold3:#9c7a2e;--white:#fff;--mid:#6b7280;--lt:#9ca3af;--green:#22c55e;--sh:0 2px 16px rgba(8,15,30,.12);--sh2:0 8px 40px rgba(8,15,30,.22);--glow:0 0 40px rgba(201,168,76,.18);}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;scroll-padding-top:68px;}
+body{font-family:'Inter',sans-serif;background:var(--ink);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+button{font-family:'Inter',sans-serif;cursor:pointer;}a{color:inherit;text-decoration:none;}
+nav{position:fixed;top:0;left:0;right:0;z-index:400;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;background:rgba(8,15,30,.9);backdrop-filter:blur(24px) saturate(180%);border-bottom:1px solid rgba(201,168,76,.1);}
+.n-logo{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;color:var(--gold);letter-spacing:.02em;cursor:pointer;user-select:none;flex-shrink:0;}
+.n-logo b{color:var(--white);}
+.n-mid{display:flex;list-style:none;}
+.n-mid a{color:rgba(255,255,255,.5);font-size:.71rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;padding:.5rem .9rem;transition:color .2s;position:relative;}
+.n-mid a::after{content:'';position:absolute;bottom:0;left:.9rem;right:.9rem;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .2s;}
+.n-mid a:hover{color:var(--white);}
+.n-mid a:hover::after{transform:scaleX(1);}
+.n-r{display:flex;align-items:center;gap:.5rem;flex-shrink:0;}
+.n-ghost{background:transparent;color:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.14);padding:.42rem .95rem;font-size:.71rem;font-weight:500;letter-spacing:.04em;border-radius:3px;transition:all .2s;white-space:nowrap;}
+.n-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.n-cta{background:var(--gold);color:var(--ink);border:none;padding:.44rem 1.1rem;font-size:.71rem;font-weight:700;letter-spacing:.04em;border-radius:3px;transition:all .2s;white-space:nowrap;}
+.n-cta:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:var(--glow);}
+.n-ham{display:none;flex-direction:column;gap:4px;background:none;border:none;padding:6px;flex-shrink:0;}
+.n-ham span{display:block;width:20px;height:1.5px;background:rgba(255,255,255,.7);border-radius:2px;transition:all .3s;}
+.mob-nav{display:none;position:fixed;top:68px;left:0;right:0;z-index:399;background:rgba(8,15,30,.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(201,168,76,.1);flex-direction:column;max-height:calc(100vh - 68px);overflow-y:auto;}
+.mob-nav.open{display:flex;}
+.mob-section{padding:.6rem 1.5rem .3rem;font-size:.54rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;border-top:1px solid rgba(255,255,255,.05);margin-top:.25rem;}
+.mob-section.res{color:rgba(255,255,255,.3);}.mob-section.part{color:var(--gold);opacity:.7;}
+.mob-nav a,.mob-nav button.mob-link{display:flex;align-items:center;gap:.65rem;width:100%;padding:.72rem 1.5rem;color:rgba(255,255,255,.6);font-size:.82rem;font-weight:500;background:none;border:none;text-align:left;transition:all .2s;font-family:'Inter',sans-serif;letter-spacing:.02em;}
+.mob-nav a:hover,.mob-nav button.mob-link:hover{color:var(--white);background:rgba(255,255,255,.04);padding-left:1.75rem;}
+.mob-nav a .mob-ico,.mob-nav button .mob-ico{font-size:.9rem;flex-shrink:0;opacity:.65;}
+.mob-divider{height:1px;background:rgba(255,255,255,.06);margin:.25rem 0;}
+.mob-ctas{padding:.75rem 1.5rem 1.25rem;display:flex;flex-direction:column;gap:.5rem;}
+.mob-gold{padding:.82rem;background:var(--gold);color:var(--ink);border:none;font-weight:700;text-align:center;border-radius:3px;font-family:'Inter',sans-serif;font-size:.82rem;letter-spacing:.04em;cursor:pointer;}
+.mob-outline{padding:.72rem;background:transparent;color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.14);font-weight:500;text-align:center;border-radius:3px;font-family:'Inter',sans-serif;font-size:.82rem;cursor:pointer;}
+.mob-outline:hover{border-color:var(--gold);color:var(--gold);}
+#home{display:grid;grid-template-columns:1fr 1fr;min-height:100vh;position:relative;}
+.split-res{background:var(--cream);display:flex;flex-direction:column;justify-content:center;padding:8rem 5% 5rem;position:relative;overflow:hidden;transition:background .35s;cursor:pointer;border-right:1px solid rgba(8,15,30,.08);}
+.split-res:hover{background:var(--cream2);}
+.split-res::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 500px 500px at 80% 20%,rgba(201,168,76,.06) 0%,transparent 70%);}
+.sr-chip{display:inline-flex;align-items:center;gap:.5rem;background:rgba(8,15,30,.07);border:1px solid rgba(8,15,30,.1);color:var(--mid);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .72rem;border-radius:20px;margin-bottom:1.35rem;width:fit-content;}
+.sr-num{width:5px;height:5px;border-radius:50%;background:var(--gold);}
+.sr-headline{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:900;line-height:1.04;color:var(--ink);margin-bottom:1.1rem;}
+.sr-headline em{color:var(--gold);font-style:italic;}
+.sr-body{font-size:.92rem;line-height:1.8;color:var(--mid);max-width:420px;margin-bottom:2rem;font-weight:300;}
+.sr-props{display:flex;flex-direction:column;gap:.65rem;margin-bottom:1.25rem;}
+.sr-prop{display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--ink);font-weight:500;}
+.sr-prop-ico{width:32px;height:32px;border-radius:8px;background:rgba(8,15,30,.06);display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.sr-cta{display:inline-flex;align-items:center;gap:.55rem;background:var(--ink);color:var(--white);padding:.88rem 2rem;font-size:.84rem;font-weight:700;letter-spacing:.04em;border-radius:3px;border:none;transition:all .25s;}
+.sr-cta:hover{background:var(--ink2);transform:translateY(-2px);box-shadow:var(--sh2);}
+.sr-cta-arrow,.btn-gold-arrow{transition:transform .2s;}
+.sr-cta:hover .sr-cta-arrow,.btn-gold:hover .btn-gold-arrow{transform:translateX(3px);}
+.sr-link{display:block;margin-top:.85rem;font-size:.75rem;color:var(--mid);text-align:center;}
+.sr-link a{color:var(--gold);text-decoration:underline;cursor:pointer;}
+.split-res-label{position:absolute;top:2rem;left:5%;font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--lt);display:flex;align-items:center;gap:.5rem;}
+.split-res-label::before{content:'';width:16px;height:1px;background:var(--lt);}
+.split-part{background:var(--ink);display:flex;flex-direction:column;justify-content:center;padding:8rem 5% 5rem;position:relative;overflow:hidden;transition:background .35s;cursor:pointer;}
+.split-part:hover{background:var(--ink2);}
+.split-part::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 600px 500px at 20% 70%,rgba(201,168,76,.07) 0%,transparent 65%);}
+.sp-chip{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.24);color:var(--gold);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .72rem;border-radius:20px;margin-bottom:1.35rem;width:fit-content;}
+.sp-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s ease infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.45;transform:scale(1.5);}}
+.sp-headline{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,4vw,3.8rem);font-weight:900;line-height:1.04;color:var(--white);margin-bottom:1.1rem;}
+.sp-headline em,.rh-title em,.sr-headline em{color:var(--gold);font-style:italic;}
+.sp-body{font-size:.92rem;line-height:1.8;color:rgba(255,255,255,.45);max-width:420px;margin-bottom:2rem;font-weight:300;}
+.sp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.12);border-radius:6px;overflow:hidden;margin-bottom:2.25rem;}
+.sp-stat{background:rgba(255,255,255,.03);padding:1rem .75rem;text-align:center;}
+.sp-stat-n{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:var(--gold);line-height:1;transition:all .3s;}
+.sp-stat-l{font-size:.54rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;}
+@keyframes countUp{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sp-stat-n.counted{animation:countUp .6s ease forwards;}
+.sp-cta{display:inline-flex;align-items:center;gap:.55rem;background:var(--gold);color:var(--ink);padding:.88rem 2rem;font-size:.84rem;font-weight:700;letter-spacing:.04em;border-radius:3px;border:none;transition:all .25s;}
+.sp-cta:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:var(--glow);}
+.sp-cta-arrow{transition:transform .2s;}
+.sp-cta:hover .sp-cta-arrow{transform:translateX(3px);}
+.sp-link{display:block;margin-top:.85rem;font-size:.75rem;color:rgba(255,255,255,.35);text-align:center;}
+.sp-link a{color:rgba(255,255,255,.6);text-decoration:underline;}
+.split-part-label{position:absolute;top:2rem;left:5%;font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.25);display:flex;align-items:center;gap:.5rem;}
+.split-part-label::before{content:'';width:16px;height:1px;background:rgba(255,255,255,.2);}
+#home::after{content:'';position:absolute;top:0;left:50%;width:1px;height:100%;background:linear-gradient(180deg,transparent 0%,rgba(201,168,76,.3) 25%,rgba(201,168,76,.3) 75%,transparent 100%);pointer-events:none;z-index:1;}
+#resident{display:none;}#portal{display:none;}
+.rh{min-height:100vh;background:var(--ink);display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden;}
+.rh::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 700px 500px at 72% 38%,rgba(201,168,76,.08) 0%,transparent 65%);}
+.rh-l{display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 5rem 6%;position:relative;z-index:2;}
+.rh-chip{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.22);color:var(--gold);font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .72rem;border-radius:20px;margin-bottom:1.4rem;width:fit-content;}
+.rh-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+.rh-title{font-family:'Playfair Display',serif;font-size:clamp(2.6rem,5vw,4.4rem);font-weight:900;line-height:1.03;color:var(--white);margin-bottom:1.25rem;}
+.rh-sub{font-size:.95rem;line-height:1.82;color:rgba(255,255,255,.48);max-width:430px;margin-bottom:2.25rem;font-weight:300;}
+.rh-acts{display:flex;gap:.7rem;flex-wrap:wrap;}
+.btn-gold{background:var(--gold);color:var(--ink);border:none;padding:.86rem 1.9rem;font-size:.84rem;font-weight:700;letter-spacing:.04em;border-radius:3px;transition:all .25s;display:inline-flex;align-items:center;gap:.45rem;cursor:pointer;}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.28);}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.14);padding:.86rem 1.75rem;font-size:.84rem;font-weight:500;border-radius:3px;transition:all .25s;cursor:pointer;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.rh-r{display:flex;align-items:center;justify-content:center;padding:5rem 6% 5rem 2rem;position:relative;z-index:2;}
+.dash-card{background:rgba(255,255,255,.03);border:1px solid rgba(201,168,76,.18);border-radius:12px;padding:1.65rem;width:100%;max-width:340px;backdrop-filter:blur(12px);animation:float 8s ease-in-out infinite;box-shadow:0 24px 56px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.05);}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.dc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.15rem;padding-bottom:.9rem;border-bottom:1px solid rgba(255,255,255,.06);}
+.dc-lbl{font-size:.57rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);font-weight:600;}
+.dc-live{display:flex;align-items:center;gap:.35rem;font-size:.58rem;font-weight:600;color:var(--green);}
+.dc-dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 7px var(--green);animation:pulse 2s infinite;}
+.dc-prop{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);font-weight:700;margin-bottom:1rem;}
+.dc-row{display:flex;justify-content:space-between;padding:.58rem 0;border-bottom:1px solid rgba(255,255,255,.04);font-size:.74rem;}
+.dc-row:last-of-type{border-bottom:none;}
+.dc-k{color:rgba(255,255,255,.38);font-weight:300;}.dc-v{color:var(--white);font-weight:600;}
+.dc-v.gold{color:var(--gold);}.dc-v.green{color:var(--green);}
+.dc-ms{display:grid;grid-template-columns:repeat(3,1fr);margin-top:1.15rem;border:1px solid rgba(255,255,255,.06);border-radius:6px;overflow:hidden;}
+.dc-m{padding:.75rem .4rem;text-align:center;border-right:1px solid rgba(255,255,255,.05);}
+.dc-m:last-child{border-right:none;}
+.dc-m-n{font-family:'Playfair Display',serif;font-size:1.25rem;color:var(--gold);font-weight:700;line-height:1;}
+.dc-m-l{font-size:.5rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-top:.16rem;}
+.mq{background:var(--gold);padding:.7rem 0;overflow:hidden;}
+.mq-track{display:flex;gap:2.5rem;white-space:nowrap;animation:mq 5s linear infinite;}
+@keyframes mq{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.mq-i{font-size:.64rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--ink);flex-shrink:0;}
+.mq-d{opacity:.28;}
+.how{background:var(--ink2);padding:6rem 6%;}
+.ey{font-size:.61rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;display:flex;align-items:center;gap:.5rem;}
+.ey::before{content:'';width:18px;height:1px;background:var(--gold);flex-shrink:0;}
+.sh{font-family:'Playfair Display',serif;font-size:clamp(1.75rem,3vw,2.7rem);font-weight:700;line-height:1.1;margin-bottom:1.05rem;}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:3.25rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.04);border-radius:8px;overflow:hidden;}
+.step{padding:2rem 1.4rem;background:var(--ink2);transition:background .22s;position:relative;}
+.step:hover{background:rgba(255,255,255,.025);}
+.step::after{content:'';position:absolute;top:0;left:0;width:100%;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .32s ease;}
+.step:hover::after{transform:scaleX(1);}
+.step-n{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:rgba(201,168,76,.09);line-height:1;margin-bottom:.8rem;}
+.step-title{font-size:.82rem;font-weight:700;color:var(--white);margin-bottom:.45rem;}
+.step-txt{font-size:.73rem;color:rgba(255,255,255,.38);line-height:1.7;font-weight:300;}
+.plans{background:var(--cream);padding:6rem 6%;}
+.ph{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;margin-bottom:2.5rem;}
+.btog{display:flex;background:rgba(8,15,30,.08);border-radius:4px;padding:3px;gap:2px;}
+.to{padding:.38rem .88rem;border:none;background:transparent;font-size:.69rem;font-weight:700;color:var(--mid);border-radius:3px;transition:all .2s;}
+.to.on{background:var(--white);color:var(--ink);box-shadow:var(--sh);}
+.save-chip{font-size:.55rem;font-weight:700;background:var(--gold);color:var(--ink);padding:.16rem .52rem;border-radius:20px;margin-left:.38rem;}
+.pg{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid rgba(8,15,30,.08);border-radius:8px;overflow:hidden;}
+.plan{background:var(--white);display:flex;flex-direction:column;position:relative;transition:all .22s;cursor:pointer;border-right:1px solid rgba(8,15,30,.07);}
+.plan:last-child{border-right:none;}
+.plan:hover{transform:translateY(-4px);box-shadow:var(--sh2);z-index:3;}
+.plan.pop{background:var(--ink);}
+.plan-accent{height:2px;}
+.plan-badge{position:absolute;top:-1px;right:1rem;background:var(--gold);color:var(--ink);font-size:.5rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:.2rem .52rem;border-radius:0 0 4px 4px;}
+.plan-body{padding:1.35rem 1.35rem 1.05rem;flex:1;}
+.plan-tier{font-size:.54rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.32rem;}
+.plan-name{font-family:'Playfair Display',serif;font-size:1.12rem;font-weight:700;margin-bottom:.32rem;}
+.plan.pop .plan-name{color:var(--gold);}
+.plan-desc{font-size:.7rem;color:var(--mid);line-height:1.62;margin-bottom:.95rem;font-weight:300;}
+.plan.pop .plan-desc{color:rgba(255,255,255,.38);}
+.plan-price{font-family:'Playfair Display',serif;font-size:2.25rem;font-weight:900;line-height:1;}
+.plan.pop .plan-price{color:var(--white);}
+.plan-price sup{font-size:.88rem;vertical-align:super;}
+.plan-cts{font-size:.82rem;font-weight:300;opacity:.38;}
+.plan-psub{font-size:.64rem;color:var(--lt);margin-top:.2rem;}
+.plan.pop .plan-psub{color:rgba(255,255,255,.3);}
+.plan-save{display:none;font-size:.62rem;font-weight:600;color:var(--gold);margin-top:.26rem;}
+.plan-div{border:none;border-top:1px solid rgba(8,15,30,.06);margin:0 1.35rem;}
+.plan.pop .plan-div{border-color:rgba(255,255,255,.07);}
+.plan-feats{list-style:none;padding:.95rem 1.35rem;flex:1;}
+.pf{font-size:.71rem;padding:.38rem 0;border-bottom:1px solid rgba(8,15,30,.04);display:flex;align-items:flex-start;gap:.45rem;line-height:1.45;}
+.pf:last-child{border-bottom:none;}
+.plan.pop .pf{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.05);}
+.ck{color:var(--gold);font-weight:700;flex-shrink:0;font-size:.78rem;margin-top:1px;}
+.dm{opacity:.28;}
+.ftag{font-size:.5rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;background:rgba(201,168,76,.1);color:var(--gold);padding:.07rem .28rem;border-radius:2px;margin-left:auto;flex-shrink:0;}
+.plan-foot{padding:0 1.35rem 1.35rem;}
+.plan-btn{width:100%;padding:.74rem;border:1px solid rgba(8,15,30,.18);background:transparent;font-size:.73rem;font-weight:700;letter-spacing:.05em;border-radius:3px;transition:all .2s;cursor:pointer;}
+.plan-btn:hover{background:var(--ink);color:var(--white);border-color:var(--ink);}
+.plan.pop .plan-btn{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+.plan.pop .plan-btn:hover{background:var(--gold2);}
+.ao{margin-top:3.75rem;padding-top:3rem;border-top:1px solid rgba(8,15,30,.08);}
+.ao-head{display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;margin-bottom:1.85rem;}
+.ao-filters{display:flex;gap:.38rem;flex-wrap:wrap;}
+.ao-f{padding:.32rem .78rem;border:1px solid rgba(8,15,30,.12);background:transparent;font-size:.64rem;font-weight:600;letter-spacing:.04em;color:var(--mid);border-radius:20px;transition:all .2s;cursor:pointer;}
+.ao-f.on,.ao-f:hover{background:var(--ink);color:var(--white);border-color:var(--ink);}
+.ao-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:1px;background:rgba(8,15,30,.06);border:1px solid rgba(8,15,30,.06);border-radius:8px;overflow:hidden;}
+.ao-card{background:var(--cream);padding:1.15rem;transition:all .2s;cursor:pointer;}
+.ao-card:hover{background:var(--white);transform:translateY(-2px);box-shadow:var(--sh);}
+.ao-card.hidden{display:none;}
+.ao-ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.48rem;}
+.ao-ico{font-size:1.1rem;}.ao-price{font-family:'Playfair Display',serif;font-size:.84rem;font-weight:700;}
+.ao-name{font-size:.74rem;font-weight:700;margin-bottom:.2rem;}
+.ao-desc{font-size:.67rem;color:var(--mid);line-height:1.6;font-weight:300;}
+.ao-tag{display:inline-block;margin-top:.55rem;font-size:.5rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.1rem .36rem;border-radius:3px;}
+.tg-cl{color:#2563eb;background:rgba(37,99,235,.08);}
+.tg-su{color:var(--gold3);background:rgba(201,168,76,.08);}
+.tg-or{color:#ea580c;background:rgba(234,88,12,.08);}
+.tg-co{color:#7c3aed;background:rgba(124,58,237,.08);}
+footer{background:var(--ink);padding:1.85rem 6%;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(201,168,76,.07);}
+.f-logo{font-family:'Playfair Display',serif;font-size:1.12rem;font-weight:700;color:var(--gold);cursor:pointer;}
+.f-logo b{color:var(--white);}
+.flinks{display:flex;gap:1.4rem;flex-wrap:wrap;justify-content:center;}
+.flinks a{color:rgba(255,255,255,.26);font-size:.68rem;transition:color .2s;}
+.flinks a:hover{color:var(--gold);}
+.fcopy{color:rgba(255,255,255,.14);font-size:.64rem;}
+#portal{min-height:100vh;background:var(--cream);}
+#auth-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--ink);padding-top:68px;}
+.auth{background:var(--white);width:100%;max-width:440px;padding:2.25rem;box-shadow:var(--sh2);border-radius:8px;}
+.auth-logo{font-family:'Playfair Display',serif;font-size:1.55rem;font-weight:700;color:var(--ink);}
+.auth-logo em{color:var(--gold);font-style:normal;}
+.auth-sub{font-size:.7rem;color:var(--mid);margin:.25rem 0 1.35rem;}
+.atabs{display:flex;background:rgba(8,15,30,.06);border-radius:4px;padding:3px;gap:2px;margin-bottom:1.5rem;}
+.atab{flex:1;padding:.48rem;border:none;font-size:.7rem;font-weight:700;letter-spacing:.05em;border-radius:3px;transition:all .2s;cursor:pointer;}
+.atab.on{background:var(--white);color:var(--ink);box-shadow:var(--sh);}
+.atab:not(.on){background:transparent;color:var(--mid);}
+.ag{margin-bottom:.72rem;}
+.ag label{display:block;font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.26rem;}
+.ag input,.ag select{width:100%;padding:.63rem .82rem;border:1px solid rgba(8,15,30,.12);font-family:'Inter',sans-serif;font-size:.82rem;color:var(--ink);background:var(--cream2);outline:none;transition:border-color .2s;border-radius:3px;}
+.ag input:focus,.ag select:focus{border-color:var(--gold);background:var(--white);}
+.a2{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;}
+.abtn{width:100%;padding:.82rem;font-size:.82rem;font-weight:700;letter-spacing:.04em;border:none;border-radius:3px;transition:all .2s;margin-top:.65rem;cursor:pointer;}
+.abtn.dk{background:var(--ink);color:var(--white);}
+.abtn.dk:hover{background:var(--ink2);}
+.abtn.gd{background:var(--gold);color:var(--ink);}
+.abtn.gd:hover{background:var(--gold2);}
+.prog{display:flex;gap:3px;margin-top:.95rem;}
+.pd{flex:1;height:2px;background:rgba(8,15,30,.1);border-radius:2px;transition:background .3s;}
+.pd.on{background:var(--gold);}
+.popt{display:flex;align-items:flex-start;gap:.65rem;padding:.82rem;border:1px solid rgba(8,15,30,.1);cursor:pointer;transition:all .2s;margin-bottom:.48rem;border-radius:4px;}
+.popt:hover{border-color:var(--gold3);}
+.popt.sel{border:2px solid var(--gold);background:rgba(201,168,76,.04);}
+.popt input[type=radio]{margin-top:3px;accent-color:var(--ink);flex-shrink:0;}
+.popt-name{font-size:.8rem;font-weight:700;}
+.popt-price{font-family:'Playfair Display',serif;font-size:.92rem;font-weight:900;margin-left:auto;white-space:nowrap;}
+.popt-desc{font-size:.64rem;color:var(--mid);margin-top:.16rem;line-height:1.45;font-weight:300;}
+.ord{background:var(--ink);padding:1.05rem;margin-bottom:1.05rem;border-radius:4px;}
+.ord-lbl{font-size:.53rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.55rem;}
+.ord-name{font-family:'Playfair Display',serif;font-size:.98rem;color:var(--white);font-weight:700;}
+.ord-unit{font-size:.68rem;color:rgba(255,255,255,.35);margin-bottom:.78rem;font-weight:300;}
+.ord-row{display:flex;justify-content:space-between;padding:.42rem 0;border-top:1px solid rgba(255,255,255,.07);font-size:.73rem;}
+.ord-k{color:rgba(255,255,255,.52);}.ord-v{color:var(--gold);font-weight:700;}
+.sec-note{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.14);border-radius:4px;padding:.65rem;font-size:.68rem;color:var(--mid);line-height:1.6;margin-bottom:.9rem;}
+#dash{display:none;}
+.dh{background:linear-gradient(135deg,var(--ink) 0%,var(--ink2) 100%);padding:2rem 5%;display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;border-bottom:1px solid rgba(201,168,76,.07);}
+.dh-greet{font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.32);margin-bottom:.28rem;}
+.dh-name{font-family:'Playfair Display',serif;font-size:1.72rem;color:var(--white);font-weight:700;}
+.dh-info{font-size:.72rem;color:rgba(255,255,255,.32);margin-top:.16rem;font-weight:300;}
+.dh-live{display:flex;align-items:center;gap:.38rem;}
+.dl-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);}
+.dl-txt{color:var(--green);font-size:.7rem;font-weight:600;}
+.db{padding:1.75rem 5%;}
+.dgrid{display:grid;grid-template-columns:2fr 1fr;gap:1.2rem;}
+.dc2{background:var(--white);border:1px solid rgba(8,15,30,.07);padding:1.45rem;margin-bottom:1.15rem;border-radius:8px;}
+.dc2-h{font-size:.88rem;font-weight:700;margin-bottom:1.05rem;display:flex;align-items:center;justify-content:space-between;}
+.dc2-tag{font-family:'Inter',sans-serif;font-size:.53rem;letter-spacing:.1em;text-transform:uppercase;background:var(--cream2);color:var(--mid);padding:.17rem .46rem;border-radius:3px;}
+.dc2.dk2{background:var(--ink);}
+.dc2.dk2 .dc2-h{color:var(--gold);}
+.pi2{display:grid;grid-template-columns:1fr 1fr;gap:1.05rem;margin-bottom:1.4rem;}
+.pil label{font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.32);display:block;margin-bottom:.18rem;}
+.pil span{font-size:.98rem;font-weight:600;color:var(--white);}
+.brow{display:flex;gap:.52rem;flex-wrap:wrap;}
+.bsm{padding:.44rem .92rem;font-size:.68rem;font-weight:700;letter-spacing:.04em;border:none;border-radius:3px;transition:all .2s;white-space:nowrap;cursor:pointer;}
+.bg{background:var(--gold);color:var(--ink);}.bg:hover{background:var(--gold2);}
+.bgh{background:transparent;color:rgba(255,255,255,.52);border:1px solid rgba(255,255,255,.12);}
+.bgh:hover{border-color:rgba(255,255,255,.3);color:var(--white);}
+.bpl{background:var(--cream2);color:var(--ink);border:1px solid rgba(8,15,30,.09);}
+.bpl:hover{border-color:var(--gold);}
+.day-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.48rem;margin-bottom:.88rem;}
+.day{padding:.7rem .28rem;text-align:center;border:1px solid rgba(8,15,30,.09);background:var(--cream);border-radius:4px;transition:all .2s;cursor:pointer;}
+.day:not(.off):hover,.day.sel{border-color:var(--gold);background:rgba(201,168,76,.07);}
+.day.off{opacity:.3;pointer-events:none;}
+.day-n{font-size:.55rem;text-transform:uppercase;letter-spacing:.07em;color:var(--mid);}
+.day-d{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;margin:.14rem 0;}
+.day-a{font-size:.55rem;color:var(--gold);}
+.hrow{display:flex;align-items:center;justify-content:space-between;padding:.7rem 0;border-bottom:1px solid rgba(8,15,30,.05);}
+.hrow:last-child{border-bottom:none;}
+.hdt{font-size:.68rem;color:var(--mid);font-weight:300;}
+.hdesc{font-size:.76rem;font-weight:500;}
+.hbadge{font-size:.54rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.14rem .46rem;background:rgba(34,197,94,.1);color:#16a34a;border-radius:3px;}
+.ubar{height:4px;background:var(--cream2);border-radius:2px;overflow:hidden;margin-top:.3rem;}
+.ufill{height:100%;background:var(--gold);transition:width .8s ease;}
+.umeta{display:flex;justify-content:space-between;font-size:.63rem;color:var(--mid);margin-top:.26rem;}
+.perk{display:flex;align-items:center;gap:.58rem;padding:.54rem 0;border-bottom:1px solid rgba(8,15,30,.05);font-size:.76rem;}
+.perk:last-child{border-bottom:none;}
+.perk-ico{font-size:.9rem;flex-shrink:0;}
+.ao-stat{font-size:.55rem;font-weight:700;letter-spacing:.07em;margin-left:auto;}
+.ao-on{color:#16a34a;}.ao-off{color:var(--lt);}
+.ao-shop{display:none;border-top:1px solid rgba(8,15,30,.06);margin-top:.76rem;padding-top:.76rem;}
+.asr{display:flex;align-items:center;justify-content:space-between;padding:.52rem 0;border-bottom:1px solid rgba(8,15,30,.05);font-size:.76rem;}
+.asr:last-child{border-bottom:none;}
+.asb{background:var(--ink);color:var(--white);border:none;font-size:.64rem;font-weight:700;padding:.22rem .62rem;border-radius:3px;transition:all .2s;cursor:pointer;}
+.asb:hover{background:var(--gold);color:var(--ink);}
+.sr-plans-label{font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);margin-bottom:.65rem;margin-top:.75rem;}
+.sr-plan-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem;margin-bottom:1.75rem;}
+.sr-plan-card{border:1px solid rgba(8,15,30,.12);border-radius:5px;padding:.75rem .6rem;text-align:center;cursor:pointer;transition:all .2s;background:var(--white);position:relative;}
+.sr-plan-card:hover{border-color:var(--gold);box-shadow:0 2px 12px rgba(201,168,76,.14);}
+.sr-plan-card.active{border:2px solid var(--gold);background:rgba(201,168,76,.05);}
+.sr-plan-card.active .spc-name{color:var(--gold3);}
+.sr-plan-check{position:absolute;top:.35rem;right:.45rem;font-size:.62rem;color:var(--gold);font-weight:700;opacity:0;transition:opacity .15s;}
+.sr-plan-card.active .sr-plan-check{opacity:1;}
+.spc-name{font-size:.7rem;font-weight:700;color:var(--ink);margin-bottom:.2rem;transition:color .2s;}
+.spc-price{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:900;color:var(--ink);line-height:1;}
+.spc-price sup{font-size:.55rem;vertical-align:super;}
+.spc-sub{font-size:.55rem;color:var(--lt);margin-top:.15rem;}
+.spc-feat{font-size:.58rem;color:var(--mid);margin-top:.35rem;line-height:1.45;font-weight:300;}
+.sr-plan-pop{background:var(--ink);}
+.sr-plan-pop .spc-name,.sr-plan-pop .spc-price,.sr-plan-pop .spc-sub,.sr-plan-pop .spc-feat{color:var(--white);}
+.sr-plan-pop .spc-price{color:var(--gold);}
+.sr-plan-pop .spc-sub{color:rgba(255,255,255,.38);}
+.sr-plan-pop .spc-feat{color:rgba(255,255,255,.5);}
+.sr-plan-pop:hover,.sr-plan-pop.active{border-color:var(--gold);}
+.sr-plan-more{font-size:.68rem;color:var(--mid);text-align:center;margin-bottom:.65rem;}
+.sr-plan-more a{color:var(--gold3);font-weight:600;cursor:pointer;text-decoration:underline;}
+.inf-sec{background:var(--ink2);padding:4.5rem 1.2rem 5rem;overflow:hidden;}
+.inf-hd{text-align:center;margin-bottom:2.8rem;}
+.stat-row{display:flex;flex-wrap:wrap;gap:1.2rem;justify-content:center;max-width:900px;margin:0 auto 3.5rem;}
+.stat-box{flex:1;min-width:160px;max-width:220px;background:var(--ink3);border-radius:12px;padding:1.5rem 1rem;text-align:center;border:1px solid rgba(201,168,76,.15);}
+.stat-box.gold-bg{background:var(--gold);border:none;}
+.stat-n{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:var(--gold);line-height:1;}
+.stat-box.gold-bg .stat-n{color:var(--ink);}
+.stat-u{font-size:.72rem;color:var(--cream2);margin-top:.4rem;font-weight:500;}
+.stat-box.gold-bg .stat-u{color:var(--ink);font-weight:700;}
+.stat-d{font-size:.68rem;color:var(--mid);margin-top:.3rem;font-weight:300;}
+.stat-box.gold-bg .stat-d{color:var(--ink3);font-weight:500;}
+
+.cmp-box{max-width:640px;margin:3.5rem auto 0;background:var(--ink3);border-radius:12px;padding:1.5rem 1.4rem;border:1px solid rgba(201,168,76,.12);}
+.cmp-lbl{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:1.1rem;}
+.cmp-rows{display:flex;flex-direction:column;gap:.7rem;}
+.cmp-r{display:flex;justify-content:space-between;align-items:center;}
+.cmp-k{font-size:.75rem;color:var(--mid);}
+.cmp-tags{display:flex;gap:.6rem;align-items:center;}
+.tag-bad{font-size:.72rem;background:rgba(239,68,68,.12);color:#f87171;padding:.2rem .6rem;border-radius:4px;}
+.tag-good{font-size:.72rem;background:rgba(201,168,76,.15);color:var(--gold);padding:.2rem .6rem;border-radius:4px;}
+.rev-sec{background:var(--ink);padding:4.5rem 1.2rem 5rem;}
+.rev-hd{text-align:center;margin-bottom:2.8rem;}
+.rev-grid{display:flex;flex-wrap:wrap;gap:1.1rem;justify-content:center;max-width:960px;margin:0 auto 2.5rem;}
+.rev-card{flex:1;min-width:260px;max-width:300px;background:var(--ink2);border-radius:12px;padding:1.4rem;border:1px solid rgba(201,168,76,.1);}
+.rev-card.feat{border-color:rgba(201,168,76,.2);box-shadow:0 0 24px rgba(201,168,76,.08);}
+.rev-stars{color:var(--gold);font-size:.9rem;margin-bottom:.7rem;}
+.rev-quote{font-size:.8rem;color:var(--cream2);line-height:1.75;font-weight:300;margin-bottom:1rem;}
+.rev-auth{display:flex;align-items:center;gap:.6rem;}
+.rev-av{width:34px;height:34px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.8rem;color:var(--ink);}
+.rev-name{font-size:.74rem;font-weight:600;color:var(--cream);}
+.rev-plan{font-size:.65rem;color:var(--mid);}
+.trust-bar{text-align:center;margin-top:1.2rem;}
+.trust-inner{display:inline-flex;flex-wrap:wrap;gap:1.5rem;justify-content:center;align-items:center;background:var(--ink2);border-radius:10px;padding:.9rem 1.6rem;border:1px solid rgba(201,168,76,.1);}
+.trust-stat{text-align:center;}
+.trust-n{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;color:var(--gold);}
+.trust-l{font-size:.62rem;color:var(--mid);}
+.trust-div{width:1px;height:32px;background:rgba(201,168,76,.2);}
+.cta-sec{text-align:center;margin-top:2.8rem;}
+.cta-sub{font-size:.82rem;color:var(--mid);margin-bottom:1rem;}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .55s ease,transform .55s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+.reveal-l{opacity:0;transform:translateX(-18px);transition:opacity .55s ease,transform .55s ease;}
+.reveal-l.vis{opacity:1;transform:translateX(0);}
+.reveal-r{opacity:0;transform:translateX(18px);transition:opacity .55s ease,transform .55s ease;}
+.reveal-r.vis{opacity:1;transform:translateX(0);}
+/* Sticky mobile CTA */
+.sticky-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:300;background:var(--gold);padding:.85rem 1.5rem;display:flex;align-items:center;justify-content:space-between;box-shadow:0 -4px 20px rgba(0,0,0,.2);transform:translateY(100%);transition:transform .3s ease;}
+.sticky-cta.show{transform:translateY(0);}
+.sticky-cta-txt{font-size:.78rem;font-weight:700;color:var(--ink);}
+.sticky-cta-sub{font-size:.62rem;color:rgba(8,15,30,.6);margin-top:.1rem;}
+.sticky-cta-btn{background:var(--ink);color:var(--gold);border:none;padding:.6rem 1.2rem;border-radius:4px;font-size:.76rem;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0;}
+/* Trust badges */
+.trust-badges{display:flex;flex-wrap:wrap;gap:.65rem;justify-content:center;margin-top:.85rem;}
+.trust-badge{font-size:.68rem;color:rgba(255,255,255,.45);display:flex;align-items:center;gap:.3rem;}
+/* FAQ */
+.faq-sec{background:var(--ink);padding:4rem 6%;}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.07);}
+.faq-q{width:100%;background:transparent;border:none;color:var(--white);font-family:'Inter',sans-serif;font-size:.86rem;font-weight:600;text-align:left;padding:1.1rem 0;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;}
+.faq-q:hover{color:var(--gold);}
+.faq-icon{font-size:.9rem;color:var(--gold);flex-shrink:0;transition:transform .25s;}
+.faq-item.open .faq-icon{transform:rotate(45deg);}
+.faq-a{display:none;font-size:.82rem;color:rgba(255,255,255,.45);line-height:1.8;padding-bottom:1rem;font-weight:300;}
+.faq-item.open .faq-a{display:block;}
+/* Social proof ticker */
+.social-proof{display:inline-flex;align-items:center;gap:.5rem;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.15);border-radius:20px;padding:.3rem .85rem;font-size:.68rem;color:var(--green);font-weight:600;margin-bottom:1.2rem;}
+.sp-pulse{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);animation:pulse 2s infinite;}
+@media(max-width:1100px){.pg{grid-template-columns:repeat(2,1fr);}.plan{border-bottom:1px solid rgba(8,15,30,.07);}}
+@media(max-width:900px){nav{padding:0 1.1rem;}.n-mid,.n-ghost,.n-cta{display:none;}.n-ham{display:flex;}#home{grid-template-columns:1fr;min-height:auto;}#home::after{display:none;}.split-res,.split-part{min-height:100vh;padding:6rem 6% 3.5rem;}.rh{grid-template-columns:1fr;}.rh-l{padding:5.5rem 6% 3rem;}.rh-r{display:none;}.how,.plans{padding:3.5rem 6%;}.steps{grid-template-columns:1fr 1fr;}.pg{grid-template-columns:1fr;}.ph{flex-direction:column;align-items:flex-start;}.ao-grid{grid-template-columns:1fr;}footer{flex-direction:column;gap:1rem;padding:1.75rem 6%;text-align:center;}.flinks{justify-content:center;}.dh,.db{padding:1.5rem 6%;}.dgrid{grid-template-columns:1fr;}.day-grid{grid-template-columns:repeat(2,1fr);}.auth{margin:1rem;max-width:100%;border-radius:6px;}.a2{grid-template-columns:1fr;}.stat-row{gap:.7rem;}.rev-grid{flex-direction:column;align-items:center;}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="n-logo" onclick="goHome()">Suite<b>Wash</b></div>
+  <ul class="n-mid" id="nav-mid">
+    <li><a href="#" onclick="goHome();return false;" id="nav-home" style="display:none">Home</a></li>
+    <li><a href="#how" onclick="navTo('how');return false;" id="nav-how" style="display:none">How It Works</a></li>
+    <li><a href="#plans" onclick="navTo('plans');return false;" id="nav-plans" style="display:none">Plans</a></li>
+    <li><a href="property.html" id="nav-partners">Property Partners</a></li>
+  </ul>
+  <div class="n-r">
+    <button class="n-ghost" id="nav-signin" onclick="showPortal()" style="display:none">Sign In</button>
+    <button class="n-cta" id="nav-getstarted" onclick="startSignup('com')" style="display:none">Get Started</button>
+    <button class="n-ham" onclick="toggleNav()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<!-- Sticky mobile CTA -->
+<div class="sticky-cta" id="sticky-cta">
+  <div><div class="sticky-cta-txt">Start your laundry subscription</div><div class="sticky-cta-sub">From $59.99/mo &middot; Cancel anytime</div></div>
+  <button class="sticky-cta-btn" onclick="startSignup('com')">Get Started &rarr;</button>
+</div>
+<div class="mob-nav" id="mob-nav">
+  <div class="mob-section res">For Residents</div>
+  <a href="#" onclick="closeNav();enterResident();"><span class="mob-ico">&#x1F3E0;</span> Resident Home</a>
+  <a href="#how" onclick="closeNav();navTo('how');"><span class="mob-ico">&#x1F4CB;</span> How It Works</a>
+  <a href="#plans" onclick="closeNav();navTo('plans');"><span class="mob-ico">&#x1F4B2;</span> View Plans &amp; Pricing</a>
+  <div class="mob-divider"></div>
+  <div class="mob-section part">For Property Partners</div>
+  <a href="property.html"><span class="mob-ico">&#x1F3E2;</span> Property Partner Program</a>
+  <div class="mob-divider"></div>
+  <div class="mob-ctas">
+    <button class="mob-gold" onclick="closeNav();startSignup('com');">Start My Subscription &rarr;</button>
+    <button class="mob-outline" onclick="closeNav();showPortal();">Sign In</button>
+  </div>
+</div>
+<div id="home" style="position:relative;">
+  <div class="split-res" onclick="enterResident()">
+    <div class="split-res-label">For Residents</div>
+    <div class="sr-chip"><span class="sr-num"></span>Residents &bull; Detroit Metro</div>
+    <h2 class="sr-headline">Laundry that comes<br>to <em>your door.</em></h2>
+    <p class="sr-body">Fresh, folded clothes delivered back to your door on a flat monthly subscription. No machines. No trips downstairs.</p>
+    <div class="sr-props">
+      <div class="sr-prop"><div class="sr-prop-ico">&#x1F9BA;</div>Pickup from your door</div>
+      <div class="sr-prop"><div class="sr-prop-ico">&#x1F4C5;</div>Flat monthly rate</div>
+      <div class="sr-prop"><div class="sr-prop-ico">&#x23F1;</div>48-hour turnaround</div>
+    </div>
+    <p class="sr-plans-label">Choose a plan to get started</p>
+    <div class="sr-plan-grid" id="sr-plan-grid" onclick="event.stopPropagation()">
+      <div class="sr-plan-card" id="spc-ess" onclick="selectSplitPlan('ess',this)"><span class="sr-plan-check">&#x2713;</span><div class="spc-name">Essential</div><div class="spc-price"><sup>$</sup>59<span style="font-size:.7rem;font-weight:400;opacity:.55">.99</span></div><div class="spc-sub">/mo</div></div>
+      <div class="sr-plan-card sr-plan-pop active" id="spc-com" onclick="selectSplitPlan('com',this)"><span class="sr-plan-check">&#x2713;</span><div class="spc-name">Comfort</div><div class="spc-price"><sup>$</sup>89<span style="font-size:.7rem;font-weight:400;opacity:.5">.99</span></div><div class="spc-sub">/mo</div></div>
+      <div class="sr-plan-card" id="spc-suite" onclick="selectSplitPlan('suite',this)"><span class="sr-plan-check">&#x2713;</span><div class="spc-name">Suite</div><div class="spc-price"><sup>$</sup>119<span style="font-size:.7rem;font-weight:400;opacity:.55">.99</span></div><div class="spc-sub">/mo</div></div>
+    </div>
+    <p class="sr-plan-more" onclick="event.stopPropagation()">Not sure? <a onclick="enterResident();setTimeout(()=>navTo('plans'),120)">See full plan details &rarr;</a></p>
+    <button class="sr-cta" id="sr-cta-btn" onclick="event.stopPropagation();startSignup(selectedSplitPlan)">Start My Subscription <span class="sr-cta-arrow">&rarr;</span></button>
+<div class="trust-badges" onclick="event.stopPropagation()">
+  <span class="trust-badge" style="color:var(--mid);">&#x1F512; Secure via Stripe</span>
+  <span class="trust-badge" style="color:var(--mid);">&#x1F4C5; Cancel anytime</span>
+  <span class="trust-badge" style="color:var(--mid);">&#x1F3E0; Detroit area only</span>
+</div>
+    <p class="sr-link">Already a member? <a onclick="event.stopPropagation();showPortal()">Sign in &rarr;</a></p>
+  </div>
+  <div class="split-part" onclick="window.location.href='property.html'">
+    <div class="split-part-label">For Property Partners</div>
+    <div class="sp-chip"><span class="sp-dot"></span>Property Partners &bull; Detroit Metro</div>
+    <h2 class="sp-headline">Turn laundry into<br>a <em>revenue line.</em></h2>
+    <p class="sp-body">SuiteWash installs at zero cost. We run all operations &mdash; you earn a monthly revenue share and elevate your amenity package overnight.</p>
+    <div class="sp-stats">
+      <div class="sp-stat"><div class="sp-stat-n" data-count="0" data-suffix="">$0</div><div class="sp-stat-l">Setup Cost</div></div>
+      <div class="sp-stat"><div class="sp-stat-n" data-count="77" data-suffix="%">77%</div><div class="sp-stat-l">Avg Adoption</div></div>
+      <div class="sp-stat"><div class="sp-stat-n" data-count="22" data-suffix="K">$22K</div><div class="sp-stat-l">Avg Annual</div></div>
+    </div>
+    <button class="sp-cta" onclick="event.stopPropagation();window.location.href='property.html'">View Partner Program <span class="sp-cta-arrow">&rarr;</span></button>
+    <p class="sp-link"><a onclick="event.stopPropagation()">No commitment &bull; 48-hour launch &bull; Zero setup cost</a></p>
+  </div>
+</div>
+<div id="resident">
+<section class="rh">
+  <div class="rh-l">
+    <div class="social-proof"><span class="sp-pulse"></span>47 Detroit residents subscribed this month</div>
+<div class="rh-chip"><span class="rh-chip-dot"></span>Managed Laundry &bull; Detroit Metro</div>
+    <h1 class="rh-title">Laundry that comes<br>to <em>your door.</em></h1>
+    <p class="rh-sub">SuiteWash picks up your laundry, washes, folds, and delivers back to your door &mdash; on a flat monthly subscription.</p>
+    <div class="rh-acts">
+      <button class="btn-gold" onclick="startSignup('com')">Start My Subscription <span class="btn-gold-arrow">&rarr;</span></button>
+      <button class="btn-ghost" onclick="navTo('plans')">View Plans</button>
+    </div>
+  </div>
+  <div class="rh-r">
+    <div class="dash-card">
+      <div class="dc-top"><span class="dc-lbl">Live Dashboard</span><span class="dc-live"><span class="dc-dot"></span>Active</span></div>
+      <div class="dc-prop">Maple Lofts &mdash; Detroit</div>
+      <div class="dc-row"><span class="dc-k">Active Subscribers</span><span class="dc-v">48 / 62 units</span></div>
+      <div class="dc-row"><span class="dc-k">Revenue Share</span><span class="dc-v gold">$1,840 / mo</span></div>
+      <div class="dc-row"><span class="dc-k">Next Pickup</span><span class="dc-v">Tue &amp; Fri</span></div>
+      <div class="dc-row"><span class="dc-k">Resident Rating</span><span class="dc-v green">4.9 &#9733;</span></div>
+      <div class="dc-ms">
+        <div class="dc-m"><div class="dc-m-n">77%</div><div class="dc-m-l">Adoption</div></div>
+        <div class="dc-m"><div class="dc-m-n">$0</div><div class="dc-m-l">Setup</div></div>
+        <div class="dc-m"><div class="dc-m-n">48h</div><div class="dc-m-l">Delivery</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="mq"><div class="mq-track"><span class="mq-i">Wash &amp; Fold</span><span class="mq-d"> &middot; </span><span class="mq-i">Door Pickup</span><span class="mq-d"> &middot; </span><span class="mq-i">Door Delivery</span><span class="mq-d"> &middot; </span><span class="mq-i">48-Hour Turnaround</span><span class="mq-d"> &middot; </span><span class="mq-i">No Equipment Needed</span><span class="mq-d"> &middot; </span><span class="mq-i">Detroit Metro</span><span class="mq-d"> &middot; </span><span class="mq-i">Wash &amp; Fold</span><span class="mq-d"> &middot; </span><span class="mq-i">Door Pickup</span><span class="mq-d"> &middot; </span><span class="mq-i">Door Delivery</span><span class="mq-d"> &middot; </span><span class="mq-i">48-Hour Turnaround</span><span class="mq-d"> &middot; </span><span class="mq-i">No Equipment Needed</span><span class="mq-d"> &middot; </span><span class="mq-i">Detroit Metro</span><span class="mq-d"> &middot; </span></div></div>
+<section class="how" id="how">
+  <p class="ey reveal">The Process</p>
+  <h2 class="sh reveal" style="color:var(--white)">Simple as leaving a bag at your door.</h2>
+  <div class="steps">
+    <div class="step reveal"><div class="step-n">01</div><div class="step-title">Schedule a Pickup</div><p class="step-txt">Choose your pickup day in the portal. We sync with your building schedule automatically.</p></div>
+    <div class="step reveal"><div class="step-n">02</div><div class="step-title">Leave It at Your Door</div><p class="step-txt">Bag it and set it out by 8 AM. No trips downstairs, no machines, no hassle.</p></div>
+    <div class="step reveal"><div class="step-n">03</div><div class="step-title">We Handle Everything</div><p class="step-txt">Washed, dried, and folded at a nearby facility using your exact preferences.</p></div>
+    <div class="step reveal"><div class="step-n">04</div><div class="step-title">Delivered Back Clean</div><p class="step-txt">Fresh folded laundry back at your door within 48 hours. Every cycle, every month.</p></div>
+  </div>
+</section>
+<section class="plans" id="plans">
+  <div class="ph">
+    <div class="reveal"><p class="ey">Resident Plans</p><h2 class="sh" style="margin-bottom:.3rem;">One flat rate. All month long.</h2><p style="font-size:.83rem;color:var(--mid);line-height:1.8;font-weight:300;">Three tiers from essential to unlimited. No per-load surprises.</p></div>
+    <div style="display:flex;align-items:center;gap:.38rem;" class="reveal"><div class="btog"><button class="to on" id="btn-mo" onclick="setBilling('mo')">Monthly</button><button class="to" id="btn-yr" onclick="setBilling('yr')">Annual</button></div><span class="save-chip">Save 15%</span></div>
+  </div>
+  <div class="pg">
+    <div class="plan" onclick="startSignup('ess')"><div class="plan-accent" style="background:#374151"></div><div class="plan-body"><p class="plan-tier">Singles &amp; Light Use</p><p class="plan-name">Essential</p><p class="plan-desc">Wash &amp; fold pickup without door delivery.</p><div class="plan-price"><sup>$</sup><span class="pv" data-mo="59" data-yr="50">59</span><span class="plan-cts">.99</span></div><p class="plan-psub">per month &middot; billed <span class="bl">monthly</span></p><div class="plan-save" id="sv-ess">$599/yr &mdash; save $120</div></div><hr class="plan-div"/><ul class="plan-feats"><li class="pf"><span class="ck">&#x2713;</span>2 pickups per month</li><li class="pf"><span class="ck">&#x2713;</span>Up to 20 lbs per pickup</li><li class="pf"><span class="ck">&#x2713;</span>Wash &amp; fold standard</li><li class="pf"><span class="ck">&#x2713;</span>48-hour turnaround</li><li class="pf dm"><span class="ck" style="color:var(--lt)">&#x2013;</span>Door delivery</li><li class="pf dm"><span class="ck" style="color:var(--lt)">&#x2013;</span>Priority scheduling</li></ul><div class="plan-foot"><button class="plan-btn" onclick="event.stopPropagation();startSignup('ess')">Get Started</button></div></div>
+    <div class="plan pop" onclick="startSignup('com')"><div class="plan-accent" style="background:var(--gold)"></div><div class="plan-badge">Most Popular</div><div class="plan-body"><p class="plan-tier">Professionals &amp; Couples</p><p class="plan-name">Comfort</p><p class="plan-desc">Full door-to-door &mdash; pickup, wash, fold, and delivery every cycle.</p><div class="plan-price"><sup>$</sup><span class="pv" data-mo="89" data-yr="76">89</span><span class="plan-cts">.99</span></div><p class="plan-psub">per month &middot; billed <span class="bl">monthly</span></p><div class="plan-save" id="sv-com">$911/yr &mdash; save $168</div></div><hr class="plan-div"/><ul class="plan-feats"><li class="pf"><span class="ck">&#x2713;</span>4 pickups per month</li><li class="pf"><span class="ck">&#x2713;</span>Up to 30 lbs per pickup</li><li class="pf"><span class="ck">&#x2713;</span>Premium wash &amp; fold</li><li class="pf"><span class="ck">&#x2713;</span><strong>Door pickup &amp; delivery</strong></li><li class="pf"><span class="ck">&#x2713;</span>Priority scheduling</li><li class="pf"><span class="ck">&#x2713;</span>48-hour turnaround</li></ul><div class="plan-foot"><button class="plan-btn" onclick="event.stopPropagation();startSignup('com')">Start Comfort Plan</button></div></div>
+    <div class="plan" onclick="startSignup('suite')"><div class="plan-accent" style="background:var(--gold)"></div><div class="plan-body"><p class="plan-tier">Families &amp; Households</p><p class="plan-name">Suite</p><p class="plan-desc">Unlimited pickups, highest weight limit, dedicated attendant.</p><div class="plan-price"><sup>$</sup><span class="pv" data-mo="119" data-yr="101">119</span><span class="plan-cts">.99</span></div><p class="plan-psub">per month &middot; billed <span class="bl">monthly</span></p><div class="plan-save" id="sv-suite">$1,223/yr &mdash; save $216</div></div><hr class="plan-div"/><ul class="plan-feats"><li class="pf"><span class="ck">&#x2713;</span>Unlimited pickups</li><li class="pf"><span class="ck">&#x2713;</span>Up to 50 lbs per pickup</li><li class="pf"><span class="ck">&#x2713;</span>Premium wash &amp; fold</li><li class="pf"><span class="ck">&#x2713;</span>Door pickup &amp; delivery</li><li class="pf"><span class="ck">&#x2713;</span>Dedicated attendant</li><li class="pf"><span class="ck">&#x2713;</span>Rush/same-day <span class="ftag">Add-on</span></li></ul><div class="plan-foot"><button class="plan-btn" onclick="event.stopPropagation();startSignup('suite')">Get Suite Plan</button></div></div>
+  </div>
+</section>
+<section class="inf-sec">
+  <div class="inf-hd reveal"><p class="ey">By The Numbers</p><h2 class="sh">Why residents choose SuiteWash</h2><p style="font-size:.83rem;color:var(--mid);font-weight:300;margin-top:.4rem;">The time and money math is simple.</p></div>
+  <div class="stat-row reveal">
+    <div class="stat-box"><div class="stat-n" data-count="4.5" data-suffix="">4.5</div><div class="stat-u">hrs/week</div><div class="stat-d">avg time on laundry</div></div>
+    <div class="stat-box"><div class="stat-n" data-count="234" data-suffix="">234</div><div class="stat-u">hrs/year</div><div class="stat-d">given back to members</div></div>
+    <div class="stat-box gold-bg"><div class="stat-n" data-count="3" data-suffix="">$3</div><div class="stat-u">/day</div><div class="stat-d">less than a coffee</div></div>
+    <div class="stat-box"><div class="stat-n" data-count="48" data-suffix="h">48h</div><div class="stat-u">turnaround</div><div class="stat-d">pickup to delivery</div></div>
+  </div>
+  <div class="cmp-box reveal">
+    <p class="cmp-lbl">SuiteWash vs. the laundromat</p>
+    <div class="cmp-rows">
+      <div class="cmp-r"><span class="cmp-k">Time cost</span><div class="cmp-tags"><span class="tag-bad">4+ hrs</span><span class="tag-good">5 min</span></div></div>
+      <div class="cmp-r"><span class="cmp-k">Equipment</span><div class="cmp-tags"><span class="tag-bad">Shared machines</span><span class="tag-good">Nothing</span></div></div>
+      <div class="cmp-r"><span class="cmp-k">Your effort</span><div class="cmp-tags"><span class="tag-bad">Sort, wash, dry, fold</span><span class="tag-good">Bag it. Done.</span></div></div>
+      <div class="cmp-r"><span class="cmp-k">Cost</span><div class="cmp-tags"><span class="tag-bad">Variable per load</span><span class="tag-good">Flat monthly</span></div></div>
+    </div>
+  </div>
+</section>
+<section class="faq-sec">
+  <div style="max-width:680px;margin:0 auto;">
+    <p class="ey reveal">Common Questions</p>
+    <h2 class="sh reveal" style="color:var(--white);margin-bottom:2rem;">Everything you need to know.</h2>
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">What if I'm not home during pickup?<span class="faq-icon">+</span></button><div class="faq-a">Leave your bag outside your door before 8 AM. We collect, wash, fold, and return within 48 hours. No interaction needed.</div></div>
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">What about delicates or special garments?<span class="faq-icon">+</span></button><div class="faq-a">Add instructions during signup (e.g. "air dry delicates"). We follow your preferences every cycle. Update anytime from your dashboard.</div></div>
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">Can I pause or cancel my subscription?<span class="faq-icon">+</span></button><div class="faq-a">Cancel anytime from your dashboard or through the Stripe billing portal. No fees, no lock-in. Billed monthly.</div></div>
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">What detergent do you use?<span class="faq-icon">+</span></button><div class="faq-a">Premium hypoallergenic detergent as standard. Add preferences in your profile. Subscribe to the Detergent Bundle add-on to supply your own pods.</div></div>
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">What if something gets damaged or lost?<span class="faq-icon">+</span></button><div class="faq-a">We treat every garment with care. Our Garment Protection add-on covers up to $150 per incident. Email hello@suitewashandfold.com and we'll make it right.</div></div>
+    <div class="faq-item reveal"><button class="faq-q" onclick="toggleFAQ(this)">Is my building eligible?<span class="faq-icon">+</span></button><div class="faq-a">SuiteWash serves select Detroit metro apartment buildings. Your building needs to be a registered partner. Click "Check My Building" or ask your property manager.</div></div>
+  </div>
+</section>
+<section class="rev-sec">
+  <div class="rev-hd reveal"><p class="ey">Early Members</p><h2 class="sh">What residents are saying</h2><p style="font-size:.83rem;color:var(--mid);font-weight:300;margin-top:.4rem;">Real feedback from our pilot community in metro Detroit.</p></div>
+  <div class="rev-grid reveal">
+    <div class="rev-card"><div class="rev-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div><p class="rev-quote">"I work long hours and laundry was always the thing I put off. SuiteWash changed that completely &mdash; it just gets done now. Worth every penny."</p><div class="rev-auth"><div class="rev-av">JM</div><div><div class="rev-name">Jordan M.</div><div class="rev-plan">Comfort Plan &middot; Detroit, MI</div></div></div></div>
+    <div class="rev-card feat"><div class="rev-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div><p class="rev-quote">"The 48-hour turnaround is real. Clothes come back neatly folded, exactly how I asked. It feels like having a service that actually pays attention."</p><div class="rev-auth"><div class="rev-av">AT</div><div><div class="rev-name">Amara T.</div><div class="rev-plan">Suite Plan &middot; Sterling Heights, MI</div></div></div></div>
+    <div class="rev-card"><div class="rev-stars">&#x2605;&#x2605;&#x2605;&#x2605;&#x2605;</div><p class="rev-quote">"Scheduling in the app is genuinely easy. I pick a day, leave the bag, and it shows up back at my door folded. I've recommended it to two neighbors already."</p><div class="rev-auth"><div class="rev-av">DR</div><div><div class="rev-name">Destiny R.</div><div class="rev-plan">Comfort Plan &middot; Detroit, MI</div></div></div></div>
+  </div>
+  <div class="trust-bar reveal">
+    <div class="trust-inner">
+      <div class="trust-stat"><div class="trust-n">5.0</div><div class="trust-l">avg rating</div></div>
+      <div class="trust-div"></div>
+      <div class="trust-stat"><div class="trust-n">100%</div><div class="trust-l">on-time delivery</div></div>
+      <div class="trust-div"></div>
+      <div class="trust-stat"><div class="trust-n">48h</div><div class="trust-l">avg turnaround</div></div>
+      <div class="trust-div"></div>
+      <div class="trust-stat"><div class="trust-n">Detroit</div><div class="trust-l">metro area</div></div>
+    </div>
+  </div>
+  <!-- FIX 2: "Check My Building" — was class="cta-btn" onclick="showPortal()" — fixed to btn-gold + startSignup -->
+  <div class="cta-sec reveal">
+    <p class="cta-sub">Available in select Detroit-area apartment buildings.</p>
+    <button class="btn-gold" onclick="startSignup('com')">Check My Building &rarr;</button>
+  </div>
+</section>
+<footer>
+  <div class="f-logo" onclick="goHome()">Suite<b>Wash</b></div>
+  <div class="flinks">
+    <a href="#" onclick="goHome();return false;">Home</a>
+    <a href="#plans" onclick="navTo('plans');return false;">Plans</a>
+    <a href="property.html">Property Partners</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+    <a href="mailto:hello@suitewashandfold.com">Contact</a>
+    <a href="#" onclick="showPortal();return false;">Resident Login</a>
+  </div>
+  <p class="fcopy">&copy; 2026 SuiteWash &middot; Detroit, MI</p>
+</footer>
+</div>
+<div id="portal">
+<div id="auth-wrap">
+  <div class="auth">
+    <div class="auth-logo">Suite<em>Wash</em></div>
+    <p class="auth-sub" id="auth-sub">Resident Portal</p>
+    <div class="atabs"><button class="atab on" id="tab-in" onclick="switchTab('in')">Sign In</button><button class="atab" id="tab-up" onclick="switchTab('up')">Create Account</button></div>
+    <div id="f-in">
+      <div class="ag"><label>Email</label><input type="email" id="si-email" placeholder="you@email.com"/></div>
+      <div class="ag"><label>Password</label><input type="password" id="si-password" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"/></div>
+      <div id="signin-error" style="display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:3px;padding:.55rem .75rem;font-size:.71rem;color:#dc2626;margin-bottom:.55rem;"></div>
+      <button class="abtn dk" id="signin-btn" onclick="signIn()">Sign In</button>
+      <p style="text-align:center;margin-top:.7rem;"><a href="#" onclick="showForgotPassword();return false;" style="font-size:.71rem;color:var(--mid);text-decoration:underline;">Forgot password?</a></p>
+    </div>
+    <div id="f-forgot" style="display:none"><p style="font-size:.67rem;color:var(--mid);margin-bottom:.88rem;font-weight:300;">Enter your email and we'll send you a reset link.</p><div class="ag"><label>Email</label><input type="email" id="forgot-email" placeholder="you@email.com"/></div><div id="forgot-error" style="display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:3px;padding:.55rem .75rem;font-size:.71rem;color:#dc2626;margin-bottom:.55rem;"></div><div id="forgot-success" style="display:none;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);border-radius:3px;padding:.55rem .75rem;font-size:.71rem;color:#16a34a;margin-bottom:.55rem;"></div><button class="abtn dk" id="forgot-btn" onclick="sendResetEmail()">Send Reset Link</button><p style="text-align:center;margin-top:.7rem;"><a href="#" onclick="switchTab('in');return false;" style="font-size:.71rem;color:var(--mid);text-decoration:underline;">Back to Sign In</a></p></div>
+    <div id="f-reset" style="display:none"><p style="font-size:.67rem;color:var(--mid);margin-bottom:.88rem;font-weight:300;">Choose a new password for your account.</p><div class="ag"><label>New Password</label><input type="password" id="reset-password" placeholder="Min. 8 characters"/></div><div id="reset-error" style="display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:3px;padding:.55rem .75rem;font-size:.71rem;color:#dc2626;margin-bottom:.55rem;"></div><button class="abtn dk" id="reset-btn" onclick="setNewPassword()">Set New Password</button></div>
+    <div id="f-s1" style="display:none"><p style="font-size:.67rem;color:var(--mid);margin-bottom:.88rem;font-weight:300;">Step 1 of 3 &mdash; Your details</p><div class="a2"><div class="ag"><label>First Name</label><input type="text" placeholder="Alex" id="su-fn"/></div><div class="ag"><label>Last Name</label><input type="text" placeholder="Johnson" id="su-ln"/></div></div><div class="ag"><label>Email</label><input type="email" id="su-email" placeholder="alex@email.com"/></div><div class="ag"><label>Password</label><input type="password" id="su-password" placeholder="Min. 8 characters"/></div><div class="ag"><label>Phone</label><input type="tel" id="su-phone" placeholder="(313) 555-0100"/></div><div id="step1-error" style="display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:3px;padding:.55rem .75rem;font-size:.71rem;color:#dc2626;margin-bottom:.55rem;"></div><button class="abtn dk" onclick="validateStep1()">Continue &rarr;</button><div class="prog"><div class="pd on"></div><div class="pd"></div><div class="pd"></div></div></div>
+    <div id="f-s2" style="display:none"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.88rem;">
+  <p style="font-size:.67rem;color:var(--mid);font-weight:300;">Step 2 of 3 &mdash; Choose your plan</p>
+  <span style="font-size:.6rem;color:var(--lt);">~20 sec left</span>
+</div><div class="popt" id="po-ess" onclick="pickP('ess')"><input type="radio" name="pl" value="ess"/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Essential</span><span class="popt-price">$59.99/mo</span></div><p class="popt-desc">Wash &amp; fold &middot; 2&times;/mo &middot; Up to 20 lbs</p></div></div><div class="popt sel" id="po-com" onclick="pickP('com')"><input type="radio" name="pl" value="com" checked/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Comfort <span style="font-size:.5rem;background:var(--gold);color:var(--ink);padding:.07rem .32rem;border-radius:2px;font-weight:800;">POPULAR</span></span><span class="popt-price">$89.99/mo</span></div><p class="popt-desc">Door pickup &amp; delivery &middot; 4&times;/mo &middot; Up to 30 lbs</p></div></div><div class="popt" id="po-suite" onclick="pickP('suite')"><input type="radio" name="pl" value="suite"/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Suite</span><span class="popt-price">$119.99/mo</span></div><p class="popt-desc">Unlimited pickups &middot; Dedicated attendant</p></div></div><div style="display:flex;gap:.52rem;margin-top:.82rem;"><button onclick="gS(1)" style="flex:1;padding:.74rem;background:transparent;border:1px solid rgba(8,15,30,.12);font-family:'Inter',sans-serif;font-weight:600;font-size:.76rem;color:var(--mid);border-radius:3px;">&larr; Back</button><button class="abtn dk" style="flex:2;margin-top:0;" onclick="gS(3)">Continue &rarr;</button></div><div class="prog"><div class="pd on"></div><div class="pd on"></div><div class="pd"></div></div></div>
+    <div id="f-s3" style="display:none"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.88rem;">
+  <p style="font-size:.67rem;color:var(--mid);font-weight:300;">Step 3 of 3 &mdash; Your unit</p>
+  <span style="font-size:.6rem;color:var(--green);">Almost done &#x2713;</span>
+</div><div class="a2"><div class="ag"><label>Building</label><input type="text" placeholder="Maple Lofts" id="su-bldg"/></div><div class="ag"><label>Unit #</label><input type="text" placeholder="4B" id="su-unit"/></div></div><div class="ag"><label>City</label><input type="text" placeholder="Detroit" id="su-city"/></div><div class="ord"><div class="ord-lbl">Order Summary</div><div class="ord-name" id="os-n"></div><div class="ord-unit" id="os-u"></div><div class="ord-row"><span class="ord-k" id="os-plan"></span><span class="ord-v" id="os-price"></span></div></div><div class="ag"><label>Wash Preference</label><select id="su-wash"><option>Warm wash, low heat dry</option><option>Cold wash, low heat dry</option><option>Cold wash, air dry</option></select></div><div class="ag"><label>Scent</label><select id="su-scent"><option>Lavender</option><option>Fresh Linen</option><option>Unscented</option><option>Ocean Breeze</option></select></div><div class="ag"><label>Special Instructions</label><input type="text" id="su-notes" placeholder="e.g. Hang dress shirts, separate darks"/></div><div style="background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);border-radius:6px;padding:.82rem 1rem;margin-bottom:.9rem;">
+  <label style="display:flex;align-items:flex-start;gap:.65rem;cursor:pointer;">
+    <input type="checkbox" id="addon-scent-upsell" style="margin-top:3px;accent-color:var(--gold);flex-shrink:0;"/>
+    <div>
+      <div style="font-size:.78rem;font-weight:700;color:var(--ink);">&#x1F338; Add Scent Subscription <span style="color:var(--gold3);">+$9.99/mo</span></div>
+      <div style="font-size:.66rem;color:var(--mid);margin-top:.1rem;">Premium fragrance sachets in every delivery. Cancel anytime.</div>
+    </div>
+  </label>
+</div>
+<div class="sec-note">&#x1F512; Payment processed securely via Stripe. First pickup within 48 hours.</div><div id="signup-submitting" style="display:none;text-align:center;padding:.5rem;font-size:.76rem;color:var(--mid);">Saving your details&hellip;</div><div id="signup-error" style="display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:3px;padding:.6rem .8rem;font-size:.72rem;color:#dc2626;margin-bottom:.6rem;"></div><div style="display:flex;gap:.52rem;" id="signup-btns"><button onclick="gS(2)" style="flex:1;padding:.74rem;background:transparent;border:1px solid rgba(8,15,30,.12);font-family:'Inter',sans-serif;font-weight:600;font-size:.76rem;color:var(--mid);border-radius:3px;">&larr; Back</button><button class="abtn gd" style="flex:2;margin-top:0;" onclick="completeSignup()">Start Subscription &rarr;</button></div><div class="prog"><div class="pd on"></div><div class="pd on"></div><div class="pd on"></div></div></div>
+
+    <div id="f-sA2" style="display:none"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.88rem;">
+  <p style="font-size:.67rem;color:var(--mid);font-weight:300;">Step 2 of 3 &mdash; Choose your plan</p>
+  <span style="font-size:.6rem;color:var(--lt);">~20 sec left</span>
+</div>
+<div class="popt sel" id="po-aw-fdtd2" data-anywhere="anywhere_fdtd_2x" onclick="pickAnywherePlan('anywhere_fdtd_2x')"><input type="radio" name="awpl" value="anywhere_fdtd_2x" checked/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Full Door-to-Door</span><span class="popt-price">$95.00/mo</span></div><p class="popt-desc">2 pickups/mo &middot; Up to 15 lbs per pickup</p></div></div>
+<div class="popt" id="po-aw-fdtd4" data-anywhere="anywhere_fdtd_4x" onclick="pickAnywherePlan('anywhere_fdtd_4x')"><input type="radio" name="awpl" value="anywhere_fdtd_4x"/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Full Door-to-Door <span style="font-size:.5rem;background:var(--gold);color:var(--ink);padding:.07rem .32rem;border-radius:2px;font-weight:800;">WEEKLY</span></span><span class="popt-price">$190.00/mo</span></div><p class="popt-desc">4 pickups/mo &middot; Up to 15 lbs per pickup</p></div></div>
+<div class="popt" id="po-aw-fam2" data-anywhere="anywhere_family_2x" onclick="pickAnywherePlan('anywhere_family_2x')"><input type="radio" name="awpl" value="anywhere_family_2x"/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Family</span><span class="popt-price">$198.00/mo</span></div><p class="popt-desc">2 pickups/mo &middot; Up to 35 lbs per pickup</p></div></div>
+<div class="popt" id="po-aw-fam4" data-anywhere="anywhere_family_4x" onclick="pickAnywherePlan('anywhere_family_4x')"><input type="radio" name="awpl" value="anywhere_family_4x"/><div style="flex:1"><div style="display:flex;justify-content:space-between"><span class="popt-name">Family <span style="font-size:.5rem;background:var(--gold);color:var(--ink);padding:.07rem .32rem;border-radius:2px;font-weight:800;">WEEKLY</span></span><span class="popt-price">$396.00/mo</span></div><p class="popt-desc">4 pickups/mo &middot; Up to 35 lbs per pickup</p></div></div>
+<div style="display:flex;gap:.52rem;margin-top:.82rem;"><button onclick="gS(1)" style="flex:1;padding:.74rem;background:transparent;border:1px solid rgba(8,15,30,.12);font-family:'Inter',sans-serif;font-weight:600;font-size:.76rem;color:var(--mid);border-radius:3px;">&larr; Back</button><button class="abtn dk" style="flex:2;margin-top:0;" onclick="gA(3)">Continue &rarr;</button></div><div class="prog"><div class="pd on"></div><div class="pd on"></div><div class="pd"></div></div></div>
+
+    <div id="f-sA3" style="display:none"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.88rem;">
+  <p style="font-size:.67rem;color:var(--mid);font-weight:300;">Step 3 of 3 &mdash; Your address</p>
+  <span style="font-size:.6rem;color:var(--green);">Almost done &#x2713;</span>
+</div>
+<div class="ag"><label>Street Address</label><input type="text" placeholder="123 Main St" id="aw-address"/></div>
+<div class="a2"><div class="ag"><label>City</label><input type="text" placeholder="Sterling Heights" id="aw-city" value="Sterling Heights"/></div><div class="ag"><label>ZIP Code</label><input type="text" placeholder="48310" id="aw-zip" maxlength="5" inputmode="numeric" onblur="checkAnywhereZip()"/></div></div>
+<div id="aw-zip-result" class="sec-note" style="display:none;"></div>
+<div class="ord"><div class="ord-lbl">Order Summary</div><div class="ord-name" id="aw-os-n"></div><div class="ord-unit" id="aw-os-u"></div><div class="ord-row"><span class="ord-k" id="aw-os-plan"></span><span class="ord-v" id="aw-os-price"></span></div></div>
+<div class="ag"><label>Wash Preference</label><select id="aw-wash"><option>Warm wash, low heat dry</option><option>Cold wash, low heat dry</option><option>Cold wash, air dry</option></select></div>
+<div class="ag"><label>Scent</label><select id="aw-scent"><option>Lavender</option><option>Fresh Linen</option><option>Unscented</option><option>Ocean Breeze</option></select></div>
+<div class="ag"><label>Special Instructions</label><input type="text" id="aw-notes" placeholder="e.g. Hang dress shirts, separate darks"/></div>
+<div class="sec-note">&#x1F512; Payment processed securely via Stripe. First pickup scheduled after signup.</div>
+<div id="aw-signup-submitting" style="display:none;text-align:center;padding:.5rem;font-size:.76rem;color:var(--mid);">Saving your details&hellip;</div>
+<div id="aw-signup-error" style="display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:3px;padding:.6rem .8rem;font-size:.72rem;color:#dc2626;margin-bottom:.6rem;"></div>
+<div style="display:flex;gap:.52rem;" id="aw-signup-btns"><button onclick="gA(2)" style="flex:1;padding:.74rem;background:transparent;border:1px solid rgba(8,15,30,.12);font-family:'Inter',sans-serif;font-weight:600;font-size:.76rem;color:var(--mid);border-radius:3px;">&larr; Back</button><button class="abtn gd" style="flex:2;margin-top:0;" onclick="completeSignupAnywhere()">Start Subscription &rarr;</button></div>
+<div class="prog"><div class="pd on"></div><div class="pd on"></div><div class="pd on"></div></div></div>
+  </div>
+</div>
+<div id="dash">
+  <div class="dh"><div><p class="dh-greet">Welcome back</p><h2 class="dh-name" id="dh-name">&hellip;</h2><p class="dh-info" id="dh-info">&hellip;</p></div><div class="dh-live"><div class="dl-dot"></div><span class="dl-txt" id="dh-status">Loading&hellip;</span></div></div>
+  <!-- FIX 1: Removed duplicate display:flex — only display:none here, JS sets display:flex when needed -->
+  <div id="payment-pending-banner" style="display:none;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.35);border-radius:6px;padding:.85rem 1rem;margin:1rem 5% 0;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;">
+    <span style="font-size:.8rem;color:var(--ink);">Your subscription isn't active yet &mdash; finish checkout to start scheduling pickups.</span>
+    <button class="bsm bg" onclick="finishPayment()">Complete Payment &rarr;</button>
+  </div>
+  <div class="db">
+    <div class="dgrid">
+      <div>
+        <div class="dc2 dk2"><div class="dc2-h"><span id="dc-planname">Comfort Plan</span><span class="dc2-tag" id="dc-planstatus" style="background:rgba(201,168,76,.15);color:var(--gold)">Active</span></div><div class="pi2"><div class="pil"><label>Monthly Rate</label><span id="dc-rate">$89.99</span></div><div class="pil"><label>Pickups Used</label><span id="dc-pickups">2 of 4</span></div><div class="pil"><label>Next Billing</label><span id="dc-billing">&mdash;</span></div><div class="pil"><label>Next Pickup</label><span id="dc-nextpickup">&mdash;</span></div></div><div class="brow"><button class="bsm bg" onclick="manageBilling()">Upgrade to Suite</button><button class="bsm bgh" onclick="manageBilling()">Manage Plan</button></div></div>
+        <div class="dc2"><div class="dc2-h">Schedule a Pickup<span class="dc2-tag" id="dc-remaining">&mdash; Remaining</span></div><div class="day-grid" id="day-grid"><p style="font-size:.74rem;color:var(--mid);padding:.5rem 0;">Loading availability&hellip;</p></div><button class="bsm bg" id="confirm-pickup-btn" style="width:100%;padding:.65rem;" onclick="confirmPickup()" disabled>Select a Day</button></div>
+        <div class="dc2"><div class="dc2-h">Pickup History</div><div id="pickup-history"><p style="font-size:.74rem;color:var(--mid);padding:.5rem 0;">Loading your pickup history&hellip;</p></div></div>
+      </div>
+      <div>
+        <div class="dc2"><div class="dc2-h" style="font-size:.84rem;">This Month</div><p style="font-size:.68rem;color:var(--mid);margin-bottom:.52rem;font-weight:300;">Pickups used</p><div class="ubar"><div class="ufill" id="um-pk-fill" style="width:0%"></div></div><div class="umeta"><span id="um-pk-text">&mdash;</span><span id="um-pk-pct">&mdash;</span></div><div id="um-lb-row"><p style="font-size:.68rem;color:var(--mid);margin:.82rem 0 .52rem;font-weight:300;">Pounds processed</p><div class="ubar"><div class="ufill" id="um-lb-fill" style="width:0%"></div></div><div class="umeta"><span id="um-lb-text">&mdash;</span><span id="um-lb-pct">&mdash;</span></div></div></div>
+        <div class="dc2"><div class="dc2-h" style="font-size:.84rem;">Plan Perks<span class="dc2-tag" id="perks-plantag">Comfort</span></div><div id="perks-list"><p style="font-size:.74rem;color:var(--mid);">Loading&hellip;</p></div></div>
+        <div class="dc2"><div class="dc2-h" style="font-size:.84rem;">Add-Ons<button class="bsm bg" style="font-size:.62rem;padding:.2rem .6rem;" onclick="toggleAOShop()">+ More</button></div><div id="addons-list"><p style="font-size:.74rem;color:var(--mid);">No add-ons active yet.</p></div><div class="ao-shop" id="ao-shop"><div class="asr"><span>&#x1F338; Scent Subscription</span><button class="asb" data-addon="Scent Subscription" onclick="purchaseAddon('Scent Subscription',999,'monthly',this)">+$9.99/mo</button></div><div class="asr"><span>&#x2728; Stain Treatment</span><button class="asb" data-addon="Stain Treatment" onclick="purchaseAddon('Stain Treatment',399,'monthly',this)">+$3.99/mo</button></div><div class="asr"><span>&#x1FA9D; Hanger Upgrade</span><button class="asb" data-addon="Hanger Upgrade" onclick="purchaseAddon('Hanger Upgrade',699,'monthly',this)">+$6.99/mo</button></div><div class="asr"><span>&#x1F454; Dry Cleaning</span><button class="asb" data-addon="Dry Cleaning" onclick="purchaseAddon('Dry Cleaning',2000,'per_order',this)">+$20/order</button></div></div></div>
+        <div class="dc2"><div class="dc2-h" style="font-size:.84rem;">Account</div><div style="display:flex;flex-direction:column;gap:.42rem;"><button class="bsm bpl" style="width:100%;text-align:left;" onclick="togglePrefsForm()">Edit Wash Preferences</button><div id="prefs-form" style="display:none;background:rgba(0,0,0,.02);border-radius:6px;padding:.7rem;margin:.2rem 0;"><div class="ag"><label style="font-size:.65rem;">Wash Preference</label><input type="text" id="prefs-wash" style="font-size:.78rem;"/></div><div class="ag"><label style="font-size:.65rem;">Scent Preference</label><input type="text" id="prefs-scent" style="font-size:.78rem;"/></div><div class="ag"><label style="font-size:.65rem;">Special Instructions</label><input type="text" id="prefs-notes" style="font-size:.78rem;"/></div><button class="bsm bg" style="width:100%;margin-top:.3rem;" onclick="savePreferences()">Save Preferences</button></div><button class="bsm bpl" style="width:100%;text-align:left;" onclick="manageBilling()">Manage Billing</button><button class="bsm bpl" style="width:100%;text-align:left;color:var(--mid);" onclick="signOut()">Sign Out</button></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script>const SUPABASE_URL='https://eajxwgwwupwpcfxepasr.supabase.co';
+const SUPABASE_KEY='sb_publishable_hPL9QAbrWxjK700WFTqwQA_cnDmqFK4';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const STRIPE_LINKS={
+mo:{ess:'https://buy.stripe.com/bJe9AT29F9XNbz86dn5ZC01',com:'https://buy.stripe.com/fZu6oH3dJ4Dt32C31b5ZC02',suite:'https://buy.stripe.com/00wfZhdSn3zp7iSbxH5ZC03'},
+yr:{ess:'ANNUAL_ESS_LINK',com:'ANNUAL_COM_LINK',suite:'ANNUAL_SUITE_LINK'}
+};
+let billingCycle='mo';
+STRIPE_LINKS.anywhere={
+anywhere_fdtd_2x:'REPLACE_WITH_STRIPE_LINK_FDTD_2X',
+anywhere_fdtd_4x:'REPLACE_WITH_STRIPE_LINK_FDTD_4X',
+anywhere_family_2x:'REPLACE_WITH_STRIPE_LINK_FAMILY_2X',
+anywhere_family_4x:'REPLACE_WITH_STRIPE_LINK_FAMILY_4X'
+};
+const ANYWHERE_ZIPS=['48310','48311','48312','48313','48314'];
+const ANYWHERE_PLAN_INFO={
+anywhere_fdtd_2x:{name:'Full Door-to-Door',freq:'2x/mo',price:'$95.00/mo',cap:'15 lb per pickup'},
+anywhere_fdtd_4x:{name:'Full Door-to-Door',freq:'4x/mo (weekly)',price:'$190.00/mo',cap:'15 lb per pickup'},
+anywhere_family_2x:{name:'Family',freq:'2x/mo',price:'$198.00/mo',cap:'35 lb per pickup'},
+anywhere_family_4x:{name:'Family',freq:'4x/mo (weekly)',price:'$396.00/mo',cap:'35 lb per pickup'}
+};
+let signupFlow='building';
+let anywherePlan='anywhere_fdtd_2x';
+const STRIPE_PORTAL='https://billing.stripe.com/p/login/00w9ATdSnfi7cDc6dn5ZC00';
+const FORM_ID='xvznveay';
+const SERVICE_DAYS=[1,3,5],DAILY_CAP=12,LBS_CAP={ess:40,com:120};
+let resident=null,uid=null,pickupDate=null,splitPlan='com';
+function toggleNav(){document.getElementById('mob-nav').classList.toggle('open');}
+function closeNav(){document.getElementById('mob-nav').classList.remove('open');}
+function selectSplitPlan(p,el){splitPlan=p;document.querySelectorAll('.sr-plan-card').forEach(c=>c.classList.remove('active'));el.classList.add('active');const l={ess:'Essential',com:'Comfort',suite:'Suite'};document.getElementById('sr-cta-btn').innerHTML='Start '+l[p]+' Plan <span class="sr-cta-arrow">&rarr;</span>';}
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:.1});
+document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>obs.observe(el));
+(async()=>{
+const params=new URLSearchParams(window.location.search);
+if(params.get('success')==='1'||window.location.pathname.includes('success')){
+window.location.href='success.html';return;
+}
+const{data:{session}}=await sb.auth.getSession();
+if(session){showDash();loadDashboard();return;}
+const awParam=params.get('anywhere');
+if(awParam){
+const validPlans=['anywhere_fdtd_2x','anywhere_fdtd_4x','anywhere_family_2x','anywhere_family_4x'];
+const plan=validPlans.includes(awParam)?awParam:'anywhere_fdtd_2x';
+startSignupAnywhere(plan);
+}
+})();
+function goHome(){document.getElementById('home').style.display='grid';['resident','portal'].forEach(id=>document.getElementById(id).style.display='none');['nav-home','nav-how','nav-plans','nav-signin','nav-getstarted'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});const np=document.getElementById('nav-partners');if(np)np.style.display='';window.scrollTo(0,0);}
+function enterResident(){document.getElementById('home').style.display='none';document.getElementById('resident').style.display='block';document.getElementById('portal').style.display='none';['nav-home','nav-how','nav-plans'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='';});const s=document.getElementById('nav-signin');if(s)s.style.display='';const g=document.getElementById('nav-getstarted');if(g)g.style.display='';window.scrollTo(0,0);}
+function showPortal(){document.getElementById('home').style.display='none';document.getElementById('resident').style.display='none';document.getElementById('portal').style.display='block';document.getElementById('auth-wrap').style.display='flex';document.getElementById('dash').style.display='none';switchTab('in');window.scrollTo(0,0);}
+function showDash(){document.getElementById('home').style.display='none';document.getElementById('resident').style.display='none';document.getElementById('portal').style.display='block';document.getElementById('auth-wrap').style.display='none';document.getElementById('dash').style.display='block';}
+function startSignup(plan){trackEvent('begin_checkout',{plan:plan,currency:'USD'});document.getElementById('home').style.display='none';document.getElementById('resident').style.display='none';document.getElementById('portal').style.display='block';document.getElementById('auth-wrap').style.display='flex';document.getElementById('dash').style.display='none';signupFlow='building';switchTab('up');setTimeout(()=>{gS(1);pickP(plan||'com');},60);window.scrollTo(0,0);}
+function startSignupAnywhere(planCode){signupFlow='anywhere';anywherePlan=planCode||'anywhere_fdtd_2x';trackEvent('begin_checkout',{plan:anywherePlan,currency:'USD'});document.getElementById('home').style.display='none';document.getElementById('resident').style.display='none';document.getElementById('portal').style.display='block';document.getElementById('auth-wrap').style.display='flex';document.getElementById('dash').style.display='none';switchTab('up');setTimeout(()=>{gS(1);pickAnywherePlan(anywherePlan);},60);window.scrollTo(0,0);}
+function navTo(id){const r=document.getElementById('resident');if(r&&r.style.display!=='block'){enterResident();setTimeout(()=>{const e=document.getElementById(id);if(e)e.scrollIntoView({behavior:'smooth',block:'start'});},80);}else{const e=document.getElementById(id);if(e)e.scrollIntoView({behavior:'smooth',block:'start'});}}
+async function signIn(){const email=document.getElementById('si-email').value.trim(),pw=document.getElementById('si-password').value,btn=document.getElementById('signin-btn'),err=document.getElementById('signin-error');err.style.display='none';if(!email||!pw){err.textContent='Please enter your email and password.';err.style.display='block';return;}btn.textContent='Signing in…';btn.disabled=true;const{error}=await sb.auth.signInWithPassword({email,password:pw});btn.textContent='Sign In';btn.disabled=false;if(error){err.textContent=error.message==='Invalid login credentials'?'Incorrect email or password.':error.message;err.style.display='block';return;}showDash();window.scrollTo(0,0);loadDashboard();}
+async function signOut(){await sb.auth.signOut();goHome();}
+async function loadDashboard(){const{data:{user}}=await sb.auth.getUser();if(!user){goHome();return;}const{data:r,error}=await sb.from('residents').select('*').eq('id',user.id).single();if(error||!r){console.warn('resident load failed',error);return;}resident=r;uid=user.id;const pl={ess:'Essential',com:'Comfort',suite:'Suite'},pr={ess:'$59.99',com:'$89.99',suite:'$119.99'},pn=pl[r.plan]||'Comfort';document.getElementById('dh-name').textContent=`${r.first_name} ${r.last_name||''}`.trim();document.getElementById('dh-info').textContent=`Unit ${r.unit||'—'} · ${r.building||'—'}`+(r.member_since?` · Member since ${new Date(r.member_since).toLocaleDateString('en-US',{month:'short',year:'numeric'})}` :'');document.getElementById('dh-status').textContent=r.plan_status==='active'?'Subscription Active':'Pending Activation';const active=r.plan_status==='active',banner=document.getElementById('payment-pending-banner');banner.style.display=active?'none':'flex';document.getElementById('dc-planname').textContent=`${pn} Plan`;const st=document.getElementById('dc-planstatus');st.textContent=active?'Active':'Pending Payment';st.style.background=active?'rgba(201,168,76,.15)':'rgba(220,38,38,.1)';st.style.color=active?'var(--gold)':'#dc2626';document.getElementById('dc-rate').textContent=pr[r.plan]||'—';document.getElementById('dc-pickups').textContent=`${r.pickups_used_this_cycle||0} of ${r.pickups_limit||4}`;document.getElementById('dc-remaining').textContent=`${(r.pickups_limit||4)-(r.pickups_used_this_cycle||0)} Remaining`;document.getElementById('dc-billing').textContent=r.next_billing_date?new Date(r.next_billing_date).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'—';document.getElementById('perks-plantag').textContent=pn;
+const{data:picks}=await sb.from('pickups').select('*').eq('resident_id',uid).order('scheduled_date',{ascending:false}).limit(6);const h=document.getElementById('pickup-history');if(picks&&picks.length){h.innerHTML=picks.map(p=>`<div class="hrow"><div><div class="hdt">${new Date(p.scheduled_date).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div><div class="hdesc">Wash &amp; Fold${p.weight_lbs?` · ${p.weight_lbs} lbs`:''}</div></div><span class="hbadge">${p.status.charAt(0).toUpperCase()+p.status.slice(1).replace('_',' ')}</span></div>`).join('');}else{h.innerHTML='<p style="font-size:.74rem;color:var(--mid);padding:.5rem 0;">No pickups yet.</p>';}
+const{data:np}=await sb.from('pickups').select('*').eq('resident_id',uid).in('status',['scheduled']).order('scheduled_date',{ascending:true}).limit(1).maybeSingle();document.getElementById('dc-nextpickup').textContent=np?new Date(np.scheduled_date).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'Not scheduled';
+const pb={ess:['&#x1F9FA; 2 monthly pickups','&#x1F4E6; Up to 20 lbs per pickup'],com:['&#x1F9FA; 4 monthly pickups','&#x1F6AA; Door pickup & delivery','&#x26A1; Priority scheduling'],suite:['&#x1F9FA; Unlimited pickups','&#x1F6AA; Door pickup & delivery','&#x1F464; Dedicated attendant']};document.getElementById('perks-list').innerHTML=(pb[r.plan]||pb.com).map(p=>{const[i,...t]=p.split(' ');return`<div class="perk"><span class="perk-ico">${i}</span>${t.join(' ')}</div>`;}).join('')+`<div class="perk"><span class="perk-ico">&#x1F338;</span>Scent: ${r.scent_preference||'Unscented'}</div>`;
+const{data:addons}=await sb.from('resident_addons').select('*').eq('resident_id',uid).eq('active',true);const al=document.getElementById('addons-list');if(addons&&addons.length){al.innerHTML=addons.map(a=>`<div class="perk"><span class="perk-ico">&#x2713;</span><div style="flex:1"><div>${a.addon_name}</div><div style="font-size:.62rem;color:var(--mid)">+$${(a.price_cents/100).toFixed(2)}${a.billing_type==='monthly'?'/mo':a.billing_type==='per_order'?'/order':' once'}</div></div><span class="ao-stat ao-on">Active</span></div>`).join('');}else{al.innerHTML='<p style="font-size:.74rem;color:var(--mid);">No add-ons active yet.</p>';}
+document.querySelectorAll('.asb').forEach(b=>{if((addons||[]).some(a=>a.addon_name===b.dataset.addon)){b.disabled=true;b.textContent='Added ✓';}});
+const pu=r.pickups_used_this_cycle||0,pl2=r.pickups_limit||4,pp=pl2>0?Math.min(100,Math.round(pu/pl2*100)):0;document.getElementById('um-pk-fill').style.width=pp+'%';document.getElementById('um-pk-text').textContent=`${pu} of ${pl2}`;document.getElementById('um-pk-pct').textContent=pp+'%';
+const{data:up}=await sb.from('pickups').select('weight_lbs,scheduled_date').eq('resident_id',uid);const now=new Date(),ms=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`,lbs=(up||[]).filter(p=>p.scheduled_date>=ms).reduce((s,p)=>s+(Number(p.weight_lbs)||0),0);const lr=document.getElementById('um-lb-row');if(r.plan==='suite'){lr.style.display='block';document.getElementById('um-lb-fill').style.width='100%';document.getElementById('um-lb-text').textContent=`${lbs} lbs (unlimited)`;document.getElementById('um-lb-pct').textContent='—';}else{const cap=LBS_CAP[r.plan]||120,lp=Math.min(100,Math.round(lbs/cap*100));lr.style.display='block';document.getElementById('um-lb-fill').style.width=lp+'%';document.getElementById('um-lb-text').textContent=`${lbs} of ${cap} lbs`;document.getElementById('um-lb-pct').textContent=lp+'%';}
+buildPickupCalendar();}
+function nextSvcDates(n){const d=[],t=new Date();t.setDate(t.getDate()+1);while(d.length<n){if(SERVICE_DAYS.includes(t.getDay()))d.push(new Date(t));t.setDate(t.getDate()+1);}return d;}
+async function buildPickupCalendar(){const grid=document.getElementById('day-grid'),btn=document.getElementById('confirm-pickup-btn');pickupDate=null;if(resident.plan_status!=='active'){grid.innerHTML='<p style="font-size:.74rem;color:var(--mid);padding:.5rem 0;">Complete payment to start scheduling.</p>';btn.style.display='none';return;}const rem=(resident.pickups_limit||4)-(resident.pickups_used_this_cycle||0);if(rem<=0){grid.innerHTML=`<p style="font-size:.74rem;color:var(--mid);padding:.5rem 0;">All pickups used this cycle.</p>`;btn.style.display='none';return;}btn.style.display='';btn.disabled=true;btn.textContent='Select a Day';const dates=nextSvcDates(6),strs=dates.map(d=>d.toISOString().slice(0,10));const{data:dc}=await sb.from('pickups').select('scheduled_date').in('scheduled_date',strs).eq('status','scheduled');const cnt={};(dc||[]).forEach(p=>cnt[p.scheduled_date]=(cnt[p.scheduled_date]||0)+1);const{data:own}=await sb.from('pickups').select('scheduled_date').eq('resident_id',uid).eq('status','scheduled').in('scheduled_date',strs);const od=new Set((own||[]).map(p=>p.scheduled_date));const dn=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];grid.innerHTML=dates.map((d,i)=>{const s=strs[i],io=od.has(s),if2=!io&&(cnt[s]||0)>=DAILY_CAP,lbl=io?'Booked':if2?'Full':'Available',cls=(io||if2)?'day off':'day',clk=(io||if2)?'':`onclick="selDay(this,'${s}')"`;return`<div class="${cls}" ${clk} data-date="${s}"><div class="day-n">${dn[d.getDay()]}</div><div class="day-d">${d.getDate()}</div><div class="day-a">${lbl}</div></div>`;}).join('');}
+function selDay(el,ds){document.querySelectorAll('.day:not(.off)').forEach(b=>{b.classList.remove('sel');b.querySelector('.day-a').textContent='Available';});el.classList.add('sel');el.querySelector('.day-a').textContent='Selected ✓';pickupDate=ds;const b=document.getElementById('confirm-pickup-btn');b.disabled=false;b.textContent='Confirm Pickup';}
+async function confirmPickup(){if(!pickupDate||!uid)return;const btn=document.getElementById('confirm-pickup-btn');btn.disabled=true;btn.textContent='Booking…';const{error}=await sb.from('pickups').insert({resident_id:uid,scheduled_date:pickupDate,status:'scheduled'});if(error){btn.disabled=false;btn.textContent='Confirm Pickup';alert('Could not book: '+error.message);return;}await sb.from('residents').update({pickups_used_this_cycle:(resident.pickups_used_this_cycle||0)+1}).eq('id',uid);await loadDashboard();}
+async function purchaseAddon(name,cents,type,btn){if(!uid)return;if(resident.plan_status!=='active'){alert('Complete payment first.');return;}const orig=btn.textContent;btn.disabled=true;btn.textContent='Adding…';const{data:ex}=await sb.from('resident_addons').select('id').eq('resident_id',uid).eq('addon_name',name).eq('active',true).maybeSingle();if(ex){btn.textContent='Already Active';return;}const{error}=await sb.from('resident_addons').insert({resident_id:uid,addon_name:name,price_cents:cents,billing_type:type,active:true});if(error){btn.disabled=false;btn.textContent=orig;alert('Could not add: '+error.message);return;}btn.textContent='Added ✓';await loadDashboard();}
+function togglePrefsForm(){const f=document.getElementById('prefs-form'),show=f.style.display==='block';if(!show&&resident){document.getElementById('prefs-wash').value=resident.wash_preference||'';document.getElementById('prefs-scent').value=resident.scent_preference||'';document.getElementById('prefs-notes').value=resident.special_instructions||'';}f.style.display=show?'none':'block';}
+async function savePreferences(){if(!uid)return;const w=document.getElementById('prefs-wash').value.trim(),sc=document.getElementById('prefs-scent').value.trim(),n=document.getElementById('prefs-notes').value.trim();const{error}=await sb.from('residents').update({wash_preference:w,scent_preference:sc,special_instructions:n}).eq('id',uid);if(error){alert('Could not save: '+error.message);return;}document.getElementById('prefs-form').style.display='none';await loadDashboard();}
+function manageBilling(){window.open(STRIPE_PORTAL,'_blank');}
+function finishPayment(){if(!resident||!uid)return;window.location.href=(STRIPE_LINKS.mo[resident.plan])+'?prefilled_email='+encodeURIComponent(resident.email)+'&client_reference_id='+encodeURIComponent(uid);}
+function switchTab(t){const li=t==='in';document.getElementById('tab-in').classList.toggle('on',li);document.getElementById('tab-up').classList.toggle('on',!li);document.getElementById('f-in').style.display=li?'block':'none';document.getElementById('f-s1').style.display=li?'none':'block';['f-forgot','f-reset','f-s2','f-s3','f-sA2','f-sA3'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});document.getElementById('auth-sub').textContent=li?'Sign in to your account':'Create your SuiteWash account';}
+function showForgotPassword(){document.getElementById('f-in').style.display='none';document.getElementById('f-forgot').style.display='block';document.getElementById('auth-sub').textContent='Reset your password';const e=document.getElementById('si-email').value.trim();if(e)document.getElementById('forgot-email').value=e;}
+async function sendResetEmail(){const email=document.getElementById('forgot-email').value.trim(),btn=document.getElementById('forgot-btn'),err=document.getElementById('forgot-error'),ok=document.getElementById('forgot-success');err.style.display='none';ok.style.display='none';if(!email){err.textContent='Please enter your email.';err.style.display='block';return;}btn.disabled=true;btn.textContent='Sending…';const{error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+window.location.pathname});btn.disabled=false;btn.textContent='Send Reset Link';if(error){err.textContent=error.message;err.style.display='block';return;}ok.textContent="Check your email. Outlook users: open in a different browser if the link doesn't work.";ok.style.display='block';}
+async function setNewPassword(){const pw=document.getElementById('reset-password').value,btn=document.getElementById('reset-btn'),err=document.getElementById('reset-error');err.style.display='none';if(!pw||pw.length<8){err.textContent='Password must be at least 8 characters.';err.style.display='block';return;}btn.disabled=true;btn.textContent='Saving…';const{error}=await sb.auth.updateUser({password:pw});btn.disabled=false;btn.textContent='Set New Password';if(error){err.textContent=error.message;err.style.display='block';return;}alert('Password updated!');window.location.href=window.location.origin+window.location.pathname;}
+sb.auth.onAuthStateChange((event,session)=>{if(event==='PASSWORD_RECOVERY'){document.getElementById('home').style.display='none';document.getElementById('resident').style.display='none';document.getElementById('portal').style.display='block';document.getElementById('auth-wrap').style.display='flex';document.getElementById('dash').style.display='none';['f-in','f-s1','f-forgot'].forEach(id=>document.getElementById(id).style.display='none');document.getElementById('f-reset').style.display='block';document.getElementById('auth-sub').textContent='Choose a new password';}});
+function validateStep1(){const fn=document.getElementById('su-fn')?.value.trim()||'',em=document.getElementById('su-email')?.value.trim()||'',pw=document.getElementById('su-password')?.value||'',err=document.getElementById('step1-error');if(!fn||!em||!pw){err.textContent='Please enter your name, email, and password.';err.style.display='block';return;}if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){err.textContent='Please enter a valid email.';err.style.display='block';return;}if(pw.length<8){err.textContent='Password must be at least 8 characters.';err.style.display='block';return;}err.style.display='none';if(signupFlow==='anywhere'){gA(2);}else{gS(2);}}
+function gS(n){[1,2,3].forEach(i=>document.getElementById('f-s'+i).style.display=i===n?'block':'none');if(n===3)buildOrd();}
+function buildOrd(){const l={ess:'Essential',com:'Comfort',suite:'Suite'},p={ess:'$59.99/mo',com:'$89.99/mo',suite:'$119.99/mo'},s=document.querySelector('input[name="pl"]:checked')?.value||'com';document.getElementById('os-n').textContent=`${document.getElementById('su-fn')?.value||''} ${document.getElementById('su-ln')?.value||''}`.trim();document.getElementById('os-u').textContent=`Unit ${document.getElementById('su-unit')?.value||''} · ${document.getElementById('su-bldg')?.value||''}`;document.getElementById('os-plan').textContent=`${l[s]} Plan`;document.getElementById('os-price').textContent=p[s];}
+function pickP(p){['ess','com','suite'].forEach(id=>{const el=document.getElementById('po-'+id);if(!el)return;el.classList.toggle('sel',id===p);const r=el.querySelector('input[type=radio]');if(r)r.checked=id===p;});}
+
+function gA(n){['f-s1','f-s2','f-s3','f-sA2','f-sA3'].forEach(id=>{const e=document.getElementById(id);if(e)e.style.display='none';});const target=n===1?'f-s1':'f-sA'+n;const el=document.getElementById(target);if(el)el.style.display='block';if(n===3)buildOrdAnywhere();}
+function pickAnywherePlan(code){anywherePlan=code;document.querySelectorAll('.popt[data-anywhere]').forEach(el=>{const sel=el.dataset.anywhere===code;el.classList.toggle('sel',sel);const r=el.querySelector('input[type=radio]');if(r)r.checked=sel;});}
+function checkAnywhereZip(){const zip=(document.getElementById('aw-zip')?.value||'').trim();const box=document.getElementById('aw-zip-result');if(!box)return true;if(!/^\d{5}$/.test(zip)){box.className='sec-note';box.style.color='#dc2626';box.textContent="That doesn't look like a valid 5-digit ZIP.";box.style.display='block';return false;}if(ANYWHERE_ZIPS.includes(zip)){box.className='sec-note';box.style.color='';box.style.background='rgba(34,197,94,.08)';box.style.borderColor='rgba(34,197,94,.2)';box.textContent="You're in the Sterling Heights service zone \u2713";box.style.display='block';return true;}box.className='sec-note';box.style.background='rgba(239,68,68,.08)';box.style.borderColor='rgba(239,68,68,.2)';box.style.color='#dc2626';box.innerHTML='We\'re not in your ZIP yet. <a href="anywhere-waitlist.html" style="color:#dc2626;text-decoration:underline;">Join the waitlist</a> and we\'ll notify you when your zone opens.';box.style.display='block';return false;}
+function buildOrdAnywhere(){const info=ANYWHERE_PLAN_INFO[anywherePlan];document.getElementById('aw-os-n').textContent=`${document.getElementById('su-fn')?.value||''} ${document.getElementById('su-ln')?.value||''}`.trim();document.getElementById('aw-os-u').textContent=document.getElementById('aw-address')?.value||'';document.getElementById('aw-os-plan').textContent=`${info.name} \u2014 ${info.freq}`;document.getElementById('aw-os-price').textContent=info.price;}
+async function completeSignupAnywhere(){const fn=document.getElementById('su-fn')?.value||'',ln=document.getElementById('su-ln')?.value||'',em=document.getElementById('su-email')?.value||'',pw=document.getElementById('su-password')?.value||'',ph=document.getElementById('su-phone')?.value||'',addr=document.getElementById('aw-address')?.value||'',zip=document.getElementById('aw-zip')?.value||'',ci=document.getElementById('aw-city')?.value||'Sterling Heights',wa=document.getElementById('aw-wash')?.value||'',sc=document.getElementById('aw-scent')?.value||'',no=document.getElementById('aw-notes')?.value||'';const errEl=document.getElementById('aw-signup-error');if(!fn||!em||!pw||!addr||!zip){errEl.textContent='Please fill in all required fields.';errEl.style.display='block';return;}if(pw.length<8){errEl.textContent='Password must be at least 8 characters.';errEl.style.display='block';return;}if(!checkAnywhereZip()){errEl.textContent='Please enter a ZIP code in our service area, or join the waitlist above.';errEl.style.display='block';return;}errEl.style.display='none';document.getElementById('aw-signup-submitting').style.display='block';document.getElementById('aw-signup-btns').style.display='none';try{const{data:sd,error:se}=await sb.auth.signUp({email:em,password:pw,options:{data:{first_name:fn,last_name:ln,phone:ph,address:addr,zip:zip,city:ci,plan:'com',plan_code:anywherePlan,service_model:'anywhere_d2c',service_zone:'sterling_heights',wash_preference:wa,scent_preference:sc,special_instructions:no}}});if(se)throw new Error(se.message);await fetch(`https://formspree.io/f/${FORM_ID}`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({_subject:`New Anywhere Signup \u2014 ${fn} ${ln} \u2014 ${addr}`,first_name:fn,last_name:ln,email:em,phone:ph,address:addr,zip:zip,city:ci,plan_code:anywherePlan,wash_preference:wa,scent_preference:sc,notes:no||'None',submitted_at:new Date().toLocaleString('en-US',{timeZone:'America/Detroit'})})});const url=(STRIPE_LINKS.anywhere[anywherePlan])+'?prefilled_email='+encodeURIComponent(em)+(sd.user?.id?'&client_reference_id='+encodeURIComponent(sd.user.id):'');trackEvent('purchase',{plan:anywherePlan,currency:'USD'});window.location.href=url;}catch(e){document.getElementById('aw-signup-submitting').style.display='none';document.getElementById('aw-signup-btns').style.display='flex';errEl.textContent=e.message?.includes('already registered')?'Account already exists. Please sign in.':(e.message||'Something went wrong. Email hello@suitewashandfold.com.');errEl.style.display='block';}}
+async function completeSignup(){const fn=document.getElementById('su-fn')?.value||'',ln=document.getElementById('su-ln')?.value||'',em=document.getElementById('su-email')?.value||'',pw=document.getElementById('su-password')?.value||'',ph=document.getElementById('su-phone')?.value||'',bl=document.getElementById('su-bldg')?.value||'',un=document.getElementById('su-unit')?.value||'',ci=document.getElementById('su-city')?.value||'',wa=document.getElementById('su-wash')?.value||'',sc=document.getElementById('su-scent')?.value||'',no=document.getElementById('su-notes')?.value||'',pl=document.querySelector('input[name="pl"]:checked')?.value||'com';if(!fn||!em||!pw||!bl||!un){const e=document.getElementById('signup-error');e.textContent='Please fill in all required fields.';e.style.display='block';return;}if(pw.length<8){const e=document.getElementById('signup-error');e.textContent='Password must be at least 8 characters.';e.style.display='block';return;}document.getElementById('signup-submitting').style.display='block';document.getElementById('signup-btns').style.display='none';document.getElementById('signup-error').style.display='none';try{const{data:sd,error:se}=await sb.auth.signUp({email:em,password:pw,options:{data:{first_name:fn,last_name:ln,phone:ph,building:bl,unit:un,city:ci,plan:pl,wash_preference:wa,scent_preference:sc,special_instructions:no}}});if(se)throw new Error(se.message);await fetch(`https://formspree.io/f/${FORM_ID}`,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({_subject:`New Signup — ${fn} ${ln} — ${bl} Unit ${un}`,first_name:fn,last_name:ln,email:em,phone:ph,building:bl,unit:un,city:ci,plan:pl,wash_preference:wa,scent_preference:sc,notes:no||'None',submitted_at:new Date().toLocaleString('en-US',{timeZone:'America/Detroit'})})});const url=(STRIPE_LINKS[billingCycle]?.[pl]||STRIPE_LINKS.mo[pl])+'?prefilled_email='+encodeURIComponent(em)+(sd.user?.id?'&client_reference_id='+encodeURIComponent(sd.user.id):'');trackEvent('purchase',{plan:pl,billing:billingCycle,currency:'USD'});window.location.href=url;}catch(e){document.getElementById('signup-submitting').style.display='none';document.getElementById('signup-btns').style.display='flex';const err=document.getElementById('signup-error');err.textContent=e.message?.includes('already registered')?'Account already exists. Please sign in.':(e.message||'Something went wrong. Email hello@suitewashandfold.com.');err.style.display='block';}}
+function setBilling(t){billingCycle=t;const yr=t==='yr';document.getElementById('btn-mo').classList.toggle('on',!yr);document.getElementById('btn-yr').classList.toggle('on',yr);document.querySelectorAll('.pv').forEach(e=>e.textContent=yr?e.dataset.yr:e.dataset.mo);document.querySelectorAll('.bl').forEach(e=>e.textContent=yr?'annually':'monthly');['ess','com','suite'].forEach(id=>{const e=document.getElementById('sv-'+id);if(e)e.style.display=yr?'block':'none';});}
+function filterAO(cat,btn){document.querySelectorAll('.ao-f').forEach(b=>b.classList.remove('on'));btn.classList.add('on');document.querySelectorAll('.ao-card').forEach(c=>c.classList.toggle('hidden',cat!=='all'&&c.dataset.cat!==cat));}
+function toggleAOShop(){const s=document.getElementById('ao-shop');s.style.display=s.style.display==='block'?'none':'block';}
+let stickyCTAShown=false;
+window.addEventListener('scroll',()=>{
+const bar=document.getElementById('sticky-cta');
+if(!bar)return;
+const resident=document.getElementById('resident');
+if(resident&&resident.style.display==='block'){
+if(window.scrollY>400&&!stickyCTAShown){bar.classList.add('show');stickyCTAShown=true;}
+else if(window.scrollY<200){bar.classList.remove('show');stickyCTAShown=false;}
+} else {
+bar.classList.remove('show');stickyCTAShown=false;
+}
+},{passive:true});
+function animateCounter(el,target,suffix,duration){
+const start=performance.now();
+const isDecimal=target%1!==0;
+function step(now){
+const progress=Math.min((now-start)/duration,1);
+const ease=1-Math.pow(1-progress,3);
+const val=isDecimal?(target*ease).toFixed(1):(Math.round(target*ease));
+el.textContent=val+suffix;
+if(progress<1)requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+}
+const counterObs=new IntersectionObserver(entries=>{
+entries.forEach(e=>{
+if(e.isIntersecting){
+const el=e.target;
+const raw=el.dataset.count;
+const suffix=el.dataset.suffix||'';
+if(raw){animateCounter(el,parseFloat(raw),suffix,1200);el.classList.add('counted');}
+counterObs.unobserve(el);
+}
+});
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>counterObs.observe(el));
+function toggleFAQ(btn){
+const item=btn.closest('.faq-item');
+const isOpen=item.classList.contains('open');
+document.querySelectorAll('.faq-item.open').forEach(i=>i.classList.remove('open'));
+if(!isOpen)item.classList.add('open');
+}
+const origComplete=completeSignup;
+async function completeSignup(){
+await origComplete();
+}</script>
+</body>
+</html>
