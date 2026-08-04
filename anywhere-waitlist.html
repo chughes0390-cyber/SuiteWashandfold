@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SuiteWash Anywhere — Coming to Sterling Heights</title>
+<style>
+  :root{
+    --charcoal:#1F2933;
+    --steel:#3E5C76;
+    --gold:#C9A24B;
+    --cream:#F5F3EE;
+    --route:#5B8C7B;
+    --line:rgba(31,41,51,0.12);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background:var(--cream);
+    color:var(--charcoal);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  .mono{font-family:'Courier New', Courier, monospace;}
+  .display{font-family:Georgia, 'Times New Roman', serif;}
+
+  nav{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    padding:22px; border-bottom:1px solid var(--line);
+  }
+  .brand-name{font-family:Georgia, serif; font-weight:600; font-size:19px;}
+  .brand-badge{
+    font-family:'Courier New', monospace; font-size:11px; letter-spacing:0.08em;
+    text-transform:uppercase; background:var(--route); color:var(--cream);
+    padding:3px 8px; border-radius:3px;
+  }
+
+  main{flex:1; display:flex; align-items:center; justify-content:center; padding:40px 6vw;}
+  .card{max-width:520px; width:100%; text-align:center;}
+
+  .badge-pill{
+    display:inline-block; font-family:'Courier New', monospace; font-size:12px;
+    letter-spacing:0.08em; text-transform:uppercase; color:var(--route);
+    border:1px solid var(--route); border-radius:20px; padding:6px 16px;
+    margin-bottom:22px;
+  }
+
+  h1{
+    font-family:Georgia, serif; font-weight:500; font-size:clamp(30px, 6vw, 44px);
+    line-height:1.1; letter-spacing:-0.01em; margin-bottom:16px;
+  }
+  h1 em{font-style:italic; color:var(--steel);}
+
+  .sub{font-size:16px; color:#4A5560; line-height:1.6; margin-bottom:34px;}
+
+  .offer-box{
+    background:var(--charcoal); color:var(--cream); border-radius:8px;
+    padding:28px 24px; margin-bottom:30px; text-align:left;
+  }
+  .offer-label{
+    font-family:'Courier New', monospace; font-size:11px; text-transform:uppercase;
+    letter-spacing:0.08em; color:var(--gold); margin-bottom:10px;
+  }
+  .offer-headline{font-family:Georgia, serif; font-size:24px; margin-bottom:10px;}
+  .offer-detail{font-size:14px; color:rgba(245,243,238,0.75); line-height:1.5;}
+  .spots-bar{
+    margin-top:18px; height:8px; background:rgba(245,243,238,0.15); border-radius:4px; overflow:hidden;
+  }
+  .spots-fill{height:100%; width:0%; background:var(--gold); border-radius:4px;}
+  .spots-label{font-family:'Courier New', monospace; font-size:12px; margin-top:8px; color:rgba(245,243,238,0.6);}
+
+  form{display:flex; flex-direction:column; gap:12px; text-align:left;}
+  input{
+    padding:14px 16px; border:1px solid var(--line); border-radius:5px;
+    font-size:15px; font-family:inherit; background:#fff; color:var(--charcoal);
+  }
+  input:focus{outline:2px solid var(--steel); outline-offset:1px;}
+  button{
+    padding:15px; border:none; border-radius:5px; background:var(--charcoal);
+    color:var(--cream); font-size:15px; font-weight:600; cursor:pointer;
+  }
+  button:hover{background:var(--steel);}
+  .fine-print{font-size:12px; color:#8A93A0; margin-top:14px; text-align:center;}
+
+  .confirm{display:none; text-align:center; padding:20px 0;}
+  .confirm.show{display:block;}
+  .confirm h2{font-family:Georgia, serif; font-size:22px; margin-bottom:8px;}
+  .confirm p{color:#4A5560; font-size:14px;}
+
+  footer{text-align:center; padding:24px; font-size:12px; color:#8A93A0;}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand-name">SuiteWash</span>
+  <span class="brand-badge">Anywhere</span>
+</nav>
+
+<main>
+  <div class="card">
+    <div class="badge-pill">Coming to Sterling Heights</div>
+    <h1>Wash &amp; fold,<br><em>coming to your door.</em></h1>
+    <p class="sub">SuiteWash is expanding beyond partner buildings — starting right here in Sterling Heights. Join the waitlist to be first in line.</p>
+
+    <div class="offer-box">
+      <div class="offer-label">Founding 50 — Limited to your zip code</div>
+      <div class="offer-headline">Lock your rate. For life.</div>
+      <div class="offer-detail">The first 50 Sterling Heights residents to join lock in today's price forever — even after we raise it later. Plus first pick of pickup day, and a 30-day guarantee: not happy with any pickup, we'll rewash it free or refund it.</div>
+      <div style="margin-top:14px; font-size:12px; color:rgba(245,243,238,0.55); line-height:1.6;">✓ Rate locked for life &nbsp;·&nbsp; ✓ Priority scheduling &nbsp;·&nbsp; ✓ 30-day guarantee</div>
+      <div class="spots-bar"><div class="spots-fill" style="width:0%;"></div></div>
+      <div class="spots-label">0 / 50 spots claimed</div>
+    </div>
+
+    <form id="waitlist-form" onsubmit="handleSubmit(event)">
+      <input type="text" id="name" placeholder="Full name" required>
+      <input type="email" id="email" placeholder="Email address" required>
+      <input type="text" id="zip" placeholder="ZIP code" required maxlength="5" pattern="[0-9]{5}">
+      <button type="submit">Claim my spot</button>
+    </form>
+
+    <div class="confirm" id="confirm-msg">
+      <h2>You're on the list.</h2>
+      <p>We'll email you the moment SuiteWash Anywhere launches in your area — with your Founding 50 pricing locked in.</p>
+    </div>
+
+    <p class="fine-print">No payment required now. We'll notify you before your card is ever charged.</p>
+  </div>
+</main>
+
+<footer>A SuiteWash and Fold LLC product · Detroit Metro</footer>
+
+<script>
+  function handleSubmit(e){
+    e.preventDefault();
+    document.getElementById('waitlist-form').style.display = 'none';
+    document.getElementById('confirm-msg').classList.add('show');
+    // Note for integration: wire this submit handler to Resend/Supabase
+    // to actually capture leads once ready to go live.
+  }
+</script>
+
+</body>
+</html>
