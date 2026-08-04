@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Welcome to SuiteWash</title>
+<meta name="robots" content="noindex"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--ink:#080f1e;--ink2:#111827;--gold:#c9a84c;--gold2:#e8d5a3;--white:#fff;--green:#22c55e;--mid:#6b7280;--cream:#f7f3ec;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Inter",sans-serif;background:var(--ink);color:var(--white);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;-webkit-font-smoothing:antialiased;}
+.card{background:rgba(255,255,255,.04);border:1px solid rgba(201,168,76,.2);border-radius:16px;padding:3rem 2.5rem;max-width:480px;width:100%;text-align:center;box-shadow:0 24px 64px rgba(0,0,0,.4);}
+.ico{font-size:3.5rem;margin-bottom:1.25rem;animation:pop .5s ease;}
+@keyframes pop{0%{transform:scale(.5);opacity:0;}80%{transform:scale(1.1);}100%{transform:scale(1);opacity:1;}}
+.title{font-family:"Playfair Display",serif;font-size:2rem;font-weight:900;color:var(--white);margin-bottom:.5rem;}
+.title em{color:var(--gold);font-style:italic;}
+.sub{font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.8;font-weight:300;margin-bottom:2rem;}
+.steps{display:flex;flex-direction:column;gap:.75rem;margin-bottom:2rem;text-align:left;}
+.step{display:flex;align-items:flex-start;gap:.75rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.9rem 1rem;}
+.step-num{width:24px;height:24px;border-radius:50%;background:var(--gold);color:var(--ink);font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.step-txt{font-size:.78rem;color:rgba(255,255,255,.6);line-height:1.6;font-weight:300;}
+.step-txt strong{color:var(--white);font-weight:600;}
+.btn{display:block;width:100%;padding:.9rem;background:var(--gold);color:var(--ink);border:none;border-radius:6px;font-family:"Inter",sans-serif;font-size:.84rem;font-weight:700;letter-spacing:.04em;cursor:pointer;transition:all .2s;margin-bottom:.65rem;}
+.btn:hover{background:var(--gold2);transform:translateY(-1px);}
+.btn-ghost{display:block;width:100%;padding:.82rem;background:transparent;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.12);border-radius:6px;font-family:"Inter",sans-serif;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;}
+.btn-ghost:hover{border-color:rgba(255,255,255,.3);color:var(--white);}
+.plan-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.24);color:var(--gold);font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;border-radius:20px;margin-bottom:1.5rem;}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);}
+.logo{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;color:var(--gold);margin-bottom:2rem;}
+.logo b{color:var(--white);}
+.confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+canvas{position:absolute;top:0;left:0;width:100%;height:100%;}
+.detail-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:.85rem 1rem;margin-bottom:1.5rem;text-align:left;display:none;}
+.detail-row{display:flex;justify-content:space-between;padding:.3rem 0;font-size:.74rem;}
+.detail-k{color:rgba(255,255,255,.4);}
+.detail-v{color:var(--gold);font-weight:600;}
+</style>
+<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+</head>
+<body>
+<div class="confetti"><canvas id="cv"></canvas></div>
+<div class="card" style="position:relative;z-index:1;">
+  <div class="logo">Suite<b>Wash</b></div>
+  <div class="ico">&#x1F389;</div>
+  <div class="plan-badge"><span class="dot"></span><span id="plan-label">Subscription Active</span></div>
+  <h1 class="title" id="title-text">You're <em>in.</em></h1>
+  <p class="sub" id="sub-text">Your SuiteWash subscription is confirmed. Here's what happens next.</p>
+  <div class="detail-box" id="detail-box">
+    <div class="detail-row"><span class="detail-k">Plan</span><span class="detail-v" id="detail-plan">&mdash;</span></div>
+    <div class="detail-row"><span class="detail-k">Rate</span><span class="detail-v" id="detail-price">&mdash;</span></div>
+    <div class="detail-row"><span class="detail-k">Weight included</span><span class="detail-v" id="detail-cap">&mdash;</span></div>
+  </div>
+  <div class="steps" id="steps-box">
+    <div class="step"><div class="step-num">1</div><div class="step-txt"><strong>Check your email</strong> — a confirmation with your plan details and first pickup instructions is on its way.</div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-txt"><strong>Sign in to your dashboard</strong> — schedule your first pickup. Service runs Mon, Wed, and Fri.</div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-txt"><strong>Leave it at your door by 8 AM</strong> — we handle everything. Folded and back within 48 hours.</div></div>
+  </div>
+  <button class="btn" onclick="window.location.href='index.html'">Go to My Dashboard &rarr;</button>
+  <button class="btn-ghost" onclick="window.location.href='mailto:hello@suitewashandfold.com'">Questions? Email Us</button>
+</div>
+<script>
+// Confetti
+const cv=document.getElementById("cv"),ctx=cv.getContext("2d");
+cv.width=window.innerWidth;cv.height=window.innerHeight;
+const pieces=Array.from({length:80},()=>({x:Math.random()*cv.width,y:Math.random()*-cv.height,r:Math.random()*6+3,c:["#c9a84c","#e8d5a3","#fff","#22c55e"][Math.floor(Math.random()*4)],s:Math.random()*2+1,a:Math.random()*Math.PI*2,as:Math.random()*.08-.04}));
+function draw(){ctx.clearRect(0,0,cv.width,cv.height);pieces.forEach(p=>{ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.globalAlpha=.8;ctx.fillRect(-p.r/2,-p.r/2,p.r,p.r);ctx.restore();p.y+=p.s;p.a+=p.as;if(p.y>cv.height){p.y=-10;p.x=Math.random()*cv.width;}});requestAnimationFrame(draw);}
+draw();
+setTimeout(()=>{cv.style.display="none";},4000);
+
+// Show plan label + details from Supabase session — now supports both partner-building and Anywhere plans
+(async()=>{
+  const sb=supabase.createClient("https://eajxwgwwupwpcfxepasr.supabase.co","sb_publishable_hPL9QAbrWxjK700WFTqwQA_cnDmqFK4");
+  const{data:{user}}=await sb.auth.getUser();
+  if(!user)return;
+  const{data:r}=await sb.from("residents").select("plan,plan_code,service_model,first_name,address,building,unit").eq("id",user.id).single();
+  if(!r)return;
+
+  const BUILDING_LABELS={ess:"Essential Plan Active",com:"Comfort Plan Active",suite:"Suite Plan Active"};
+  const BUILDING_INFO={ess:{name:"Essential",price:"$59.99/mo",cap:"20 lb per pickup"},com:{name:"Comfort",price:"$89.99/mo",cap:"30 lb per pickup"},suite:{name:"Suite",price:"$119.99/mo",cap:"Unlimited"}};
+  const ANYWHERE_LABELS={anywhere_fdtd_2x:"Full Door-to-Door Active",anywhere_fdtd_4x:"Full Door-to-Door Active",anywhere_family_2x:"Family Plan Active",anywhere_family_4x:"Family Plan Active"};
+  const ANYWHERE_INFO={
+    anywhere_fdtd_2x:{name:"Full Door-to-Door \u2014 2x/mo",price:"$95.00/mo",cap:"15 lb per pickup"},
+    anywhere_fdtd_4x:{name:"Full Door-to-Door \u2014 4x/mo (weekly)",price:"$190.00/mo",cap:"15 lb per pickup"},
+    anywhere_family_2x:{name:"Family \u2014 2x/mo",price:"$198.00/mo",cap:"35 lb per pickup"},
+    anywhere_family_4x:{name:"Family \u2014 4x/mo (weekly)",price:"$396.00/mo",cap:"35 lb per pickup"}
+  };
+
+  const firstName=r.first_name?`, ${r.first_name}`:"";
+
+  if(r.service_model==="anywhere_d2c" && r.plan_code && ANYWHERE_INFO[r.plan_code]){
+    const info=ANYWHERE_INFO[r.plan_code];
+    document.getElementById("plan-label").textContent=ANYWHERE_LABELS[r.plan_code]||"Subscription Active";
+    document.getElementById("title-text").innerHTML=`Welcome<em>${firstName}.</em>`;
+    document.getElementById("sub-text").textContent="Your SuiteWash Anywhere subscription is confirmed. Here's what happens next.";
+    document.getElementById("detail-plan").textContent=info.name;
+    document.getElementById("detail-price").textContent=info.price;
+    document.getElementById("detail-cap").textContent=info.cap;
+    document.getElementById("detail-box").style.display="block";
+    document.getElementById("steps-box").innerHTML=`
+      <div class="step"><div class="step-num">1</div><div class="step-txt"><strong>Check your email</strong> — a confirmation with your plan details and pickup instructions is on its way.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-txt"><strong>Sign in to your dashboard</strong> — schedule your first pickup at <strong>${r.address||'your address'}</strong>. Service runs Mon, Wed, and Fri.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-txt"><strong>Leave it at your door</strong> — we handle everything. Washed, folded, and back at your door on schedule.</div></div>`;
+  } else {
+    const info=BUILDING_INFO[r.plan]||BUILDING_INFO.com;
+    document.getElementById("plan-label").textContent=BUILDING_LABELS[r.plan]||"Subscription Active";
+    document.getElementById("title-text").innerHTML=`You're<em> in${firstName}.</em>`;
+    document.getElementById("detail-plan").textContent=info.name;
+    document.getElementById("detail-price").textContent=info.price;
+    document.getElementById("detail-cap").textContent=info.cap;
+    document.getElementById("detail-box").style.display="block";
+  }
+})();
+</script>
+</body>
+</html>
