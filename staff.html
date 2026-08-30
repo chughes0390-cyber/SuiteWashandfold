@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SuiteWash Staff Dashboard</title>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--ink:#080f1e;--ink2:#111827;--ink3:#1a2535;--gold:#c9a84c;--gold2:#e8d5a3;--white:#fff;--mid:#6b7280;--lt:#9ca3af;--cream:#f7f3ec;--cream2:#ede8df;--green:#22c55e;--red:#ef4444;--sh:0 2px 16px rgba(8,15,30,.12);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:"Inter",sans-serif;background:var(--ink2);color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased;}
+button{font-family:"Inter",sans-serif;cursor:pointer;}
+a{color:inherit;text-decoration:none;}
+
+/* Auth */
+#auth-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--ink);}
+.auth-card{background:var(--white);border-radius:10px;padding:2.25rem;width:100%;max-width:380px;box-shadow:0 24px 48px rgba(0,0,0,.3);}
+.auth-logo{font-family:"Playfair Display",serif;font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:.2rem;}
+.auth-logo em{color:var(--gold);font-style:normal;}
+.auth-badge{font-size:.58rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mid);background:var(--cream2);padding:.2rem .55rem;border-radius:3px;display:inline-block;margin-bottom:1.25rem;}
+.ag{margin-bottom:.72rem;}
+.ag label{display:block;font-size:.57rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);margin-bottom:.26rem;}
+.ag input{width:100%;padding:.63rem .82rem;border:1px solid rgba(8,15,30,.12);font-family:"Inter",sans-serif;font-size:.82rem;color:var(--ink);background:var(--cream2);outline:none;border-radius:3px;transition:border-color .2s;}
+.ag input:focus{border-color:var(--gold);background:var(--white);}
+.auth-btn{width:100%;padding:.82rem;background:var(--ink);color:var(--white);border:none;border-radius:3px;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:.5rem;transition:background .2s;}
+.auth-btn:hover{background:var(--ink2);}
+.auth-err{display:none;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:3px;padding:.5rem .72rem;font-size:.7rem;color:var(--red);margin-top:.5rem;}
+
+/* App shell */
+#app{display:none;}
+nav{background:var(--ink);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;border-bottom:1px solid rgba(201,168,76,.1);position:sticky;top:0;z-index:100;}
+.n-logo{font-family:"Playfair Display",serif;font-size:1.2rem;font-weight:700;color:var(--gold);}
+.n-logo b{color:var(--white);}
+.n-badge{font-size:.54rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:rgba(239,68,68,.15);color:#f87171;padding:.2rem .52rem;border-radius:3px;margin-left:.5rem;}
+.n-right{display:flex;align-items:center;gap:.75rem;}
+.n-user{font-size:.72rem;color:rgba(255,255,255,.38);}
+.n-out{background:transparent;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.45);padding:.32rem .75rem;font-size:.68rem;border-radius:3px;transition:all .2s;}
+.n-out:hover{border-color:var(--red);color:var(--red);}
+
+/* Tabs */
+.tabs{display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,.06);padding:0 1.5rem;background:var(--ink2);}
+.tab{padding:.85rem 1.1rem;font-size:.72rem;font-weight:600;color:rgba(255,255,255,.35);border-bottom:2px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.tab.on{color:var(--gold);border-bottom-color:var(--gold);}
+.tab:hover:not(.on){color:rgba(255,255,255,.6);}
+
+/* Main */
+.main{padding:1.5rem;}
+
+/* Stats bar */
+.stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-bottom:1.5rem;}
+.stat{background:var(--ink);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1rem 1.1rem;}
+.stat-n{font-family:"Playfair Display",serif;font-size:1.8rem;font-weight:900;color:var(--gold);line-height:1;}
+.stat-l{font-size:.6rem;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem;}
+.stat.green .stat-n{color:var(--green);}
+.stat.red .stat-n{color:var(--red);}
+
+/* Cards */
+.card{background:var(--ink);border:1px solid rgba(255,255,255,.06);border-radius:8px;margin-bottom:1rem;}
+.card-h{padding:.9rem 1.1rem;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
+.card-title{font-size:.82rem;font-weight:700;color:var(--white);}
+.card-sub{font-size:.62rem;color:rgba(255,255,255,.3);}
+
+/* Table */
+.tbl{width:100%;border-collapse:collapse;}
+.tbl th{font-size:.57rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:.65rem 1rem;text-align:left;border-bottom:1px solid rgba(255,255,255,.05);}
+.tbl td{padding:.72rem 1rem;font-size:.76rem;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl tr:hover td{background:rgba(255,255,255,.02);}
+.badge{font-size:.54rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:.15rem .46rem;border-radius:3px;white-space:nowrap;}
+.b-scheduled{background:rgba(201,168,76,.12);color:var(--gold);}
+.b-picked-up{background:rgba(59,130,246,.12);color:#60a5fa;}
+.b-at-laundromat{background:rgba(168,85,247,.12);color:#c084fc;}
+.b-ready{background:rgba(20,184,166,.12);color:#2dd4bf;}
+.b-delivered{background:rgba(34,197,94,.1);color:var(--green);}
+.b-cancelled{background:rgba(239,68,68,.1);color:var(--red);}
+.b-active{background:rgba(34,197,94,.1);color:var(--green);}
+.b-pending{background:rgba(201,168,76,.1);color:var(--gold);}
+.b-past-due{background:rgba(239,68,68,.1);color:var(--red);}
+.b-cancelled-r{background:rgba(107,114,128,.1);color:var(--lt);}
+.plan-tag{font-size:.55rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(201,168,76,.08);color:var(--gold);padding:.1rem .35rem;border-radius:2px;}
+
+/* Action buttons */
+.act{padding:.3rem .7rem;border:none;border-radius:3px;font-size:.64rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.act-gold{background:var(--gold);color:var(--ink);}
+.act-gold:hover{background:var(--gold2);}
+.act-green{background:rgba(34,197,94,.15);color:var(--green);border:1px solid rgba(34,197,94,.2);}
+.act-green:hover{background:rgba(34,197,94,.25);}
+.act-red{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.15);}
+.act-red:hover{background:rgba(239,68,68,.2);}
+.act-ghost{background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);}
+.act-ghost:hover{border-color:rgba(255,255,255,.3);color:var(--white);}
+.acts{display:flex;gap:.35rem;flex-wrap:wrap;}
+
+/* Weight input */
+.w-inp{width:60px;padding:.25rem .4rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;color:var(--white);font-size:.74rem;font-family:"Inter",sans-serif;text-align:center;}
+.w-inp:focus{outline:none;border-color:var(--gold);}
+
+/* Toast */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--ink);border:1px solid rgba(201,168,76,.3);border-radius:8px;padding:.85rem 1.2rem;font-size:.76rem;color:var(--white);box-shadow:0 8px 32px rgba(0,0,0,.4);z-index:999;transform:translateY(100px);opacity:0;transition:all .3s;max-width:320px;}
+.toast.show{transform:translateY(0);opacity:1;}
+.toast.ok{border-color:rgba(34,197,94,.3);}
+.toast.err{border-color:rgba(239,68,68,.3);}
+
+/* Date nav */
+.date-nav{display:flex;align-items:center;gap:.75rem;}
+.date-nav button{background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.5);padding:.3rem .65rem;border-radius:3px;font-size:.72rem;cursor:pointer;transition:all .2s;}
+.date-nav button:hover{border-color:var(--gold);color:var(--gold);}
+.date-lbl{font-size:.78rem;font-weight:600;color:var(--white);}
+
+/* Search */
+.search-bar{display:flex;gap:.5rem;margin-bottom:1rem;}
+.search-inp{flex:1;padding:.55rem .85rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:4px;color:var(--white);font-family:"Inter",sans-serif;font-size:.78rem;}
+.search-inp:focus{outline:none;border-color:var(--gold);}
+.search-inp::placeholder{color:rgba(255,255,255,.2);}
+
+/* Empty state */
+.empty{padding:2.5rem;text-align:center;color:rgba(255,255,255,.2);font-size:.78rem;}
+
+/* Modal */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:1rem;}
+.modal-bg.open{display:flex;}
+.modal{background:var(--ink);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:1.75rem;width:100%;max-width:420px;max-height:90vh;overflow-y:auto;}
+.modal-title{font-family:"Playfair Display",serif;font-size:1.1rem;font-weight:700;margin-bottom:1.25rem;color:var(--white);}
+.m-row{display:flex;justify-content:space-between;padding:.52rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.76rem;}
+.m-row:last-of-type{border-bottom:none;}
+.m-k{color:rgba(255,255,255,.38);}
+.m-v{color:var(--white);font-weight:500;text-align:right;max-width:60%;}
+.modal-close{background:transparent;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);padding:.42rem .85rem;border-radius:3px;font-size:.72rem;cursor:pointer;margin-top:1.25rem;width:100%;}
+.modal-close:hover{border-color:rgba(255,255,255,.3);color:var(--white);}
+
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr;}.tbl th:nth-child(4),.tbl td:nth-child(4){display:none;}.tabs{overflow-x:auto;}.main{padding:1rem;}}
+</style>
+<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-logo">Suite<em>Wash</em></div>
+    <div class="auth-badge">Staff Portal</div>
+    <div class="ag"><label>Email</label><input type="email" id="s-email" placeholder="staff@suitewashandfold.com"/></div>
+    <div class="ag"><label>Password</label><input type="password" id="s-pw" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" onkeydown="if(event.key==='Enter')staffSignIn()"/></div>
+    <div id="s-err" class="auth-err"></div>
+    <button class="auth-btn" onclick="staffSignIn()">Sign In</button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <nav>
+    <div><span class="n-logo">Suite<b>Wash</b></span><span class="n-badge">Staff</span></div>
+    <div class="n-right">
+      <span class="n-user" id="n-user"></span>
+      <button class="n-out" onclick="staffSignOut()">Sign Out</button>
+    </div>
+  </nav>
+  <div class="tabs">
+    <div class="tab on" onclick="showTab('pickups',this)">&#x1F4E6; Today's Pickups</div>
+    <div class="tab" onclick="showTab('schedule',this)">&#x1F4C5; Schedule</div>
+    <div class="tab" onclick="showTab('residents',this)">&#x1F464; Residents</div>
+    <div class="tab" onclick="showTab('metrics',this)">&#x1F4CA; Metrics</div>
+  </div>
+
+  <!-- TODAY'S PICKUPS TAB -->
+  <div id="tab-pickups" class="main">
+    <div class="stats" id="today-stats">
+      <div class="stat"><div class="stat-n" id="st-total">-</div><div class="stat-l">Today's Pickups</div></div>
+      <div class="stat"><div class="stat-n" id="st-pending">-</div><div class="stat-l">Scheduled</div></div>
+      <div class="stat"><div class="stat-n" id="st-done">-</div><div class="stat-l">Picked Up</div></div>
+      <div class="stat"><div class="stat-n" id="st-laundromat">-</div><div class="stat-l">Washing &amp; Folding</div></div>
+      <div class="stat"><div class="stat-n" id="st-ready">-</div><div class="stat-l">Ready for Delivery</div></div>
+      <div class="stat green"><div class="stat-n" id="st-delivered">-</div><div class="stat-l">Delivered</div></div>
+    </div>
+    <div class="card">
+      <div class="card-h">
+        <div><div class="card-title">Today's Route</div><div class="card-sub" id="today-date"></div></div>
+        <div class="date-nav">
+          <button onclick="shiftDay(-1)">&#x2190;</button>
+          <span class="date-lbl" id="route-date-lbl"></span>
+          <button onclick="shiftDay(1)">&#x2192;</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="tbl">
+          <thead><tr><th>Unit</th><th>Resident</th><th>Plan</th><th>Building</th><th>Status</th><th>Lbs</th><th>Actions</th></tr></thead>
+          <tbody id="pickup-rows"><tr><td colspan="7" class="empty">Loading pickups&hellip;</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCHEDULE TAB -->
+  <div id="tab-schedule" class="main" style="display:none;">
+    <div class="card">
+      <div class="card-h">
+        <div><div class="card-title">Upcoming Pickups</div><div class="card-sub">Next 14 days</div></div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="tbl">
+          <thead><tr><th>Date</th><th>Unit</th><th>Resident</th><th>Plan</th><th>Status</th></tr></thead>
+          <tbody id="schedule-rows"><tr><td colspan="5" class="empty">Loading&hellip;</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESIDENTS TAB -->
+  <div id="tab-residents" class="main" style="display:none;">
+    <div class="search-bar">
+      <input class="search-inp" id="res-search" placeholder="Search by name, email, or unit&hellip;" oninput="filterResidents()"/>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="rs-total">-</div><div class="stat-l">Total Residents</div></div>
+      <div class="stat green"><div class="stat-n" id="rs-active">-</div><div class="stat-l">Active</div></div>
+      <div class="stat"><div class="stat-n" id="rs-pending">-</div><div class="stat-l">Pending Payment</div></div>
+      <div class="stat red"><div class="stat-n" id="rs-pastdue">-</div><div class="stat-l">Past Due</div></div>
+      <div class="stat"><div class="stat-n" id="rs-cancelled" style="color:var(--lt)">-</div><div class="stat-l">Cancelled</div></div>
+    </div>
+    <div class="card">
+      <div class="card-h">
+        <div class="card-title">All Residents</div>
+        <div class="acts" id="status-filters">
+          <button class="act act-gold" onclick="setFilter('all',this)">All</button>
+          <button class="act act-ghost" onclick="setFilter('active',this)">Active</button>
+          <button class="act act-ghost" onclick="setFilter('pending_payment',this)">Pending</button>
+          <button class="act act-ghost" onclick="setFilter('past_due',this)">Past Due</button>
+          <button class="act act-ghost" onclick="setFilter('cancelled',this)">Cancelled</button>
+        </div>
+      </div>
+      <div style="overflow-x:auto;">
+        <table class="tbl">
+          <thead><tr><th>Name</th><th>Unit</th><th>Plan</th><th>Status</th><th>Pickups</th><th>Next Billing</th><th></th></tr></thead>
+          <tbody id="resident-rows"><tr><td colspan="7" class="empty">Loading&hellip;</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- METRICS TAB -->
+  <div id="tab-metrics" class="main" style="display:none;">
+    <div class="stats">
+      <div class="stat"><div class="stat-n" id="m-mrr">-</div><div class="stat-l">Est. Monthly Revenue</div></div>
+      <div class="stat green"><div class="stat-n" id="m-active">-</div><div class="stat-l">Active Subscribers</div></div>
+      <div class="stat"><div class="stat-n" id="m-adoption">-</div><div class="stat-l">Adoption Rate</div></div>
+      <div class="stat"><div class="stat-n" id="m-pickups-mo">-</div><div class="stat-l">Pickups This Month</div></div>
+    </div>
+    <div class="card">
+      <div class="card-h"><div class="card-title">Plan Breakdown</div></div>
+      <table class="tbl">
+        <thead><tr><th>Plan</th><th>Subscribers</th><th>Monthly Revenue</th><th>% of Total</th></tr></thead>
+        <tbody id="plan-breakdown"></tbody>
+      </table>
+    </div>
+    <div class="card" style="margin-top:.75rem;">
+      <div class="card-h"><div class="card-title">Recent Activity</div></div>
+      <table class="tbl">
+        <thead><tr><th>Date</th><th>Resident</th><th>Event</th></tr></thead>
+        <tbody id="activity-rows"><tr><td colspan="3" class="empty">Loading&hellip;</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- RESIDENT DETAIL MODAL -->
+<div class="modal-bg" id="res-modal">
+  <div class="modal">
+    <div class="modal-title" id="modal-name">Resident Details</div>
+    <div id="modal-body"></div>
+    <button class="modal-close" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SUPA_URL='https://eajxwgwwupwpcfxepasr.supabase.co';
+const SUPA_KEY='sb_publishable_hPL9QAbrWxjK700WFTqwQA_cnDmqFK4';
+const sb=supabase.createClient(SUPA_URL,SUPA_KEY);
+const PLAN_LABELS={ess:'Essential',com:'Comfort',suite:'Suite'};
+const PLAN_RATES={ess:59.99,com:89.99,suite:119.99};
+let routeDate=new Date(),allResidents=[],currentStaffEmail='',activeFilter='all';
+
+// ── AUTH ──
+async function staffSignIn(){
+  const email=document.getElementById('s-email').value.trim();
+  const pw=document.getElementById('s-pw').value;
+  const err=document.getElementById('s-err');
+  err.style.display='none';
+  if(!email||!pw){err.textContent='Please enter email and password.';err.style.display='block';return;}
+  const{data,error}=await sb.auth.signInWithPassword({email,password:pw});
+  if(error){err.textContent='Invalid credentials or not a staff account.';err.style.display='block';return;}
+  // Verify staff record exists
+  const{data:staffRow}=await sb.from('staff').select('id,email').eq('id',data.user.id).maybeSingle();
+  if(!staffRow){await sb.auth.signOut();err.textContent='Access denied. Not a staff account.';err.style.display='block';return;}
+  currentStaffEmail=email;
+  launchApp();
+}
+async function staffSignOut(){await sb.auth.signOut();window.location.reload();}
+
+function launchApp(){
+  document.getElementById('auth-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('n-user').textContent=currentStaffEmail;
+  loadTodayPickups();
+}
+
+(async()=>{
+  const{data:{session}}=await sb.auth.getSession();
+  if(session){
+    const{data:staffRow}=await sb.from('staff').select('id,email').eq('id',session.user.id).maybeSingle();
+    if(staffRow){currentStaffEmail=session.user.email||'Staff';launchApp();}
+  }
+})();
+
+// ── TABS ──
+function showTab(name,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  ['pickups','schedule','residents','metrics'].forEach(t=>{
+    document.getElementById('tab-'+t).style.display=t===name?'block':'none';
+  });
+  if(name==='pickups')loadTodayPickups();
+  else if(name==='schedule')loadSchedule();
+  else if(name==='residents')loadResidents();
+  else if(name==='metrics')loadMetrics();
+}
+
+// ── DATE NAV ──
+function shiftDay(n){routeDate.setDate(routeDate.getDate()+n);loadTodayPickups();}
+function fmtDate(d){return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
+function isoDate(d){return d.toISOString().slice(0,10);}
+
+// ── TODAY'S PICKUPS ──
+async function loadTodayPickups(){
+  const ds=isoDate(routeDate);
+  document.getElementById('today-date').textContent=fmtDate(routeDate);
+  document.getElementById('route-date-lbl').textContent=fmtDate(routeDate);
+  const{data:pickups,error}=await sb
+    .from('pickups')
+    .select('*,residents(first_name,last_name,email,unit,building,plan)')
+    .eq('scheduled_date',ds)
+    .order('created_at');
+  if(error){toast('Failed to load pickups','err');return;}
+  const total=pickups?.length||0;
+  const pending=(pickups||[]).filter(p=>p.status==='scheduled').length;
+  const done=(pickups||[]).filter(p=>p.status==='picked_up').length;
+  const atLaundromat=(pickups||[]).filter(p=>p.status==='at_laundromat').length;
+  const ready=(pickups||[]).filter(p=>p.status==='ready_for_delivery').length;
+  const delivered=(pickups||[]).filter(p=>p.status==='delivered').length;
+  document.getElementById('st-total').textContent=total;
+  document.getElementById('st-pending').textContent=pending;
+  document.getElementById('st-done').textContent=done;
+  document.getElementById('st-laundromat').textContent=atLaundromat;
+  document.getElementById('st-ready').textContent=ready;
+  document.getElementById('st-delivered').textContent=delivered;
+  const tbody=document.getElementById('pickup-rows');
+  if(!total){tbody.innerHTML='<tr><td colspan="7" class="empty">No pickups scheduled for this day.</td></tr>';return;}
+  tbody.innerHTML=(pickups||[]).map(p=>{
+    const r=p.residents||{};
+    const name=`${r.first_name||''} ${r.last_name||''}`.trim()||'Unknown';
+    const plan=PLAN_LABELS[r.plan]||'-';
+    const statusBadge={scheduled:'b-scheduled',picked_up:'b-picked-up',at_laundromat:'b-at-laundromat',ready_for_delivery:'b-ready',delivered:'b-delivered',cancelled:'b-cancelled'}[p.status]||'b-scheduled';
+    const statusLabel={scheduled:'scheduled',picked_up:'picked up',at_laundromat:'washing & folding',ready_for_delivery:'ready for delivery',delivered:'delivered',cancelled:'cancelled'}[p.status]||p.status.replace('_',' ');
+    let actionBtn='';
+    if(p.status==='scheduled')actionBtn=`<button class="act act-gold" onclick="updatePickup('${p.id}','picked_up')">Picked Up</button>`;
+    else if(p.status==='picked_up')actionBtn=`<button class="act act-gold" onclick="updatePickup('${p.id}','at_laundromat')">Dropped Off</button>`;
+    else if(p.status==='at_laundromat')actionBtn=`<button class="act act-gold" onclick="updatePickup('${p.id}','ready_for_delivery')">Ready for Delivery</button>`;
+    else if(p.status==='ready_for_delivery')actionBtn=`<button class="act act-green" onclick="updatePickupWithWeight('${p.id}')">Delivered</button>`;
+    return `<tr>
+      <td style="font-weight:600">${r.unit||'?'}${r.building?' &middot; '+r.building:'' }</td>
+      <td>${name}<div style="font-size:.62rem;color:var(--mid)">${r.email||''}</div></td>
+      <td><span class="plan-tag">${plan}</span></td>
+      <td style="color:var(--mid);font-size:.72rem">${r.building||'-'}</td>
+      <td><span class="badge ${statusBadge}">${statusLabel}</span></td>
+      <td><input class="w-inp" type="number" placeholder="-" value="${p.weight_lbs||''}" id="wt-${p.id}" min="1" max="200"/></td>
+      <td><div class="acts">
+        ${actionBtn}
+        ${p.status==='scheduled'?`<button class="act act-red" onclick="updatePickup('${p.id}','cancelled')">Cancel</button>`:''}
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+async function updatePickup(id,status){
+  const{error}=await sb.from('pickups').update({status,confirmed_at:status==='delivered'?new Date().toISOString():null}).eq('id',id);
+  if(error){toast('Update failed: '+error.message,'err');return;}
+  // Trigger pickup_confirmed email when staff marks picked_up
+  if(status==='picked_up'){
+    fetch('https://eajxwgwwupwpcfxepasr.supabase.co/functions/v1/send-email',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer sb_publishable_hPL9QAbrWxjK700WFTqwQA_cnDmqFK4'},
+      body:JSON.stringify({type:'pickup_confirmed',pickup_id:id})
+    }).catch(e=>console.warn('Email trigger failed:',e));
+  }
+  toast('Pickup marked '+status.replace('_',' '),'ok');
+  loadTodayPickups();
+}
+
+async function updatePickupWithWeight(id){
+  const wt=parseFloat(document.getElementById('wt-'+id)?.value)||null;
+  const updates={status:'delivered',confirmed_at:new Date().toISOString()};
+  if(wt)updates.weight_lbs=wt;
+  const{error}=await sb.from('pickups').update(updates).eq('id',id);
+  if(error){toast('Update failed: '+error.message,'err');return;}
+  fetch('https://eajxwgwwupwpcfxepasr.supabase.co/functions/v1/send-email',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer sb_publishable_hPL9QAbrWxjK700WFTqwQA_cnDmqFK4'},
+    body:JSON.stringify({type:'delivered',pickup_id:id})
+  }).catch(e=>console.warn('Delivered email trigger failed:',e));
+  toast('Delivery confirmed'+(wt?' ('+wt+' lbs)':'')+' ✓','ok');
+  loadTodayPickups();
+}
+
+// ── SCHEDULE ──
+async function loadSchedule(){
+  const from=new Date(),to=new Date();
+  to.setDate(to.getDate()+14);
+  const{data:pickups}=await sb
+    .from('pickups')
+    .select('*,residents(first_name,last_name,unit,building,plan)')
+    .gte('scheduled_date',isoDate(from))
+    .lte('scheduled_date',isoDate(to))
+    .order('scheduled_date');
+  const tbody=document.getElementById('schedule-rows');
+  if(!pickups?.length){tbody.innerHTML='<tr><td colspan="5" class="empty">No upcoming pickups.</td></tr>';return;}
+  tbody.innerHTML=pickups.map(p=>{
+    const r=p.residents||{};
+    const name=`${r.first_name||''} ${r.last_name||''}`.trim();
+    const badge={scheduled:'b-scheduled',picked_up:'b-picked-up',at_laundromat:'b-at-laundromat',ready_for_delivery:'b-ready',delivered:'b-delivered',cancelled:'b-cancelled'}[p.status]||'b-scheduled';
+    const label={scheduled:'scheduled',picked_up:'picked up',at_laundromat:'washing & folding',ready_for_delivery:'ready for delivery',delivered:'delivered',cancelled:'cancelled'}[p.status]||p.status.replace('_',' ');
+    return `<tr>
+      <td style="font-weight:600">${new Date(p.scheduled_date+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}</td>
+      <td>${r.unit||'-'} &middot; ${r.building||'-'}</td>
+      <td>${name}</td>
+      <td><span class="plan-tag">${PLAN_LABELS[r.plan]||'-'}</span></td>
+      <td><span class="badge ${badge}">${label}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+// ── RESIDENTS ──
+async function loadResidents(){
+  const{data:residents}=await sb.from('residents').select('*').order('created_at',{ascending:false});
+  allResidents=residents||[];
+  const total=allResidents.length;
+  const active=allResidents.filter(r=>r.plan_status==='active').length;
+  const pending=allResidents.filter(r=>r.plan_status==='pending_payment').length;
+  const pastdue=allResidents.filter(r=>r.plan_status==='past_due').length;
+  const cancelled=allResidents.filter(r=>r.plan_status==='cancelled').length;
+  document.getElementById('rs-total').textContent=total;
+  document.getElementById('rs-active').textContent=active;
+  document.getElementById('rs-pending').textContent=pending;
+  document.getElementById('rs-pastdue').textContent=pastdue;
+  document.getElementById('rs-cancelled').textContent=cancelled;
+  applyFilters();
+}
+
+function setFilter(status, el){
+  activeFilter=status;
+  document.querySelectorAll('#status-filters .act').forEach(b=>{
+    b.className='act act-ghost';
+  });
+  el.className='act act-gold';
+  applyFilters();
+}
+
+function applyFilters(){
+  const q=document.getElementById('res-search').value.toLowerCase();
+  let list=allResidents;
+  if(activeFilter!=='all') list=list.filter(r=>r.plan_status===activeFilter);
+  if(q) list=list.filter(r=>`${r.first_name} ${r.last_name} ${r.email} ${r.unit} ${r.building}`.toLowerCase().includes(q));
+  renderResidents(list);
+}
+
+function filterResidents(){ applyFilters(); }
+
+function renderResidents(list){
+  const tbody=document.getElementById('resident-rows');
+  if(!list.length){tbody.innerHTML='<tr><td colspan="7" class="empty">No residents found.</td></tr>';return;}
+  tbody.innerHTML=list.map(r=>{
+    const name=`${r.first_name||''} ${r.last_name||''}`.trim();
+    const statusClass={active:'b-active',pending_payment:'b-pending',past_due:'b-past-due',cancelled:'b-cancelled-r'}[r.plan_status]||'b-pending';
+    const billing=r.next_billing_date?new Date(r.next_billing_date+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'}):'-';
+    return `<tr>
+      <td><div style="font-weight:600">${name}</div><div style="font-size:.62rem;color:var(--mid)">${r.email}</div></td>
+      <td>${r.unit||'-'}</td>
+      <td><span class="plan-tag">${PLAN_LABELS[r.plan]||'-'}</span></td>
+      <td><span class="badge ${statusClass}">${(r.plan_status||'unknown').replace('_',' ')}</span></td>
+      <td style="font-size:.72rem">${r.pickups_used_this_cycle||0} / ${r.pickups_limit||4}</td>
+      <td style="font-size:.72rem;color:var(--mid)">${billing}</td>
+      <td><button class="act act-ghost" onclick="openResidentModal(${JSON.stringify(JSON.stringify(r))})">View</button></td>
+    </tr>`;
+  }).join('');
+}
+
+function openResidentModal(rJson){
+  const r=JSON.parse(rJson);
+  const name=`${r.first_name||''} ${r.last_name||''}`.trim();
+  document.getElementById('modal-name').textContent=name;
+  document.getElementById('modal-body').innerHTML=`
+    <div class="m-row"><span class="m-k">Email</span><span class="m-v">${r.email}</span></div>
+    <div class="m-row"><span class="m-k">Phone</span><span class="m-v">${r.phone||'-'}</span></div>
+    <div class="m-row"><span class="m-k">Building</span><span class="m-v">${r.building||'-'}</span></div>
+    <div class="m-row"><span class="m-k">Unit</span><span class="m-v">${r.unit||'-'}</span></div>
+    <div class="m-row"><span class="m-k">City</span><span class="m-v">${r.city||'-'}</span></div>
+    <div class="m-row"><span class="m-k">Plan</span><span class="m-v">${PLAN_LABELS[r.plan]||r.plan}</span></div>
+    <div class="m-row"><span class="m-k">Status</span><span class="m-v">${(r.plan_status||'unknown').replace('_',' ')}</span></div>
+    <div class="m-row"><span class="m-k">Pickups Used</span><span class="m-v">${r.pickups_used_this_cycle||0} of ${r.pickups_limit||4}</span></div>
+    <div class="m-row"><span class="m-k">Next Billing</span><span class="m-v">${r.next_billing_date||'-'}</span></div>
+    <div class="m-row"><span class="m-k">Wash Pref.</span><span class="m-v">${r.wash_preference||'-'}</span></div>
+    <div class="m-row"><span class="m-k">Scent</span><span class="m-v">${r.scent_preference||'-'}</span></div>
+    <div class="m-row"><span class="m-k">Notes</span><span class="m-v">${r.special_instructions||'None'}</span></div>
+    <div class="m-row"><span class="m-k">Member Since</span><span class="m-v">${r.member_since?new Date(r.member_since).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'-'}</span></div>
+    <div class="m-row"><span class="m-k">Stripe Customer</span><span class="m-v" style="font-size:.62rem">${r.stripe_customer_id||'-'}</span></div>
+  `;
+  document.getElementById('res-modal').classList.add('open');
+}
+function closeModal(){document.getElementById('res-modal').classList.remove('open');}
+document.getElementById('res-modal').addEventListener('click',e=>{if(e.target.id==='res-modal')closeModal();});
+
+// ── METRICS ──
+async function loadMetrics(){
+  const{data:residents}=await sb.from('residents').select('plan,plan_status');
+  const{data:pickups}=await sb.from('pickups').select('id,scheduled_date,status');
+  const active=(residents||[]).filter(r=>r.plan_status==='active');
+  const mrr=active.reduce((s,r)=>s+(PLAN_RATES[r.plan]||0),0);
+  const total=(residents||[]).length;
+  const adoption=total>0?Math.round(active.length/total*100):0;
+  const now=new Date(),monthStart=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-01`;
+  const monthPickups=(pickups||[]).filter(p=>p.scheduled_date>=monthStart).length;
+  document.getElementById('m-mrr').textContent='$'+mrr.toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('m-active').textContent=active.length;
+  document.getElementById('m-adoption').textContent=adoption+'%';
+  document.getElementById('m-pickups-mo').textContent=monthPickups;
+
+  // Plan breakdown
+  const plans={ess:{n:0,rev:0},com:{n:0,rev:0},suite:{n:0,rev:0}};
+  active.forEach(r=>{if(plans[r.plan]){plans[r.plan].n++;plans[r.plan].rev+=PLAN_RATES[r.plan]||0;}});
+  document.getElementById('plan-breakdown').innerHTML=Object.entries(plans).map(([p,v])=>{
+    const pct=mrr>0?Math.round(v.rev/mrr*100):0;
+    return `<tr><td><span class="plan-tag">${PLAN_LABELS[p]}</span></td><td>${v.n}</td><td>$${v.rev.toFixed(2)}/mo</td><td>${pct}%</td></tr>`;
+  }).join('');
+
+  // Recent activity (last 10 pickups)
+  const{data:recent}=await sb.from('pickups').select('*,residents(first_name,last_name)').order('created_at',{ascending:false}).limit(10);
+  document.getElementById('activity-rows').innerHTML=(recent||[]).map(p=>{
+    const r=p.residents||{};
+    const name=`${r.first_name||''} ${r.last_name||''}`.trim()||'Unknown';
+    return `<tr><td style="font-size:.72rem;color:var(--mid)">${new Date(p.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</td><td>${name}</td><td><span class="badge b-scheduled">${p.status.replace('_',' ')}</span></td></tr>`;
+  }).join('');
+}
+
+// ── TOAST ──
+function toast(msg,type='ok'){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.className='toast show '+(type==='ok'?'ok':'err');
+  setTimeout(()=>el.classList.remove('show'),3000);
+}
+</script>
+</body>
+</html>
